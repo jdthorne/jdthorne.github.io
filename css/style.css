@@ -1,0 +1,406 @@
+body 
+{
+    background-color: #666;
+    color: #CCC;
+
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: 300;
+
+    font-size: 12pt;
+}
+
+.container_12
+{
+}
+
+/* -------------------- JAMES THORNE NAME BAR ------------------------ */
+.left_extend
+{
+     position: absolute;
+     left: 0px;
+     right: 50%;
+     top: 20px;
+     height: 104px; 
+
+     z-index: -1;
+
+     background-color: black;
+}
+
+.name_bar
+{
+     color: white;
+     background-color: black;
+
+     height: 104px;
+}
+
+.name_bar_end
+{
+    background: url(../img/name_banner_right.png);
+    width: 50px;
+    height: 104px;
+
+    position: relative;
+    left: -20px;
+}
+
+.tag_bar
+{
+    padding-top: 20px;
+}
+
+.name_bar img
+{
+    margin-top: 21px;
+    float: left;
+
+    margin-right: 20px;
+}
+
+.name
+{
+    font-weight: 900;
+    font-size: 35pt;
+
+    line-height: 32pt;
+
+    margin-top: 17px;
+
+    font-family: "HelveticaNeue-CondensedBlack";
+}
+
+.tagline
+{
+    font-size: 15pt;
+    font-weight: 100;
+
+    font-family: "HelveticaNeue-Light";
+}
+
+.james_bar 
+{
+    height: 550px;
+}
+
+.james_bar .background_image
+{
+    background: #888 url(../img/header-550.jpg) center top;
+
+    position: fixed;
+    left: 0px;
+    right: 0px;
+    height: 550px;
+
+    z-index: -2;
+}
+
+/* -------------------- WELCOME TEXT ------------------------ */
+
+.welcome
+{
+    text-align: center;
+    color: #CCC;
+    font-size: 18pt;
+}
+
+.welcome em
+{
+    font-style: normal;
+    color: #00ADED;
+}
+
+/* -------------------- MAIN BODY ------------------------ */
+
+.main_body
+{
+    background-color: #DDD;
+    box-shadow: 0px 0px 10px #000;
+    min-height: 600px;
+
+    background: url(../img/dark_fish_skin.png);
+}
+
+h1
+{
+    font-size: 24pt;
+    text-align: center;
+
+    margin-top: 0px;
+}
+h2
+{
+    font-size: 24pt;
+    text-align: center;
+
+    margin-top: -25px;
+}
+
+p
+{
+    padding-top: 20px;
+    margin-bottom: 0px;
+}
+
+ul
+{
+    margin-top: 20px;
+}
+
+a
+{
+    color: #999;
+    text-decoration: underline;
+}
+a:hover
+{
+    color: #00ADED;
+}
+
+.section
+{
+    margin-top: 100px;
+}
+
+.section_header
+{
+    margin-top: 100px;
+
+    text-align: center;
+    font-size: 18pt;
+
+    color: #00ADED;
+}
+
+.section_header i
+{
+    font-size: 14pt;
+}
+
+/* -------------------- APP STORE LINKS ----------------------- */
+.appstore
+{
+    width: 150px;
+    height: 53px;
+    background: url(../img/appstore.png);
+
+    cursor: pointer;
+}
+.appstore:hover
+{
+    background: url(../img/appstore-white.png);
+}
+
+/* -------------------- ANTEX ----------------------- */
+
+.iPad
+{
+    background: url(../img/ipad-antex.png);
+    width: 960px;
+    height: 557px;
+
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.iPad iframe
+{
+    position: relative;
+
+    top: 66px;
+    left: 72px;
+}
+
+.iPad .sidebar 
+{
+    color: white;
+
+    position: relative;
+    left: 732px;
+    top: -300px;
+
+    width: 206px;
+
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+
+}
+
+/* -------------------- TEAM LUNCH ----------------------- */
+.lunch
+{
+    margin-left: -14px;
+    width: 993px;
+    height: 653px;
+    background: url(../img/team-lunch.png);
+}
+
+.lunch iframe
+{
+    position: relative;
+    top: 405px;
+    left: 524px;
+}
+
+.lunch .sidebar
+{
+    position: relative;
+    left: 36px;
+    top: 82px;
+    width: 382px;
+}
+
+.lunch .big_explain
+{
+    padding-top: 4px;
+    font-size: 14.5pt;
+}
+
+/* -------------------- FILMSTRIP ----------------------- */
+.filmstrip
+{
+    position: relative;
+
+    margin-left: -16px;
+
+    width: 997px;
+    height: 646px;
+    background: url(../img/filmstrip-2.png);
+}
+
+.filmstrip .actual_film
+{
+    position: absolute;
+    top: 217px;
+    left: 322px;
+
+    width: 640px;
+    height: 360px;
+}
+
+.filmstrip .sidebar
+{
+    position: absolute;
+    left: 40px;
+    top: 459px;
+
+    width: 226px;
+    height: 146px;
+
+    overflow: scroll;
+}
+
+.film_title
+{
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.video_pick
+{
+    cursor: pointer;
+    font-size: 10pt;
+}
+
+.video_pick:hover
+{
+    text-decoration: underline;
+}
+
+.video_pick.active
+{
+    color: #00ADED;
+}
+
+/* -------------------- PROFESSIONAL ----------------------- */
+.professional
+{
+    font-weight: bold;
+    color: #999;
+    text-align: center;
+
+    font-size: 14pt;
+}
+
+.logo
+{
+    width: 300px;
+    height: 100px;
+
+    background-position: center bottom;
+    background-repeat: no-repeat;
+
+    margin-bottom: 10px;
+}
+
+.grid_12.gap
+{
+    margin-bottom: 40px;
+}
+
+.more_prof
+{
+    margin-top: 100px;
+    font-weight: 100;
+}
+
+/* -------------------- CONTACT ----------------------- */
+.contact
+{
+    margin-top: 40px;
+
+    font-size: 14pt;
+}
+
+.contact_personal
+{
+    text-align: right;
+
+}
+
+.contact a
+{
+    color: #CCC;
+    text-decoration: none;
+}
+.contact a:hover
+{
+    color: #00ADED;
+}
+.contact i
+{
+    margin-left: 5px;
+    margin-right: 5px;
+
+    display: inline-block;
+    min-width: 18px;
+}
+
+/* -------------------- END ----------------------- */
+.end
+{
+    color: #777;
+    font-size: 14pt;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+
+    text-align: center;
+
+    width: 960px;
+    border-top: solid 1px #777;
+
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.end a
+{
+    color: #666;
+}
+
+.end a:hover
+{
+    color: #00ADED;
+}
