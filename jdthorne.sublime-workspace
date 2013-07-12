@@ -415,13 +415,6 @@
 	},
 	"buffers":
 	[
-		{
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "Packages/User/tup.sublime-build",
 	"command_palette":
@@ -495,9 +488,12 @@
 	},
 	"file_history":
 	[
+		"/Users/james/Projects/jdthorne.github.io/haml/index.haml",
+		"/Users/james/Projects/jdthorne.github.io/css/style.css",
+		"/Users/james/Projects/jdthorne.github.io/.gitignore",
+		"/Users/james/Projects/jdthorne.github.io/CNAME",
 		"/Users/james/Projects/Website/haml/index.haml",
 		"/Users/james/Projects/jdthorne.github.io/README.md",
-		"/Users/james/Projects/jdthorne.github.io/.gitignore",
 		"/Users/james/Projects/Website/css/style.css",
 		"/Users/james/Projects/Website/js/script.js",
 		"/Users/james/Projects/Website/old/index.html",
@@ -619,10 +615,7 @@
 		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/test/common/FakeTestBenchLogger.h",
 		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/test/common/FakeTestBenchLogger.cxx",
 		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/TestBenchLogger.h",
-		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/TestBenchLogger.cxx",
-		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/test/common/RandomHelpers.cxx",
-		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/Makefile",
-		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/app/CommandProxy.h"
+		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/TestBenchLogger.cxx"
 	],
 	"find":
 	{
@@ -641,6 +634,10 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"url\\(",
+			"url",
+			"\\",
+			"url\\(",
 			"</li>",
 			"<li>",
 			"welcome",
@@ -764,18 +761,15 @@
 			"decode",
 			"addShip",
 			"deflectorPower",
-			"\\*this",
-			"0.2",
-			"glTranslate3",
-			"rotationTo",
-			"match"
+			"\\*this"
 		],
 		"highlight": true,
-		"in_selection": true,
+		"in_selection": false,
 		"preserve_case": false,
 		"regex": true,
 		"replace_history":
 		[
+			"url(img/",
 			"",
 			"    ",
 			"    \\1",
@@ -883,34 +877,8 @@
 	"groups":
 	[
 		{
-			"selected": 0,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"settings":
-					{
-						"buffer_size": 0,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],

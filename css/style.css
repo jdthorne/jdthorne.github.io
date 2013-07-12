@@ -104,7 +104,7 @@ body
     font-size: 18pt;
 }
 
-.welcome em
+em
 {
     font-style: normal;
     color: #00ADED;
@@ -119,21 +119,6 @@ body
     min-height: 600px;
 
     background: url(../img/dark_fish_skin.png);
-}
-
-h1
-{
-    font-size: 24pt;
-    text-align: center;
-
-    margin-top: 0px;
-}
-h2
-{
-    font-size: 24pt;
-    text-align: center;
-
-    margin-top: -25px;
 }
 
 p
@@ -170,6 +155,14 @@ a:hover
     font-size: 18pt;
 
     color: #00ADED;
+
+    background-image: url(../img/header-lines.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+
+    width: 960px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .section_header i
@@ -293,6 +286,7 @@ a:hover
 
 .film_title
 {
+    font-size: 14pt;
     font-weight: bold;
     margin-bottom: 20px;
 }
@@ -300,17 +294,23 @@ a:hover
 .video_pick
 {
     cursor: pointer;
-    font-size: 10pt;
+    font-size: 12pt;
 }
 
 .video_pick:hover
 {
-    text-decoration: underline;
+    color: #00ADED;
 }
 
 .video_pick.active
 {
     color: #00ADED;
+}
+.video_pick i
+{
+    float: right;
+    position: relative;
+    top: 5px;
 }
 
 /* -------------------- PROFESSIONAL ----------------------- */
@@ -321,6 +321,15 @@ a:hover
     text-align: center;
 
     font-size: 14pt;
+}
+
+.probutton
+{
+    cursor: pointer;
+}
+.probutton:hover
+{
+    color: #00ADED;
 }
 
 .logo
@@ -334,7 +343,7 @@ a:hover
     margin-bottom: 10px;
 }
 
-.grid_12.gap
+.gap
 {
     margin-bottom: 40px;
 }
@@ -343,6 +352,70 @@ a:hover
 {
     margin-top: 100px;
     font-weight: 100;
+}
+
+/* Expandalob */
+
+.expandalob
+{
+    display: none;
+
+    margin-top: 40px;
+    background: url(../img/expandalob.png);
+    height: 384px;
+}
+
+
+/* So: there is 640px of travel for the arrow */
+/* Plus the 70px the arrow is wide => 710px */
+
+.expandalob_arrow_track
+{
+    width: 710px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.expandalob_arrow
+{
+    background: url(../img/expandalob-arrow.png);
+    width: 70px;
+    height: 41px;
+
+    margin-left: 640px;
+}
+
+.expand_content
+{
+    width: 320px; /* 960 - 640 - 20 => 320px */
+
+    height: 320px;
+    margin-left: auto;
+    margin-right: auto;
+
+    background-position: right;
+    background-repeat: no-repeat;
+
+    padding-right: 660px;
+
+    text-align: left;
+}
+
+.expand_content h1
+{
+    font-size: 16pt;
+    margin-bottom: 0px;
+}
+.expand_content h2
+{
+    font-size: 12pt;
+    font-weight: 100;
+
+    margin-bottom: 0px;
+}
+
+.expand_content p
+{
+    font-size: 11pt;
 }
 
 /* -------------------- CONTACT ----------------------- */
