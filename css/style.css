@@ -16,23 +16,23 @@ body
 /* -------------------- JAMES THORNE NAME BAR ------------------------ */
 .left_extend
 {
-     position: absolute;
-     left: 0px;
-     right: 50%;
-     top: 20px;
-     height: 104px; 
+    position: absolute;
+    left: 0px;
+    right: 50%;
+    top: 20px;
+    height: 104px; 
 
-     z-index: -1;
+    z-index: -1;
 
-     background-color: black;
+    background-color: black;
 }
 
 .name_bar
 {
-     color: white;
-     background-color: black;
+    color: white;
+    background-color: black;
 
-     height: 104px;
+    height: 104px;
 }
 
 .name_bar_end
