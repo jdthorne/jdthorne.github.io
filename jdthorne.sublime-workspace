@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"exp",
+				"expandalob"
+			],
+			[
+				"expa",
+				"expandalob_visible"
+			],
+			[
 				"FLA",
 				"FLAGS_HOVER	const int"
 			],
@@ -54,10 +62,6 @@
 			[
 				"init",
 				"initialized_	bool"
-			],
-			[
-				"exp",
-				"expectedLeft	double"
 			],
 			[
 				"ex",
@@ -488,8 +492,9 @@
 	},
 	"file_history":
 	[
-		"/Users/james/Projects/jdthorne.github.io/haml/index.haml",
 		"/Users/james/Projects/jdthorne.github.io/css/style.css",
+		"/Users/james/Projects/jdthorne.github.io/haml/index.haml",
+		"/Users/james/Projects/jdthorne.github.io/js/script.js",
 		"/Users/james/Projects/jdthorne.github.io/.gitignore",
 		"/Users/james/Projects/jdthorne.github.io/CNAME",
 		"/Users/james/Projects/Website/haml/index.haml",
@@ -614,8 +619,7 @@
 		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/app/main.cxx",
 		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/test/common/FakeTestBenchLogger.h",
 		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/test/common/FakeTestBenchLogger.cxx",
-		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/TestBenchLogger.h",
-		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/TestBenchLogger.cxx"
+		"/Users/james/Courses/ENEL583 4th Year Project/vm/autopilot/src/TestBenchLogger.h"
 	],
 	"find":
 	{
@@ -634,6 +638,7 @@
 		"case_sensitive": true,
 		"find_history":
 		[
+			"%h1",
 			"url\\(",
 			"url",
 			"\\",
@@ -760,8 +765,7 @@
 			"lodepng",
 			"decode",
 			"addShip",
-			"deflectorPower",
-			"\\*this"
+			"deflectorPower"
 		],
 		"highlight": true,
 		"in_selection": false,
