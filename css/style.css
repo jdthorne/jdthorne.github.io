@@ -208,6 +208,14 @@ a:hover
     left: 72px;
 }
 
+.iPad .youtube5placeholder
+{
+    position: relative;
+
+    top: 66px;
+    left: 72px;
+}
+
 .iPad .sidebar 
 {
     color: white;
@@ -232,6 +240,13 @@ a:hover
 }
 
 .lunch iframe
+{
+    position: relative;
+    top: 405px;
+    left: 524px;
+}
+
+.lunch .youtube5placeholder
 {
     position: relative;
     top: 405px;
