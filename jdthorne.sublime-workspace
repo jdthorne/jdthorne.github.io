@@ -492,8 +492,9 @@
 	},
 	"file_history":
 	[
-		"/Users/james/Projects/jdthorne.github.io/css/style.css",
 		"/Users/james/Projects/jdthorne.github.io/haml/index.haml",
+		"/Users/james/Projects/jdthorne.github.io/css/style.css",
+		"/Users/james/Projects/jdthorne.github.io/index.html",
 		"/Users/james/Projects/jdthorne.github.io/js/script.js",
 		"/Users/james/Projects/jdthorne.github.io/.gitignore",
 		"/Users/james/Projects/jdthorne.github.io/CNAME",
@@ -502,7 +503,6 @@
 		"/Users/james/Projects/Website/css/style.css",
 		"/Users/james/Projects/Website/js/script.js",
 		"/Users/james/Projects/Website/old/index.html",
-		"/Users/james/Projects/jdthorne.github.io/index.html",
 		"/Users/james/Projects/Website/Makefile",
 		"/Users/james/Projects/Website/.gitignore",
 		"/Users/james/Projects/Website/ipad.ai",

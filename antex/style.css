@@ -1,0 +1,168 @@
+
+body
+{
+   background-color: black;
+   color: white;
+
+   font-family: 'Advent Pro', sans-serif;
+
+   margin: 0px;
+   padding: 0px;
+}
+
+#header
+{
+   background-color: #black;
+
+   border-bottom: solid 1px #00ADED;
+
+   font-size: 36pt;
+
+   padding: 20px;
+   padding-left: 50px;
+   cursor: pointer;
+
+   min-width: 820px;
+}
+
+#header *
+{
+   vertical-align: middle;
+}
+
+#header-right
+{
+   font-weight: 900;
+   font-size: 18pt;
+   color: #00ADED;
+   float: right;
+   display: inline-block;
+
+   margin-top: 30px;
+   margin-right: 20px;
+}
+
+#skybox
+{
+   padding: 50px;
+
+   background: url(Sky.jpg);
+   background-repeat: repeat-x;
+}
+
+#appstore
+{
+   position: absolute;
+   top: 180px;
+   left: -1px;
+   width: 205px;
+   height: 364px;
+
+   padding: 10px;
+
+   border: solid 1px #00ADED;
+   background-color: rgba(0, 0, 0, 0.8);
+
+   text-align: center;
+
+   font-size: 24pt;
+   font-weight: 900;
+   cursor: pointer;
+}
+
+#header:hover #appstore-available
+{
+   background: url(appstore-white.png);
+}
+
+#header-left
+{
+   margin-left: 20px;
+   display: inline-block;
+}
+
+#appstore-icon
+{
+   background: url(appicon-header.png);
+   width: 90px;
+   height: 90px;
+   border-radius: 10px;
+   display: inline-block;
+}
+
+#appstore-available
+{
+   float: right;
+   background: url(appstore.png);
+   width: 150px;
+   height: 53px;
+
+   display: inline-block;
+
+   margin-top: 20px;
+   margin-left: auto;
+   margin-right: auto;
+}
+
+#trailer
+{
+   padding: 10px;
+   width: 853px;
+
+   margin-left: auto;
+   margin-right: auto;
+
+   border: solid 1px #00ADED;
+   background-color: rgba(0, 0, 0, 0.8);
+}
+
+#main
+{
+   border-top: solid 1px #00ADED;
+   padding: 40px;
+
+   padding-left: 80px;
+   padding-right: 80px;
+
+   font-size: 16pt;
+}
+
+#main img
+{
+   margin-left: auto;
+   margin-right: auto;
+   display: block;
+}
+
+p + h1
+{
+   margin-top: 100px;
+}
+
+#footer
+{
+   margin-top: 50px;
+   background-color: #CCC;
+   color: #777;
+   font-size: 14pt;
+
+   border-top: solid 1px #00ADED;
+
+   padding: 20px;
+}
+
+#footer a
+{  
+   color: #777;
+}
+
+h1 a
+{
+   color: white;
+   text-decoration: none;
+}
+
+h1 a:hover
+{
+   text-decoration: underline;
+}
