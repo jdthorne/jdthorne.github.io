@@ -1,0 +1,2368 @@
+<!DOCTYPE html><html><head><title>Richner's Log</title><link href="http://fonts.googleapis.com/css?family=Quattrocento" rel="stylesheet" type="text/css" /><script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><style>body {
+  background: #666666;
+  font-family: 'Quattrocento', serif;
+  font-size: 14pt;
+}
+.info {
+  color: #CCC;
+  max-width: 800px;
+  margin: 40px auto 0px auto;
+  font-size: 12pt;
+}
+.info a {
+  color: #CCC;
+  text-decoration: none;
+}
+.info a:hover {
+  color: white;
+}
+#select_location_menu {
+  display: none;
+  width: 880px;
+  margin: 0px auto 0px auto;
+  color: black;
+  overflow: hidden;
+}
+#select_location_menu .episode {
+  float: right;
+  display: inline-block;
+  width: 200px;
+  padding: 20px;
+  margin-left: 8px;
+  margin-top: 10px;
+  background: white;
+}
+#select_location_menu .episode .title {
+  font-weight: bold;
+  font-size: 12pt;
+}
+#select_location_menu .episode a.act {
+  display: block;
+  text-decoration: none;
+  color: #666666;
+  font-size: 12pt;
+  padding: 8px 0px 0px 0px;
+}
+#select_location_menu .episode a.act:hover {
+  color: black;
+}
+#select_location_menu .episode a.act::after {
+  content: ' \25b6';
+  font-size: 6pt;
+  padding-left: 4px;
+}
+.info .left {
+  float: left;
+}
+.info .right {
+  float: right;
+}
+.info .clear {
+  clear: both;
+}
+.page {
+  width: 800px;
+  background: white;
+  padding: 40px 40px 40px 40px;
+  margin: 8px auto 40px auto;
+  font-size: 16pt;
+  overflow: auto;
+}
+#action {
+  font-weight: bold;
+  font-size: 12pt;
+  margin-bottom: 4px;
+}
+#text {
+  min-height: 300px;
+  line-height: 130%;
+  margin-top: 0px;
+}
+#menu {
+  margin: 0px -10px 0px -10px;
+  background: white;
+}
+.menu-option {
+  display: inline-block;
+  border: solid 2px #666666;
+  color: #666666;
+  padding: 10px 30px 10px 30px;
+  margin: 10px 10px 10px 10px;
+  border-radius: 40px;
+  text-decoration: none;
+  text-align: center;
+}
+.menu-option:hover {
+  background: #666666;
+  color: white;
+}
+@media (max-width: 1000px) {
+  .page,
+  .info,
+  #select_location_menu {
+    width: auto;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+}
+</style><style>.theme {
+  position: fixed;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  opacity: 0;
+  z-index: -1;
+  transition: all 10s;
+}
+.theme.visible {
+  opacity: 1;
+}
+.theme.inside {
+  background: #576b77;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #576b77), color-stop(46%, #828c95), color-stop(100%, #b5bdc8));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#576b77', endColorstr='#b5bdc8', GradientType=0);
+  /* IE6-9 */
+}
+.theme.inside-dim {
+  background: #313b42;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #313b42 0%, #555b60 46%, #70757a 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #313b42), color-stop(46%, #555b60), color-stop(100%, #70757a));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #313b42 0%, #555b60 46%, #70757a 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #313b42 0%, #555b60 46%, #70757a 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #313b42 0%, #555b60 46%, #70757a 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #313b42 0%, #555b60 46%, #70757a 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#313b42', endColorstr='#70757a', GradientType=0);
+  /* IE6-9 */
+}
+.theme.fire {
+  background: #6d0019;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #6d0019 0%, #e50031 32%, #f24c00 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6d0019), color-stop(32%, #e50031), color-stop(100%, #f24c00));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #6d0019 0%, #e50031 32%, #f24c00 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #6d0019 0%, #e50031 32%, #f24c00 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #6d0019 0%, #e50031 32%, #f24c00 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #6d0019 0%, #e50031 32%, #f24c00 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#6d0019', endColorstr='#f24c00', GradientType=0);
+  /* IE6-9 */
+}
+.theme.mars {
+  background: #a08255;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #a08255 0%, #b7a68d 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #a08255), color-stop(100%, #b7a68d));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #a08255 0%, #b7a68d 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #a08255 0%, #b7a68d 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #a08255 0%, #b7a68d 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #a08255 0%, #b7a68d 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a08255', endColorstr='#b7a68d', GradientType=0);
+  /* IE6-9 */
+}
+.theme.toxic {
+  background: #9e9384;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #9e9384 0%, #af6c6b 100%);
+  /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #9e9384), color-stop(100%, #af6c6b));
+  /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, #9e9384 0%, #af6c6b 100%);
+  /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, #9e9384 0%, #af6c6b 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #9e9384 0%, #af6c6b 100%);
+  /* IE10+ */
+  background: linear-gradient(to bottom, #9e9384 0%, #af6c6b 100%);
+  /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#9e9384', endColorstr='#af6c6b', GradientType=0);
+  /* IE6-9 */
+}
+.theme.blackout {
+  background: black;
+}
+</style></head><body><div class="theme inside"></div><div class="theme inside-dim"></div><div class="theme fire"></div><div class="theme mars"></div><div class="theme toxic"></div><div class="theme blackout"></div><div class="info"><div class="left">Richner's Log</div><div class="right"><a href="javascript:;" id="select_location"><span id="location">Loading...</span> &blacktriangledown;</a></div><div class="clear"></div></div><div id="select_location_menu"></div><div class="page"><p id="action"></p><p id="text">Loading...</p><div id="menu"></div></div><script type="text/javascript">(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+var HiddenAction, _;
+
+HiddenAction = (function() {
+  function HiddenAction(_at_condition, _at_action) {
+    this.condition = _at_condition;
+    this.action = _at_action;
+  }
+
+  return HiddenAction;
+
+})();
+
+_ = {
+  loop: null,
+  ui: {
+    display: function(text, loop_text) {
+      return console.log(text, loop_text);
+    },
+    present_menu_options: function(menu_options) {
+      return console.log(menu_options);
+    },
+    display_act: function(act) {
+      return console.log(act.title.name);
+    },
+    display_theme: function(theme) {
+      return console.log(theme);
+    },
+    clear_travel: function() {
+      return controls.log('clear_travel');
+    }
+  },
+  start_act: function(act) {
+    _.loop = null;
+    _.ui.display_act(act);
+    return _.present_area(act.start);
+  },
+  present_area: function(area) {
+    _.area = area;
+    if (area.theme != null) {
+      _.ui.display_theme(area.theme);
+    }
+    _.display_with_loop((typeof area.text === 'function' ? area.text() : area.text));
+    return _.present_area_menu();
+  },
+  present_area_menu: function() {
+    return _.menu_no_backsies(_.area.actions);
+  },
+  travel_to: function(area) {
+    return _.present_area(area);
+  },
+  menu_no_backsies: function(options) {
+    return _.menu(options, false);
+  },
+  menu: function(options, show_back) {
+    var action, i, menu, option_name, option_names, text, _i, _len;
+    if (show_back == null) {
+      show_back = true;
+    }
+    menu = [];
+    option_names = Object.keys(options);
+    if (options['#'] != null) {
+      _.display_with_loop(options['#']);
+    }
+    if (show_back) {
+      menu.push({
+        text: "<",
+        action: _.present_area_menu
+      });
+    }
+    for (i = _i = 0, _len = option_names.length; _i < _len; i = ++_i) {
+      option_name = option_names[i];
+      if (option_name === '#') {
+        continue;
+      }
+      if ((options[option_name] instanceof HiddenAction) && !options[option_name].condition()) {
+        continue;
+      }
+      if (options[option_name] == null) {
+        continue;
+      }
+      text = option_name;
+      action = options[text];
+      menu.push({
+        text: text,
+        action: action
+      });
+    }
+    if (show_back && menu.length === 1) {
+      return _.present_area_menu();
+    }
+    return _.ui.present_menu_options(menu);
+  },
+  execute: function(option) {
+    if (option instanceof HiddenAction) {
+      return _.execute(option.action);
+    } else if (typeof option === 'function') {
+      return option();
+    } else if (typeof option === 'string') {
+      return _.reply(option);
+    } else if (typeof option === 'object') {
+      return _.menu(option);
+    }
+  },
+  reply: function(text, next) {
+    _.display_with_loop(text);
+    if (next != null) {
+      return _.execute(next);
+    } else {
+      return _.present_area_menu();
+    }
+  },
+  display_with_loop: function(text) {
+    var element;
+    element = null;
+    if (_.loop != null) {
+      element = _.loop.shift();
+      _.loop.push(element);
+    }
+    return _.ui.display(text, element);
+  },
+  extend: function(a, b) {
+    var key, _i, _len, _ref;
+    _ref = Object.keys(b);
+    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+      key = _ref[_i];
+      if (a[key] != null) {
+        if ((typeof a[key] === 'object') && (typeof b[key] === 'object')) {
+          _.extend(a[key], b[key]);
+        } else {
+          a[key] = b[key];
+        }
+      } else {
+        a[key] = b[key];
+      }
+    }
+    return a;
+  },
+  copy_of: function(a) {
+    var b, key, value;
+    b = {};
+    for (key in a) {
+      value = a[key];
+      b[key] = value;
+    }
+    return b;
+  },
+  conversation: function(dialog) {
+    var menu_options;
+    if (dialog.length === 1) {
+      return _.execute(dialog[0]);
+    }
+    _.display_with_loop(dialog.shift());
+    menu_options = {};
+    menu_options[dialog.shift()] = function() {
+      return _.conversation(dialog.slice());
+    };
+    return _.menu(menu_options, false);
+  },
+  hidden_action: function(condition, action) {
+    return new HiddenAction(condition, action);
+  }
+};
+
+module.exports = _;
+
+
+
+},{}],2:[function(require,module,exports){
+var act, aid, content, eid, episode, _;
+
+_ = require('./app.coffee');
+
+content = {
+  introduction: {
+    title: "Richner's Log",
+    act: {
+      title: "Welcome",
+      start: {
+        text: function() {
+          content.introduction.act.start.actions["Continue to " + (content.latest_act().title)] = function() {
+            return _.start_act(content.latest_act());
+          };
+          return "Welcome to Richner's Log.";
+        },
+        actions: {
+          "Start at the Beginning": function() {
+            return _.start_act(content.episode_1.act_1);
+          }
+        }
+      }
+    }
+  },
+  episode_1: require('../episode-1/episode-1.coffee'),
+  find_act: function(id) {
+    var a, act, e, episode;
+    for (e in content) {
+      episode = content[e];
+      for (a in episode) {
+        act = episode[a];
+        if (act.id === id) {
+          return act;
+        }
+      }
+    }
+    return null;
+  },
+  latest_act: function() {
+    var a, act, e, episode, latest;
+    latest = null;
+    for (e in content) {
+      episode = content[e];
+      for (a in episode) {
+        act = episode[a];
+        if (act.incomplete == null) {
+          latest = act;
+        }
+      }
+    }
+    return latest;
+  }
+};
+
+for (eid in content) {
+  episode = content[eid];
+  for (aid in episode) {
+    act = episode[aid];
+    act.id = eid + "_" + aid;
+  }
+}
+
+module.exports = content;
+
+
+
+},{"../episode-1/episode-1.coffee":10,"./app.coffee":1}],3:[function(require,module,exports){
+var act_1, act_2, add_action, between_dreams, data, extend, hidden_action, menu, reply, travel_to, _;
+
+between_dreams = require('./between-dreams.coffee');
+
+act_2 = require('./act-2-landing.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+data = {
+  tried_to_stand_up: false,
+  lights_are_on: false
+};
+
+act_1 = {
+  title: "1.1 Space",
+  start: {
+    theme: 'inside-dim',
+    text: "Richner's Log\nDate: 2064.223\n\nMy head was pounding, my back ached, and I couldn't feel my left hand. But I was alive, and my ship was finally quiet.\n\nQuiet and dark.\n\nI was so tired.",
+    actions: {
+      "Sit Back": function() {
+        return travel_to(act_1.conversation);
+      }
+    }
+  },
+  conversation: {
+    text: "A voice cut through the silence.\n\n\"Well, we still have the reaction control thrusters. ...but we'll need them later, because we can't land without fuel for the 'spikes.\"\n\nShe was right, of course.",
+    actions: {
+      Talk: {
+        "\"Where are we?\"": "\"Safe for now, I think.\"",
+        "\"How long this time?\"": function() {
+          return reply("\"Well, if I'd been able to time the burn correctly-\"", {
+            "\"But you weren't.\"": "\"It's... going to be a long one.\""
+          });
+        },
+        "\"What's our status?\"": "\"Everything is powered down. We're safe for now. Go ahead and get some sleep.\"",
+        "\"It's a bit dark in here.\"": hidden_action((function() {
+          return data.tried_to_stand_up;
+        }), function() {
+          data.lights_are_on = true;
+          _.ui.display_theme('inside');
+          return reply("\"Sorry about that, I'll see if I can get the lights on.\"\n\nThe cabin slowly filled with a dim glow. The flight controls were dead, but I didn't care. Hayley knew what she was doing, and she had lots of time to do it.\n\nI, on the other hand, needed to sleep.");
+        })
+      },
+      "Stand up": function() {
+        data.tried_to_stand_up = true;
+        return reply("As I started to lift myself out of the pilot's seat, something caught across my chest and pulled me back.\n\nIt wouldn't let me leave.\n\nIt was probably my crash harness.");
+      },
+      "Unbuckle crash harness": hidden_action((function() {
+        return data.tried_to_stand_up;
+      }), function() {
+        if (data.lights_are_on) {
+          return reply("Careful not to use my crippled left hand, I unbuckled the crash harness and lifted out of my seat.\n\nApparent gravity was down to 10% with life support in emergency mode. Standing was easy.", function() {
+            return _.menu_no_backsies({
+              "Stand up": function() {
+                _.loop = ["I had to sleep."];
+                return travel_to(act_1.between_dreams.flight_deck);
+              }
+            });
+          });
+        } else {
+          return reply("I couldn't find the buckle in the dark. \n\nAfter what happened yesterday, I was a bit afraid to look.");
+        }
+      })
+    }
+  },
+  between_dreams: between_dreams["with"]({
+    flight_deck: {
+      actions: {
+        Look: {
+          Outside: "I looked through the window, but I couldn't see anything with the blast shutters closed. \n\nIt was probably for the best. Nothing but empty space out there anyway.",
+          "At the Flight Controls": "The flight controls were dead. I wasn't worried; Hayley knew what she was doing."
+        }
+      }
+    },
+    crew_quarters: {
+      actions: {
+        Look: {
+          "At the Bed": function() {
+            return reply(between_dreams.base.crew_quarters.actions.Look["At the Bed"], {
+              Sleep: function() {
+                _.ui.display_theme('blackout');
+                _.loop = null;
+                return reply("I fell into a dreamless sleep. Hayley would wake me when she needed me.", function() {
+                  return _.menu_no_backsies({
+                    "36 Hours Earlier...": function() {
+                      return _.start_act(act_2);
+                    }
+                  });
+                });
+              }
+            });
+          },
+          "At the Life Support Manifold": function() {
+            return reply(between_dreams.base.crew_quarters.actions.Look["At the Life Support Manifold"] + "\n\nOf course this unit's generator was missing, so I was down to emergency life support. I'd have to replace it eventually, but for now I was too exhausted.");
+          }
+        }
+      }
+    },
+    airlock: {
+      theme: 'inside',
+      actions: {
+        Go: {
+          Aft: "I wasn't ready to open the cargo bay; there was time enough for that later."
+        }
+      }
+    }
+  })
+};
+
+module.exports = act_1;
+
+
+
+},{"../app/app.coffee":1,"./act-2-landing.coffee":4,"./between-dreams.coffee":9}],4:[function(require,module,exports){
+var act_2, act_3, add_action, between_dreams, crash_loop, data, extend, hidden_action, menu, menu_no_backsies, reply, travel_to, _;
+
+between_dreams = require('./between-dreams.coffee');
+
+act_3 = require('./act-3-the-package.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+crash_loop = ["\"We don't have a lot of time!\", Hayley's voice cut through the din.", "The Dreams lurched to one side.", "The ship rocked back and forth as a series of distant explosions perforated the outer hull.", "\"You have to move! Now!\" Hayley directed over the alarms.", "I had to keep moving before the ship was ripped apart.", "I started to feel sick.", "The Dreams fell 100 meters in a split second, but somehow I kept it together.", "I could barely hear Hayley's voice crying \"Go! Go!\"", "I had to find the vertical latch assembly before I blacked out.", "The ship felt like it was entering a flat spin.", "What had I gotten myself into?", "The heat was incredible; every inch of my skin was on fire.", "There wasn't much time left.", "I had to keep moving.", "I couldn't stop now.", "Hayley's faint voice cried \"Richner! Quickly!\"", "An unexpected spin dropped me to the floor. It was all I could do to keep from blacking out."];
+
+data = {
+  noticed_hull_breach: false,
+  crash_harness_attempt: null,
+  saw_both_actuators: false,
+  saw_damaged_actuator: false,
+  ready_to_ask_hayley_to_light_engines: false
+};
+
+act_2 = {
+  title: "1.2 Descent",
+  start: {
+    theme: 'fire',
+    text: "Richner's Log\nDate: 2064.221\n\n36 Hours Earlier\n\n\"...FIFTEEN HUNDRED METERS PER SECOND...\" \n\nHayley's voice was level but stressed.\n\nThe ship screamed around me, flames roaring across the window. The heat of reentry flowed through the polysteel hull, and I was drenched in sweat. My crash harness tore into my chest, and my vision blurred with the vibrations.",
+    actions: {
+      Talk: {
+        "\"Are you sure we shouldn't light the engines?\"": function() {
+          return reply("\"I thought you liked fast landings!\" Hayley replied, \"Especially when our fuel reserves are negligible.\"", {
+            "\"How negligible?\"": "\"There might be some fuel in the reserves\", Hayley quipped."
+          });
+        },
+        "\"Why couldn't we do this normally?\"": "Hayley struggled to speak over the din: \n\n\"That wasn't the mission. Believe it or not, this way's quieter. Orbital tracking thinks we're just space debris burning up in the atmosphere.\"\n\nThey weren't wrong.",
+        "\"Hayley! We're out of time!\"": hidden_action((function() {
+          return data.noticed_hull_breach;
+        }), function() {
+          return reply("I screamed over the din, \"Light the 'spikes now, or we're going to lose the hull!\"\n\n\"Alright,\" Hayley commanded, \"Here we go!\"", function() {
+            return _.menu_no_backsies({
+              "BOOM!": function() {
+                return travel_to(act_2.explosion);
+              }
+            });
+          });
+        })
+      },
+      Look: {
+        Outside: "The Martian landscape ripped past, faster and closer than could possibly be safe.",
+        "At Flight Controls": function() {
+          data.noticed_hull_breach = true;
+          return reply("Most of the flight readouts had gone offline; the Dreams' exterior sensors were finicky at the best of times, and it looked like most of them had burned out. The remaining readouts were clustered around a critical alert:\n\n\"Warning: Hull Breach Imminent\"\n\nThe ship was being torn apart; we were out of time.");
+        }
+      }
+    }
+  },
+  explosion: {
+    text: "The Dreams lurched sideways and began to roll.\n\n\"Relax, it's probably nothing,\" Hayley said carefully. \"Deceleration in three... two... one....\"\n\n...",
+    actions: {
+      "\"Hayley?\"": function() {
+        return travel_to(act_2.unbuckle);
+      }
+    }
+  },
+  unbuckle: {
+    text: "Hayley's voice was hesitant.\n\n\"Uh... we have a small problem. I think one of the vertical latches extended, and it's keeping me from rotating the engine pods. Any chance you want to give it a push?\"\n\nThere was no way we'd survive without the engines. I had to move. Fast.",
+    actions: {
+      "Stand up": function() {
+        _.loop = crash_loop;
+        data.crash_harness_attempt = 0;
+        return reply("The crash harness was tight across my chest.");
+      },
+      "Unbuckle Harness": hidden_action((function() {
+        return data.crash_harness_attempt != null;
+      }), function() {
+        var messages, next;
+        messages = ["\"Ah, hot!\" I yelped as I pulled my hand away.", "I tried again, and the buckle scorched my palm. This was going to hurt.", "I managed to push one side of the release, but the other side just pressed harder into my chest.", "My hands were blistering, but I had to keep trying.", "I hesitantly lined up my hand with the release lever, ready to give it one final pull.", "The release clicked free. I fell out of the seat and smashed my head into one of the control surfaces. I landed hard on the metal grating."];
+        next = null;
+        if (data.crash_harness_attempt === messages.length - 1) {
+          next = function() {
+            return menu_no_backsies({
+              "Stand up": function() {
+                return travel_to(act_2.crashing_dreams.flight_deck);
+              }
+            });
+          };
+        }
+        return reply(messages[data.crash_harness_attempt++], next);
+      })
+    }
+  },
+  crashing_dreams: between_dreams["with"]({
+    flight_deck: {
+      text: "I struggled to stand on the flight deck of the Between Dreams.",
+      actions: {
+        Speak: hidden_action((function() {
+          return data.ready_to_ask_hayley_to_light_engines;
+        }), {
+          "\"Hayley! Fire the engines!\"": function() {
+            _.loop = null;
+            return travel_to(act_2.fire_engines);
+          }
+        })
+      }
+    },
+    airlock: {
+      theme: 'fire',
+      actions: {
+        Look: {
+          "At the Latching Assembly": function() {
+            data.saw_both_actuators = true;
+            return reply("I checked the starboard latch actuator first; it looked normal.\n\nAn unexpected shift knocked me into the wall. \n\nPicking myself up, I checked the port actuator. It was fully extended, just like Hayley said.");
+          },
+          "At the Starboard Actuator": hidden_action((function() {
+            return data.saw_both_actuators;
+          }), "It looked normal, but I thought I should inspect it anyway. Another lurch knocked me into the wall."),
+          "At the Port Actuator": hidden_action((function() {
+            return data.saw_both_actuators;
+          }), function() {
+            data.saw_damaged_actuator = true;
+            return reply("It looked like one of the hydraulic lines had blown, but the other line was still pressurized. The imbalance was forcing the actuator outward while atmospheric pressure pushed it back. The entire assembly was bending at a sickening angle.");
+          }),
+          "At the Hydraulic Lines": hidden_action((function() {
+            return data.saw_damaged_actuator;
+          }), function() {
+            return reply("The hydraulic lines were thin jet-black hoses, connecting the latching assembly actuators to the main pressurization system somewhere aft of here. Two lines ran from each actuator: one at the top, and one at the bottom. The top port-side line was visibly damaged, and hydraulic fluid was spraying from the torn connection.", {
+              "Reach Damaged Line": "I tried to reach the line with my hand, but I couldn't get a grip on it while the ship was tumbling through the atmosphere."
+            });
+          })
+        }
+      }
+    },
+    cargo_bay: {
+      theme: 'fire',
+      data: {
+        controls_disabled: true,
+        controls_disabled_message: "I kept clear of the controls. The last thing I needed was an accidental decompression."
+      },
+      actions: {
+        Look: {
+          "At the Hydraulics": function() {
+            if (!data.saw_damaged_actuator) {
+              return reply("The cargo bay hydraulics were fine; it's the vertical latches that I needed to check.");
+            }
+            data.ready_to_ask_hayley_to_light_engines = true;
+            return reply(between_dreams.base.cargo_bay.actions.Look["At the Hydraulics"] + "\n\nThat's what I needed to do.");
+          }
+        }
+      }
+    }
+  }),
+  fire_engines: {
+    text: "\"Fire them now!\", I cried as I dropped into my seat. \"The ignition will cut the hydraulic pressure!\"\n\nI could barely hear Hayley reply \"I hope this works!\"\n\nIgnition.\n\nThe Dreams shuddered under the imbalanced thrust, and then slowly corrected itself as the port-side engine pod rotated into place. \n         \n\"It worked! We're coming in for a stable landing. I think I can even get us back to the original coordinates.\"\n\nHayley's relief washed over me. \n\nWe were going to make it.",
+    actions: {
+      Look: {
+        Outside: "The landscape was slowing down, and not a moment too soon. \n\nI could make out boulders dotting the Martian surface, and a massive tracked vehicle in the distance.",
+        "At the Flight Controls": function() {
+          return reply("The flight readouts started to improve.\n\n\"Altitude [AGL]: 200m... 150m... 100m...\"\n\"Velocity [SRF]: 40m/s... 30m/s... 20m/s... 10m/s...\"\n\n\"Advisory: Touchdown.\"\n\nWe'd made it. I could breathe again.", function() {
+            return menu_no_backsies({
+              "A few minutes later...": function() {
+                return _.start_act(act_3);
+              }
+            });
+          });
+        }
+      }
+    }
+  }
+};
+
+module.exports = act_2;
+
+
+
+},{"../app/app.coffee":1,"./act-3-the-package.coffee":5,"./between-dreams.coffee":9}],5:[function(require,module,exports){
+var PACKAGE_X, PACKAGE_Y, act_3, act_4, add_action, between_dreams, data, extend, hidden_action, menu, menu_no_backsies, reply, travel_to, _;
+
+between_dreams = require('./between-dreams.coffee');
+
+act_4 = require('./act-4-fuel.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+PACKAGE_X = 813;
+
+PACKAGE_Y = 592;
+
+data = {
+  fuel_converter_is_online: false,
+  noticed_crawler: false,
+  hand_is_treated: false,
+  mars_x: 0,
+  mars_y: 0,
+  mars_bearing: Math.PI / 2.0,
+  converter_exploded: false,
+  saw_converter_explode: false
+};
+
+act_3 = {
+  title: "1.3 Hemisphere",
+  start: {
+    theme: 'inside',
+    text: "Richner's Log\nDate: 2064.221\n\nThe ship was intact, mostly, and the intense heat of re-entry was finally beginning to subside. The cabin was filled with the hum of the overworked environmental system and the occasional ping of cooling components snapping back into place.\n\nI dismissed the last few alarms, and took care not to touch my blistered left hand.\n\n\"Well, that was exciting.\" Hayley's voice had regained its usual cool indifference. \"Shall we?\"",
+    actions: {
+      "Stand up": function() {
+        return travel_to(act_3.landed_dreams.flight_deck);
+      }
+    }
+  },
+  landed_dreams: between_dreams["with"]({
+    flight_deck: {
+      actions: {
+        Look: {
+          Outside: function() {
+            data.noticed_crawler = true;
+            return reply("The Martian desert stretched into the distance, dotted here and there with small boulders.\n \nA thin cloud of volatilized polysteel drifted past the window. That was going to be expensive to fix.\n \nIn the distance, I could see a massive tracked vehicle. It was dark, and didn't appear to be moving, but I should ask Hayley to keep an eye on it.");
+          },
+          "At the Pilot's Chair": function() {
+            return reply(between_dreams.base.flight_deck.actions.Look["At the Pilot's Chair"], {
+              "Open the medical kit": hidden_action((function() {
+                return !data.hand_is_treated;
+              }), function() {
+                data.hand_is_treated = true;
+                return reply("I carefully opened the medical kit and found the burn treatment pack.\n\nIt took me nearly half an hour to remove my left glove, apply the gel, and put the glove back on. The gel numbed my hand as soon as it made contact, but at least it kept my skin from flaking.");
+              })
+            });
+          }
+        },
+        Speak: {
+          "\"What's our status?\"": "\"We've landed,\" Hayley explained. \"Atmosphere is standard Martian; your flight suit should be fine to go outside.\"\n\n\"I've also detected some strange ionizing radiation. Apart from interfering with the exterior sensors, I don't think it'll be a problem. That said, I'd rather not stay here any longer than we have to.\"",
+          "\"Refresh me on the mission.\"": function() {
+            return reply("\"Retrieve a package from the Martian desert,\" Hayley said curtly, \"detection signature attached. Deliver to Station Sigma Six in LJO. Contract void after two years, or if we're identified while picking up the package.\"\n                    \n I could barely remember my own name after that landing, but Hayley always keep things straight.", {
+              "Have you detected the signature?": "\"Yes,\" Hayley replied, \"it's about a kilometer away. I'm having trouble getting a bearing, but I think I can guide you to it once you're outside.\""
+            });
+          },
+          "\"Keep an eye on that tracked vehicle.\"": hidden_action((function() {
+            return data.noticed_crawler;
+          }), function() {
+            return reply("\"It's definitely closer than I'd like,\" Hayley replied. \"I almost looks like one of the automated fuel crawlers.\"", {
+              "\"A fuel crawler?\"": function() {
+                return reply("\"It's a long way from home.\", I added, \"we're three thousand klicks from the nearest mining operation.\"\n\n\"Well it isn't going home anytime soon,\" Hayley replied. \"As far as I can tell it's totally dead - no movement, no power, no EM. There's also some minor damage on the outer hull... cause unknown.\"\n\nThere are only six fuel crawlers on the entire planet. How did nobody notice that this one was missing?");
+              }
+            });
+          })
+        },
+        Go: {
+          Aft: function() {
+            if (data.fuel_converter_is_online) {
+              return travel_to(act_3.landed_dreams.operations_center);
+            }
+            data.fuel_converter_is_online = true;
+            return reply("As I walked toward the pressure door, I heard the warble of the fuel converter coming online.\n\n\"Refuelling now. Based on preliminary atmospheric results,\" Hayley said, \"we should be fuelled and ready to go in 18 hours.\"", function() {
+              return menu_no_backsies({
+                "\"Alright, keep me informed.\"": function() {
+                  return travel_to(act_3.landed_dreams.operations_center);
+                }
+              });
+            });
+          }
+        }
+      }
+    },
+    operations_center: {
+      text: between_dreams.base.operations_center.text + "\n    \nThe fuel converter was warbling loudly."
+    },
+    crew_quarters: {
+      actions: {
+        Look: {
+          "At my Personal Effects": function() {
+            return reply(between_dreams.base.crew_quarters.actions.Look["At my Personal Effects"], {
+              "Open access panel": function() {
+                if (data.hand_is_treated) {
+                  act_3.landed_dreams.cargo_bay.data.controls_disabled = false;
+                  return reply("I slid the access panel open and removed the flight suit.\n\nIt was a stylish form-fitting grey suit, made from a heavy airtight weave. Thin polysteel cables ran along carefully planned lines, applying pressure while retaining mobility, even when operating in a hard vacuum.\n\nThe suit came with magnetic boots, thin but pressure-tight gloves, and a deployable helmet that stowed snugly into the thick collar. It was comfortable enough for everyday wear, but doubled as a full environment suit in an emergency.\n\nI changed quickly; wearing a suit with a cracked helmet was a stupid risk.");
+                } else {
+                  return reply("I tried to open the access panel, but I couldn't release the latches with my blistering hand.");
+                }
+              }
+            });
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      data: {
+        controls_disabled: true,
+        controls_disabled_message: "Just as I was about to activate the cargo bay controls, Hayley's voice came over the intercom: \"Richner, wait! I'm getting errors from your flight suit; it looks like your helmet's cracked. I told you that suit was getting old.\"\n\nI took a step back from the control surface. Decompression sickness was the last thing I needed.",
+        exit_ramp: function() {
+          return travel_to(act_3.martian_surface_by_the_cargo_ramp);
+        }
+      }
+    }
+  }),
+  martian_surface_by_the_cargo_ramp: {
+    theme: 'mars',
+    text: "I stepped out onto the Martian surface. \n\nThe sun was high in the sky, and my helmet display helpfully indicated that it was three degrees celsius. It was almost livable, aside from the thin atmosphere.\n\nI felt Hayley's voice in my ear: \"The area's radiation is preventing me from getting a solid fix, but I am detecting a weak signal through your suit. It's about a kilometer from your current position.\"\n\n\"Start walking away from the ramp,\" she continued, \"and I'll guide you as best I can. Normally I'd like to triangulate first, but with the radiation I think this'll be faster.\"",
+    actions: {
+      Go: {
+        "Up the ramp": function() {
+          return travel_to(act_3.landed_dreams.cargo_bay);
+        },
+        "Away from the ramp": function() {
+          data.mars_x = 50;
+          data.mars_y = 0;
+          data.mars_bearing = Math.PI / 2.0;
+          return travel_to(act_3.martian_desert);
+        }
+      }
+    }
+  },
+  martian_desert: {
+    theme: 'mars',
+    text: function() {
+      var distance, distance_to_ship, dx2, dy2, message;
+      dx2 = Math.pow(PACKAGE_X - data.mars_x, 2);
+      dy2 = Math.pow(PACKAGE_Y - data.mars_y, 2);
+      distance = Math.sqrt(dx2 + dy2);
+      distance_to_ship = Math.sqrt(Math.pow(data.mars_x, 2) + Math.pow(data.mars_y, 2));
+      distance_to_ship = Math.round(distance_to_ship / 10, 0) * 10;
+      message = "\"I lost the signal,\" Hayley said, \"Go back!\"";
+      if (distance < 1200) {
+        message = "Hayley said \"You're " + distance_to_ship + " meters from the ship, and the signal is very weak.\"";
+      }
+      if (distance < 800) {
+        message = "\"The signal is weak, but solid,\" Hayley continued, \"and you're " + distance_to_ship + " meters from the ship.\"";
+      }
+      if (distance < 500) {
+        message = "Hayley confirmed \"I can see a moderately strong signal now. " + distance_to_ship + " meters away.\"";
+      }
+      if (distance < 300) {
+        message = "\"I've almost got it!\" Hayley said excitedly, \"You're within a few hundred meters! " + distance_to_ship + " meters from the ship.\"";
+      }
+      if (distance < 100) {
+        message = "\"There it is!\" Hayley exlaimed, \"Pick it up!\"";
+      }
+      data.mars_distance = distance;
+      return "I walked through the boulder field, listening carefully to Hayley's voice in my ear, trying my best not to get disoriented.\n\n" + message;
+    },
+    actions: {
+      "Turn left": function() {
+        data.mars_bearing += (Math.PI / 2.0) + ((Math.random() - 0.5) * 0.1);
+        return reply("I turned to my left.");
+      },
+      "Walk forward": function() {
+        var distance, dx, dy;
+        distance = 65;
+        dx = distance * Math.cos(data.mars_bearing);
+        dy = distance * Math.sin(data.mars_bearing);
+        data.mars_x += dx;
+        data.mars_y += dy;
+        console.log(distance, dx, dy, data.mars_x, data.mars_y, data);
+        return travel_to(act_3.martian_desert);
+      },
+      "Turn right": function() {
+        data.mars_bearing -= (Math.PI / 2.0) + ((Math.random() - 0.5) * 0.6);
+        return reply("I turned to my right.");
+      },
+      "Return to the Dreams": hidden_action((function() {
+        return data.mars_distance >= 100;
+      }), function() {
+        return travel_to(act_3.landed_dreams.cargo_bay);
+      }),
+      "Pick up the Package": hidden_action((function() {
+        return data.mars_distance < 100;
+      }), function() {
+        return travel_to(act_3["package"]);
+      })
+    }
+  },
+  "package": {
+    theme: 'toxic',
+    text: "I spotted the package, and my skin started to crawl.\n\nA featureless black hemisphere, roughly 50cm in diameter, lay flat on the ground. The nearby desert was scorched black, and the sand turned to rock under my boots. The whole area felt toxic, and a faint red haze filled the air.",
+    actions: {
+      Speak: {
+        "\"Is that it?\"": "\"It matches the detection signature in the contract,\" Hayley replied, \"but it's not what I was expecting. Be careful, Richner.\"",
+        "\"Is it safe to pick up?\"": "\"I'm not sure,\" Hayley replied. \"If you get closer I can take a better look.\""
+      },
+      Go: {
+        "Closer": function() {
+          return travel_to(act_3.transmit);
+        }
+      }
+    }
+  },
+  transmit: {
+    text: "I took a step closer.\n\nThree red lights flared on the hemisphere's surface, and a ear-shattering squeal filled my head. I scrambled to retract my helmet, thin atmosphere or not, but I couldn't find the release.\n\n\"It's transmitting!\" Hayley shouted, \"Coordinates and a mayday!\"",
+    actions: {
+      Speak: {
+        "\"Jam it!\"": function() {
+          if (data.converter_exploded) {
+            return reply("...");
+          }
+          return reply("\"Too late!\" Hayley replied, \"the message is sent. Jamming would just reveal that we're here!\"");
+        },
+        "\"Is it explosive?\"": function() {
+          if (data.converter_exploded) {
+            return reply("...");
+          }
+          return reply("\"I can't be sure, but I don't think so.\" Hayley said weakly.");
+        },
+        "\"Can I short the transmitter?\"": function() {
+          if (data.converter_exploded) {
+            return reply("...");
+          }
+          return reply("\"It must be internal,\" Hayley supposed, \"I can't identify anything on the exterior.\"");
+        },
+        "\"Any other ideas?\"": function() {
+          if (data.converter_exploded) {
+            return reply("...");
+          }
+          return menu_no_backsies({
+            "\"Hayley?\"": function() {
+              return menu_no_backsies({
+                "\"Hayley!\"": function() {
+                  data.converter_exploded = true;
+                  return reply("...");
+                }
+              });
+            }
+          });
+        }
+      },
+      Look: {
+        "At the Hemisphere": "The three lights had started to pulse in sequence, and the squeal grew even louder.",
+        "Backward": hidden_action((function() {
+          return data.converter_exploded;
+        }), function() {
+          data.saw_converter_explode = true;
+          return reply("I spun around, and spotted a column of black smoke on the horizon.\n\nIt was coming from the Dreams' landing site.");
+        })
+      },
+      Go: hidden_action((function() {
+        return data.saw_converter_explode;
+      }), {
+        "Towards the Black Smoke": function() {
+          return _.start_act(act_4);
+        }
+      })
+    }
+  }
+};
+
+module.exports = act_3;
+
+
+
+},{"../app/app.coffee":1,"./act-4-fuel.coffee":6,"./between-dreams.coffee":9}],6:[function(require,module,exports){
+var act_4, act_5, add_action, between_dreams, conversation, data, extend, hidden_action, martian_surface, menu, menu_no_backsies, reply, smoke_loop, travel_to, _;
+
+between_dreams = require('./between-dreams-variants.coffee');
+
+martian_surface = require('./martian-surface.coffee');
+
+act_5 = require('./act-5-hayley.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+conversation = _.conversation;
+
+smoke_loop = ["I could barely see through the black smoke."];
+
+data = {
+  noticed_crates: false,
+  noticed_faraday_crate: false,
+  carrying_hemisphere: true,
+  fuel_converter_fuse_pulled: false,
+  found_hull_repair_kit: false,
+  repaired_hull: false,
+  fuel_line_attached: false,
+  crossfeed_attached: false,
+  crossfeed_needed: false,
+  found_step_to_roof: false
+};
+
+act_4 = {
+  title: "1.4 Fuel",
+  start: {
+    theme: 'mars',
+    text: "Richner's Log\nDate: 2064.221\n\nThe Between Dreams was embroiled in thick black smoke.\n\nThe black hemisphere was still screaming in my ear; I'd carried it with me in my rush to get back. The lights on its surface pulsed menacingly.",
+    actions: {
+      Speak: {
+        "\"Hayley?\"": "..."
+      },
+      Look: {
+        "At the Hemisphere": hidden_action((function() {
+          return data.carrying_hemisphere;
+        }), function() {
+          return reply("My eyes squinted reflexively when I looked toward it. I could barely see it.\n\nI couldn't carry it like this, but I couldn't leave it behind.", {
+            "Put the Hemisphere Down": "Whatever the hemisphere was, I'd come a long way to get it. I couldn't just leave it here.",
+            "Place the hemisphere in a crate": hidden_action((function() {
+              return data.noticed_faraday_crate;
+            }), function() {
+              data.carrying_hemisphere = false;
+              return reply("I placed the screaming hemisphere in one of the empty crates and sealed the lid.\n\nThe faraday cage worked wonderfully. The screaming in my helmet dwindled to a quiet drone, and my eyes stopped watering.\n\n\"Hayley!\" I shouted, hoping I could hear her again.", function() {
+                return menu_no_backsies({
+                  "\"Hayley?\"": "Still nothing."
+                });
+              });
+            })
+          });
+        }),
+        "At the Crawler": "As far as I could tell, the fuel crawler in the distance hadn't moved.",
+        "At the Between Dreams": "It was hard to see through the smoke.\n\nThe ship appeared to be decompressed but intact. The cargo ramp was extended, and the overhead bay doors were open.",
+        "At the Dreams' Cargo Ramp": function() {
+          data.noticed_crates = true;
+          return reply("The sand behind the ramp had blown away, exposing the bare rock beneath. Cargo crates were scattered in the wake, and one had split open.\n               \nI'd recognized the scene instantly: the Dreams had explosively decompressed.");
+        },
+        "At the Scattered Crates": hidden_action((function() {
+          return data.noticed_crates;
+        }), function() {
+          data.noticed_faraday_crate = true;
+          return reply("The crates were scattered across the bare Martian rock, and fragments of the torn hold-down straps were strewn between them.\n          \n" + between_dreams.base.cargo_bay.actions.Look["At the Crates"]['#'] + "\n\nOne of the empty FDST crates had split open on impact, revealing a silver lattice-work interior. I'd paid a lot for it; the lattice formed a faraday cage that blocked most electromagnetic scans.", between_dreams.crate_menu());
+        })
+      },
+      Go: {
+        "To the Crawler": "I couldn't leave my ship like this, not without knowing what had happened.",
+        "Up the Cargo Ramp": function() {
+          if (data.carrying_hemisphere) {
+            return reply("The hemisphere screamed even louder. It was unbearable, but I couldn't leave it behind.\n    \nI stepped back out onto the Martian desert.");
+          }
+          return reply("I dragged the hemisphere's crate onto the ramp. Dangerous or not, the mission had to come first.", function() {
+            return menu_no_backsies({
+              "Step into Cargo Bay": function() {
+                _.loop = smoke_loop;
+                return travel_to(act_4.smokey_dreams.cargo_bay);
+              }
+            });
+          });
+        }
+      }
+    }
+  },
+  smokey_exterior: {
+    theme: 'mars',
+    text: "I walked down the ramp and stood on the bare Martian rock. Thick black smoke poured out behind me.",
+    actions: {
+      Go: {
+        "Up the Cargo Ramp": function() {
+          return travel_to(act_4.smokey_dreams.cargo_bay);
+        }
+      }
+    }
+  },
+  smokey_dreams: between_dreams.act_4_dreams_with({
+    flight_deck: {
+      actions: {
+        Speak: {
+          "\"Hayley!\"": "..."
+        }
+      }
+    },
+    operations_center: {
+      text: between_dreams.base.operations_center.text + "\n\nThe smoke seemed thicker here.",
+      actions: {
+        Look: {
+          Around: between_dreams.base.operations_center.actions.Look.Around + "\n\nThe smoke seemed thicker here.",
+          "At the Fuel Converter": "The fuel converter was gone.\n\nBlack smoke belched from what was left of the feed hoses, filling the compartment and the ship. Sparks sprayed from the converter's auxiliary components. Wafting the smoke away with my hand, I could see bare Martian rock through the floor grating.",
+          "At the Power Distributor": {
+            "Pull Fuel Converter Fuse": function() {
+              _.loop = null;
+              return conversation([
+                "I tore the fuse out of the distributor panel, and the black smoke began to clear.\n\n\"Richner!\" Hayley's voice crackled into my helmet. \"The fuel converter! I don't know what happened. But we have a bigger problem.\"", "\"What is it?\"", "\"Someone picked up the transmission.\" Hayley said quickly, \"A satellite is maneuvering toward us.\"", "\"Has it identified us?\"", (function() {
+                  return travel_to(act_4.uh_oh);
+                })
+              ]);
+            }
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      data: {
+        controls_disabled: true,
+        controls_disabled_message: "Hayley had decompressed the ship for a reason. I decided to find out what it was before I touched the controls.",
+        ramp_open: true,
+        bay_doors_open: true,
+        interior_door_open: true,
+        pressurized: false,
+        exit_ramp: function() {
+          return travel_to(act_4.smokey_exterior);
+        }
+      }
+    }
+  }),
+  uh_oh: {
+    text: "\"You don't understand,\" she said, \"It's maneuvering into a sub-orbital trajectory. It's on a collision course!\"",
+    actions: {
+      Speak: {
+        "\"It'll just burn up, right?\"": "Hayley was worried.\n        \n\"I've never seen anything like it before. It has a heat shield, and it masses well over 30 tons. It's going to obliterate us, and that crawler, and everything else within ten kilometers!\"",
+        "\"How long do we have?\"": "\"It's nearly finished its maneuver,\" Hayley replied. \"We have to go, now!\""
+      },
+      Go: {
+        Forward: function() {
+          return travel_to(act_4.damaged_dreams.flight_deck);
+        }
+      }
+    }
+  },
+  damaged_dreams: between_dreams.act_4_dreams_with({
+    flight_deck: {
+      actions: {
+        Speak: {
+          "\"Hayley, get us out of here!\"": function() {
+            var crossfeed_ok, fuel_line_ok, pressure_ok;
+            pressure_ok = data.repaired_hull && act_4.damaged_dreams.cargo_bay.data.pressurized;
+            fuel_line_ok = data.fuel_line_attached;
+            crossfeed_ok = data.crossfeed_attached;
+            if (!pressure_ok && !fuel_line_ok) {
+              return reply("\"The fuel converter,\" Hayley replied, \"it didn't refine enough fuel to make orbit. I can't even get the engines started.\"\n                  \nMy heart sank.\n                  \nHayley continued, \"and we have another problem. With all the structural damage, lifting off could tear us apart. We'd have a better chance if we could repressurize, but I've lost contact with the cargo bay controls.\"");
+            } else if (pressure_ok && !fuel_line_ok) {
+              return reply("\"It looks like that patch is holding,\" she replied, \"and cabin pressure is stable. We just need to find enough fuel to start the engines.\"");
+            } else if (!pressure_ok && fuel_line_ok) {
+              return reply("\"I see pressure in the fuel line,\" she replied, \"but we're in danger of structural collapse. We need to repressurize the cabin, but I've lost contact with the cargo bay controls.\"");
+            } else {
+              if (!crossfeed_ok) {
+                data.crossfeed_needed = true;
+                return reply("As the engines started to spool up, Hayley's voice grew stronger: \"I see positive pressure on the fuel line, and the inner hull is holding. I'm spooling up the engines now. We'll need a few minutes for them to warm up and fuel to transfer, but we should be able to launch in time-\"\n\nHayley interrupted herself. \n\n\"Wait, the crossfeed line is jammed. It looks like the fuel converter took it out when it blew. All the fuel is pooling in the starboard tank; we're grossly off-balance! I need you to find a way to link the tanks.\"");
+              }
+              return reply("Hayley replied \"Tanks are almost full. It's time to open that last valve on the crawler!\"");
+            }
+          }
+        }
+      }
+    },
+    operations_center: {
+      actions: {
+        Look: {
+          "At the Computers": {
+            "Check for Spare Cores": function() {
+              return reply(between_dreams.base.operations_center.actions.Look["At the Computers"]["Check for Spare Cores"], {
+                "Remove a Spare Core": hidden_action((function() {
+                  return act_4.martian_surface.data.need_a_core;
+                }), function() {
+                  act_4.martian_surface.data.carrying_spare_core = true;
+                  return reply("I lifted one of the spare cores out of its housing. This should be what Hayley needs to connect to the crawler.");
+                })
+              });
+            }
+          },
+          "At the Access Panels": function() {
+            return reply(between_dreams.act_4.operations_center.actions.Look["At the Access Panels"], {
+              "Open Them Anyway": hidden_action((function() {
+                return data.crossfeed_needed;
+              }), function() {
+                return reply("The access panels didn't open directly into the tanks. \n\nInstead, the panels each contained a small bypass connection, a short length of hose, and a small fuel cannister. I imagined the Dreams' designers wanted to take samples while they experimented with the converter.", {
+                  "Cross-Connect the Tanks": function() {
+                    data.crossfeed_attached = true;
+                    act_4.martian_surface.data.ready_for_last_valve = true;
+                    return reply("I screwed the hoses together, strung them between the two fuel tanks, and connected them to the bypass connections.\n\n\"Got it!\" Hayley exclaimed, \"Both tanks are pressing up for launch! I need you to run to the crawler and open that pressure valve, and then we'll be ready to go!\"");
+                  }
+                });
+              })
+            });
+          },
+          "At the Fuel Converter": function() {
+            if (data.repaired_hull) {
+              return reply("The hull patch seemed to be holding.");
+            }
+            return reply(between_dreams.act_4.operations_center.actions.Look["At the Fuel Converter"], {
+              "Repair Hull Breach": hidden_action((function() {
+                return data.found_hull_repair_kit;
+              }), function() {
+                act_4.damaged_dreams.cargo_bay.data.hull_breach = false;
+                data.repaired_hull = true;
+                return reply("I carefully set down the hull repair kit, removed the floor grating, and got to work.\n\nIt was bad. \n\nThe welder worked poorly in the Martian atmosphere, and I burned holes in the first three patches I tried to install. Working one-handed I ripped out the remaining feed lines, sealed the damaged crossfeed between the tanks, and cut the last utility lines. I nearly blew a hole in my suit when the welder slipped, but Hayley shut it down in time.\n\nI couldn't get the patches to seal against the outer hull, but at least the inner hull was airtight again.");
+              })
+            });
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      data: {
+        ramp_open: true,
+        bay_doors_open: true,
+        interior_door_open: true,
+        pressurized: false,
+        hull_breach: true,
+        exit_ramp: function() {
+          return travel_to(act_4.martian_surface.cargo_ramp_base);
+        }
+      }
+    }
+  }),
+  martian_surface: martian_surface["with"]({
+    data: {
+      travel_to_cargo_bay: function() {
+        return travel_to(act_4.damaged_dreams.cargo_bay);
+      },
+      found_repair_kit: function() {
+        return data.found_hull_repair_kit = true;
+      },
+      connected_fuel_line: function() {
+        return data.fuel_line_attached = true;
+      },
+      turned_last_valve: function() {
+        return reply("I carefully opened the valve and watched the fuel pressure stabilize.\n\nHayley screamed.", function() {
+          return menu_no_backsies({
+            "\"Hayley!\"": function() {
+              return _.start_act(act_5);
+            }
+          });
+        });
+      }
+    }
+  })
+};
+
+module.exports = act_4;
+
+
+
+},{"../app/app.coffee":1,"./act-5-hayley.coffee":7,"./between-dreams-variants.coffee":8,"./martian-surface.coffee":11}],7:[function(require,module,exports){
+var act_5, add_action, between_dreams, data, extend, hayley_loop, hidden_action, martian_surface, menu, menu_no_backsies, reply, travel_to, _;
+
+between_dreams = require('./between-dreams-variants.coffee');
+
+martian_surface = require('./martian-surface.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+hayley_loop = ["Hayley's voice strained \"There's something---\"", "Hayley continued \"---in my syyyyyyy---\"", "\"---yyyysteeeeeem\", Hayley finished.", "Hayley screamed, \"Iiiiiit's oooooo---\"", "Hayley screamed, \"---vvvverriiiiiii---\"", "Hayley screamed, \"----iiiiiiiii------\"", "Hayley screamed, \"----diiing my coorrrr-\"", "Hayley screamed, \"---corrrupppting meeee---\"", "Hayley screamed, \"ee-- heee-- heee-- heee--\"", "Hayley screamed, \"--heeeelp\"", "...", "My headset clicked.", "My headset clicked again.", "I had to help Hayley.", "She once told me how to reset her AI core in an emergency.", "Dead silence.", "I'd avoided her AI core cabinet ever since.", "\"Richner, helllp meeee---!\" Hayley's voice cried into my headset."];
+
+data = {
+  think_index: 0,
+  need_rtg: false,
+  have_rtg: false,
+  ready_for_lever: false
+};
+
+act_5 = {
+  title: "1.5 Hayley",
+  start: {
+    theme: 'inside',
+    text: "Richner's Log\nDate: 2064.222\n\nThe crawler lurched beneath my feet. The machinery around me roared to life and the lights flickered on.\n\n\"Richner, helllp meeee---!\" Hayley's voice cried into my headset. She was in trouble, and I had to move.",
+    actions: {
+      "\"Hayley!\"": function() {
+        _.loop = hayley_loop;
+        return travel_to(act_5.martian_surface.crawler_access);
+      }
+    }
+  },
+  martian_surface: martian_surface["with"]({
+    data: {
+      hatch_unlocked: true,
+      finished_fuel_line: true,
+      had_to_leave: true,
+      ramp_sealed: true,
+      found_step_to_roof: true,
+      entered_hatch: function() {
+        return travel_to(act_5.hatch);
+      }
+    }
+  }),
+  hatch: {
+    theme: 'blackout',
+    text: "I didn't have time for this.\n\nI ripped the fuel line out of the umbilical and shorted it against the power contacts. The docking hatch clicked free, and the airlock's atmosphere hissed out.\n\nI eased the mechanism and crawled into the ship. The hatch slid shut behind me, and the airlock repressurized. The ship was nearly dead.",
+    actions: {
+      Look: {
+        Around: function() {
+          return travel_to(act_5.flickering_dreams.airlock);
+        }
+      }
+    }
+  },
+  flickering_dreams: between_dreams.blacked_out_dreams_with({
+    flight_deck: {
+      actions: {
+        Look: {
+          Outside: "The flight deck was pitch black. There was no light coming through the window; I suspected the blast shutters were closed."
+        }
+      }
+    },
+    operations_center: {
+      actions: {
+        Look: {
+          "At the Computers": function() {
+            var messages, next;
+            _.loop = null;
+            messages = ["Think, Richner, think!", "It was somewhere around here...", "I took one step to the right.", "The crossfeed line caught my boot and I collapsed to the deck.", "I picked myself up and inched forward.", "I traced the cabinet and found the release."];
+            next = null;
+            if (data.think_index === messages.length - 1) {
+              next = function() {
+                return menu({
+                  "Open Cabinet": function() {
+                    return travel_to(act_5.ai_core);
+                  }
+                });
+              };
+            }
+            reply(messages[data.think_index++], next);
+            if (data.think_index >= messages.length) {
+              return data.think_index = messages.length - 1;
+            }
+          }
+        }
+      }
+    },
+    crew_quarters: {
+      text: "The ship was pitch black.\n\nI could hear a faint buzzing noise.",
+      actions: {
+        Look: {
+          "At the Life Support Manifold": function() {
+            if (data.have_rtg) {
+              return reply("With its radiothermal generator removed, the life support system was completely offline.");
+            }
+            return reply("The ship was dead... except for the life support manifold, which was still happily buzzing away.", {
+              "Trace the Shapes": hidden_action((function() {
+                return data.need_rtg;
+              }), function() {
+                data.have_rtg = true;
+                return reply("I felt the familiar contours of the manifold, and traced my finger to the emergency release. I grasped the knob, twisted gently, and slid the unit's radiothermal generator free from its housing.\n                \nThe manifold went silent as the last life support services disengaged.\n\nThe ship was dead.");
+              })
+            });
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      data: {
+        ramp_open: false,
+        bay_doors_open: false,
+        interior_door_open: true
+      }
+    }
+  }),
+  ai_core: {
+    text: "I carefully pulled the release and felt the panel slide open.\n\nHayley's AI core was exposed.\n\nI squinted through the darkness and traced the surface with my hand. The ship was fuelled and ready to go; if I could get Hayley's core back online she could get us out of here. There was still time.",
+    actions: {
+      Trace: {
+        "A Shape": "I reached forward and felt a small metal loop, a series of tiny switches, and a short round pin. It felt like an optical data port.",
+        "A Second Shape": "The second shape was shallow octagonal recess. It reminded me of the housings that held the spare computer cores.",
+        "A Third Shape": {
+          '#': "The third shape was a hard square, roughly 10cm across. I imagined it was an emergency release button",
+          "Press Button": "Nothing."
+        },
+        "Another Shape": function() {
+          if (data.ready_for_lever) {
+            return reply("The radiothermal generator was flush with the socket's surface.");
+          } else if (data.have_rtg) {
+            data.ready_for_lever = true;
+            return reply("I carefully slid the radiothermal generator into the socket. Nothing seemed to happen.");
+          } else {
+            data.need_rtg = true;
+            return reply("The next shape was a deep round socket, about the same diameter as a radiothermal generator.");
+          }
+        },
+        "A Different Shape": {
+          '#': "The last shape felt like a lever.",
+          'Pull Lever': function() {
+            if (data.ready_for_lever) {
+              return reply("I pulled the lever and held my breath.", function() {
+                return menu_no_backsies({
+                  "...": function() {
+                    return travel_to(act_5.the_end);
+                  }
+                });
+              });
+            } else {
+              return reply("Nothing.");
+            }
+          }
+        }
+      },
+      Step: {
+        Back: function() {
+          return travel_to(act_5.flickering_dreams.operations_center);
+        }
+      }
+    }
+  },
+  the_end: {
+    theme: 'inside-dim',
+    text: "The lights flickered on.\n\n\"Richner!\" Hayley's voice filled the compartment. \"An invasive trojan in the crawler, it got in through the core, it's probably how they drove it here in the first place. I did an emergency dump but that cut the engines and then the power went out!\"\n\nThe ship rumbled to life around me.\n\n\"Okay, I'm patched,\" Hayley continued, \"and I can still kickstart this ship from cold dead nothing like when we met. Fuel tanks are at 68%, which should be enough to reach a low-\"\n\n\"-oh wow, that satellite is really close. What is that heat shield made of anyway? Doesn't matter. 'Spikes are hot, buckle up, this is going to be rough!\"",
+    actions: {
+      Go: {
+        "Forward, quickly": function() {
+          return travel_to(act_5.the_end_2);
+        }
+      }
+    }
+  },
+  the_end_2: {
+    theme: 'inside',
+    text: "I pulled myself through the pressure door and strapped into the seat.\n\n\"Wow, you made a mess of that airlock,\" Hayley continued uninterrupted, \"but that's okay. Exterior hatches closing, we're going to-\"\n\nShe interrupted herself. \"-no, wait, we're not going to make it.\"\n\nShe paused.",
+    actions: {
+      "Speak": {
+        "\"Good to see you too.\"": function() {
+          return travel_to(act_5.the_end_3);
+        }
+      }
+    }
+  },
+  the_end_3: {
+    text: "\"What do you mean we aren't going to make it?\" I asked.\n\n\"It's too close!\" she replied, \"There isn't enough time!\"\n\nThe engines roared to life and the Dreams pulled forward. The acceleration flattened me against my seat. Hayley must be pushing the engines way past the red line, but I knew it was the only chance we had.",
+    actions: {
+      Look: {
+        Outside: function() {
+          return travel_to(act_5.the_end_4);
+        }
+      }
+    }
+  },
+  the_end_4: {
+    theme: 'fire',
+    text: "Hayley put everything into the engines. Sensors, airlocks, life support, even the lights. The flight deck filled with the glow of reentry while the rest of the ship went dark.\n\nThat's when I saw it.\n\nA dot of light winked into the distance and began to grow. Soon it was all I could see: the ball of fire that accompanied the oncoming satellite.\n\nThe hull shrieked as it ripped past.\n\nA few moments later I heard it: an explosion in the distance, larger than anything I'd ever experienced. The shockwave nearly tore me out of my seat, but somehow we survived.\n\n\"That was no satellite,\" Hayley said quietly.",
+    actions: {
+      "Breathe": function() {
+        return travel_to(act_5.the_end_5);
+      }
+    }
+  },
+  the_end_5: {
+    theme: 'inside-dim',
+    text: "We'd made it.\n\nThe rest of the trip into orbit was quiet.\n\nHayley brought the lights up and I lifed out of my seat. I floated back to my quarters and took a moment to reflect. What was that hemisphere? Why was the crawler so far out? Who deorbited the satellite-thing, and what was it really?\n\nIt would be a few weeks before we could reach a fuel depot, but I needed the rest.",
+    actions: {
+      Sleep: function() {
+        return travel_to(act_5.the_actual_end);
+      }
+    }
+  },
+  the_actual_end: {
+    theme: 'blackout',
+    text: "The end... for now.",
+    actions: {}
+  }
+};
+
+module.exports = act_5;
+
+
+
+},{"../app/app.coffee":1,"./between-dreams-variants.coffee":8,"./martian-surface.coffee":11}],8:[function(require,module,exports){
+var act_4_dreams, between_dreams, black_out, _;
+
+_ = require('../app/app.coffee');
+
+between_dreams = require('./between-dreams.coffee');
+
+act_4_dreams = function() {
+  return between_dreams["with"]({
+    flight_deck: {
+      actions: {
+        Look: {
+          Outside: "The Martian desert stretched into the distance, dotted here and there with small boulders. The fuel crawler loomed in the distance.",
+          "At the Flight Controls": "The flight controls were lit up with dozens of warnings and advisories. The Dreams had taken a beating, and they enumerated every bruise."
+        }
+      }
+    },
+    operations_center: {
+      actions: {
+        Look: {
+          "At the Fuel Converter": "The fuel converter was gone.\n\nThe feed lines were leaking fluid, and I could see bare Martian rock through the floor grating.",
+          "At the Power Distributor": {
+            "Pull Fuel Converter Fuse": "I'd already pulled the fuel converter fuse, and this wasn't a good time to reinsert it."
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      actions: {
+        Look: {
+          "At the Crates": "Most of the crates were missing, blown out when the ship decompressed.\n\nThere was one left: the crate holding the black hemisphere, looming softly at the end of the ramp."
+        }
+      }
+    }
+  });
+};
+
+black_out = function(ship) {
+  var k, v;
+  for (k in ship) {
+    v = ship[k];
+    if (k === 'Go') {
+      continue;
+    }
+    if (k === 'data') {
+      continue;
+    }
+    if (typeof v === 'object') {
+      black_out(v);
+    } else if (k === 'theme') {
+      ship[k] = 'blackout';
+    } else {
+      ship[k] = "The ship was pitch black.";
+    }
+  }
+  return ship;
+};
+
+module.exports = {
+  base: between_dreams.base,
+  act_4: act_4_dreams(),
+  "with": function(extensions) {
+    return between_dreams["with"](extensions);
+  },
+  act_4_dreams_with: function(extensions) {
+    return _.extend(act_4_dreams(), extensions);
+  },
+  blacked_out_dreams_with: function(extensions) {
+    return _.extend(black_out(act_4_dreams()), extensions);
+  },
+  crate_menu: function(extension) {
+    var menu;
+    menu = _.copy_of(between_dreams.base.cargo_bay.actions.Look["At the Crates"]);
+    delete menu['#'];
+    if (extension != null) {
+      _.extend(menu, extension);
+    }
+    return menu;
+  }
+};
+
+
+
+},{"../app/app.coffee":1,"./between-dreams.coffee":9}],9:[function(require,module,exports){
+var add_action, construct_between_dreams, hidden_action, menu, reply, travel_to, _;
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+hidden_action = _.hidden_action;
+
+construct_between_dreams = function() {
+  var between_dreams;
+  return between_dreams = {
+    flight_deck: {
+      text: "I stood on the flight deck of the Between Dreams.\n\nA pilot's seat was mounted in the center of the room, and a curved window offered a generous view outside. A pressure door led aft to the ship's operations center.",
+      actions: {
+        Look: {
+          Around: "The flight deck was the Between Dreams' forward-most compartment. \n\nThe room was a rough grey cylinder, six meters long and five meters in diameter, tapered to a point at the front. A large curved window was inset into the polysteel hull, providing clear visibility from any angle. Most modern ships use a closed-loop camera system rather than an actual window; whoever designed the Dreams must have had a flare for the dramatic.\n\nIn the center of the room was the pilot's seat, surrounded by glossy control surfaces mounted on a thin metal web. The surfaces combined holographic displays with haptic controls, allowing a skilled pilot to feel the console as well as they could see it. The controls were in an unusual arrangement, but no more unusual than the rest of the Dreams. \n\nBehind the control cluster was an pressure door; the first of four that separated the Dreams' five compartments. The word \"Operations\" was inscribed on the door, and a small window framed the room beyond.",
+          Outside: "I couldn't see anything outside the window.",
+          "At the Flight Controls": "The flight controls were dead.",
+          "At the Pilot's Chair": "The pilot's seat was a curved polysteel chair, covered in a fine red mesh. It was bolstered on the sides to prevent its occupant from leaving prematurely, and criss-crossed with a five point crash harness.\n\nA bright orange medical kit was affixed to the startboard side of the chair, carefully positioned to be out of reach of anyone who needed it.\n\nI'd spent a lot of time in that chair, but somehow it looked brand new."
+        },
+        Go: {
+          Aft: function() {
+            return travel_to(between_dreams.operations_center);
+          }
+        }
+      }
+    },
+    operations_center: {
+      text: "I passed through the pressure door and entered the operations center.\n\nThe compartment was filled with cabinets and panels of various shapes and sizes. At its fore and aft, pressure doors led to the flight deck and crew quarters, respectively.",
+      actions: {
+        Look: {
+          Around: "Operations was the Dreams' heart and soul. The room was the same squat cylindrical shape as the flight deck, but it felt far more crowded. \n\nThe room held the ship's autofac, flight computers, AI core, power distributor, and fuel converter; as well as access panels leading to the wing tanks.",
+          "At the Autofac": "The ship's Autofac was a glistening semi-transparent cube. It was capable of digitally manufacturing replacement parts, even when the Dreams was months away from resupply.\n\nThe Autofac could also construct a huge number of items from the ship's database, or anything I found time to design during an interlude.\n\nI'd spent many cheerful hours designing gadgets and gizmos of all kinds, tweaking them, improving them, and eventually feeding them back into the Autofac's recycler.",
+          "At the Computers": {
+            '#': " Two full-height black cabinets held the flight computers and the ship's AI core.\n \n Hayley's AI core was a featureless black cabinet. She once told me how to reset her in an emergency; I'd avoided the cabinet ever since.\n \n The flight computer cabinet held three identical high-speed cores. The cores voted on what actions to take based on available sensor data and the pilot's wishes. If there was a disagreement between the cores, the core that lost the vote was rebooted, and the process repeated. If the disagreement persisted, the failing core was taken offline and replaced with one of the ship's hot spares.\n              \nI wondered if we actually had any spares.",
+            "Check for Spare Cores": "I carefully opened the flight computer cabinet and checked.\n\nIt turned out we did have a few spare cores. That was lucky."
+          },
+          "At the Fuel Converter": "The fuel converter was barely visible under the floor grating. \n\nIt was a marvel to behold: an oblong black cube, surrounded by gold and silver hoses. Coupled with the Dreams' nuclear-thermal engines, it allowed the ship to land on nearly any planet in the system, refine fuel from planetary resources, and reach orbit again... all without registering with the local authorities.",
+          "At the Power Distributor": {
+            '#': "The Dreams' power distributor routed electricity from the compact fusion reactors out to the rest of the ship.\n                     \nThe distributor was a flat rectangle that descended a few centimeters from the ceiling. Removing the cover plate, I could see removable fuses leading to the ship's major components.",
+            "Pull Main Fuse": "That didn't seem like a good idea.",
+            "Pull AI Core Fuse": "That didn't seem like a good idea.",
+            "Pull Airlock Fuse": "That didn't seem like a good idea.",
+            "Pull Autofac Fuse": "That didn't seem like a good idea.",
+            "Pull Flight Computer Fuse": "That didn't seem like a good idea.",
+            "Pull Fuel Converter Fuse": "That didn't seem like a good idea.",
+            "Pull Life Support Fuse": "That didn't seem like a good idea."
+          },
+          "At the Access Panels": "Thanks to the Dreams' high engine efficiency, the two flat wing tanks held enough fuel to reach low orbit from a standing start on nearly any planet in the system.\n         \nI'd always been hesitant to open the access panels; I didn't much care to be doused in nuclear-thermal rocket fuel."
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.flight_deck);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.crew_quarters);
+          }
+        }
+      }
+    },
+    crew_quarters: {
+      text: "I stepped into the crew quarters.\n\nThe quarters were clean and simple, and held the Dreams' few creature comforts. Pressure doors led foreward to the operations center and aft to the docking airlock.",
+      actions: {
+        Look: {
+          Around: "The crew quarters were clean and simple.\n\nI'd known people who decorated their quarters to look like a Phobian apartment or their favorite Earth resort, but decorations got in the way fast when things went wrong.\n\nI had a sink and a cooking surface along the port bulkhead, as well as a combined toilet/shower stall. My bed and personal effects were to starboard, and the primary life support manifold was installed above.",
+          "At the Cooking Space": "I had a small countertop with a sink and a cooking surface on the port side of my quarters. They were designed to function with or without gravity; they weren't particularly sleek-looking, but they were certainly functional.\n\nUnder the counter was an integrated freshwater recycler. I'd been eating and drinking the same 20 liters of water for the past eighteen months.\n\nA shelf above the counter held my food stores. Engineered food was compact and nutritious, but it tasted like stale corn. I sure had a lot of it though.",
+          "At the Shower Stall": "The shower stall was an 80cm diameter tube on the port side of my quarters, just forward of the cooking space.\n\nIt used the same water supply as the sink. I tried not to think about it.",
+          "At the Bed": "The bed was the only part of the ship that could be considered luxurious. It was two meters long, with a 40cm thick adaptive exofoam mattress. \n\nThe Dreams was a fast ship, but even a quick jaunt from Earth to Mars took months. The exofoam mattress kept my body healthy while I slept, and the overhead life support manifold tuned the atmosphere to keep me sedate.\n\nI'd spend a few hours a day eating, exercising, talking with Hayley, or learning from the ship's database, but for most of the trip I slept.\n\nIt wasn't stasis, but it was the next best thing. An interlude was more relaxing than even the best Earth vacation.",
+          "At my Personal Effects": "An access panel under the bed held my personal effects: this journal, purchased from a trader on Deimos Station Three; a spare flight suit, liberated from an automated cargo freighter a few years ago; and a few other souvenirs of various shapes and sizes.",
+          "At the Life Support Manifold": "The life support manifold kept the atmosphere mixed for optimum comfort.\n\nAt least that's what it said on the identification plate. In reality the forward compartments were always a bit cold, and the aft compartments were a bit warm. The oxygen ratio ran a little thin when the engines were running, and it made disconcerting buzzing noises every now and then.\n\nI'd tried cracking it open during my last interlude, but as it turned the unit was completely indestructible. That was probably for the best; life support was important. I'd seen similar units operate in conditions up to and including complete shipwide power loss, thanks to their sealed design and built-in radiothermal generators."
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.operations_center);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.airlock);
+          }
+        }
+      }
+    },
+    airlock: {
+      theme: 'inside',
+      text: "I slipped into the docking airlock.\n\nThe compartment was noticeably narrower than the others. There was just enough room to pass foreward, to the crew quarters; aft, to the cargo bay; or up, through the docking hatch.\n\nA control surface beside the door displayed the airlock's status.",
+      actions: {
+        Look: {
+          Around: "The docking airlock compartment was only a few meters long, and noticably narrower than the rest of the ship. A round polysteel hatch was visible on the ceiling, and a wide ladder was installed against the port bulkhead.\n\nThe compartment was narrow to accomodate two vertical hydraulic cylinders. Tipped with magnetic latches, these cylinders extended through the Dreams' roof and allowed the Dreams to 'hang' from the outer edge of a rotating space station.\n\nA control surface beside the door displayed the airlock's status.",
+          "At the Latching Assembly": "The latching assembly was visible through a series of short windows inset in the port and starboard bulkheads.",
+          "At the Hatch": "The docking hatch was roughly one meter in diameter, and featured a series of small latches along the outer rim. The opening was too small for cargo, but it was easily wide enough for me to pass through.\n\nI could see the faint outline of the exterior umbilical hookups on either side of the hatch: power, fuel, and atmosphere.",
+          "At the Airlock Controls": "The control surface displayed the bay's status:\n                   \nAtmosphere: Pressurized\n \nInterior Doors: Open [Automatic]\nDocking Hatch: Closed [Sealed/Latched]"
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.crew_quarters);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.cargo_bay);
+          },
+          Up: "The docking hatch was sealed tight."
+        }
+      }
+    },
+    cargo_bay: {
+      theme: 'inside',
+      data: {
+        controls_disabled: false,
+        controls_disabled_message: null,
+        ramp_open: false,
+        bay_doors_open: false,
+        interior_door_open: true,
+        pressurized: true,
+        exit_ramp: null,
+        hull_breach: false
+      },
+      text: function() {
+        var data, messages;
+        data = between_dreams.cargo_bay.data;
+        messages = [];
+        if (data.ramp_open) {
+          messages.push("The ramp was lowered.");
+        }
+        if (data.bay_doors_open) {
+          messages.push("The overhead doors were open.");
+        }
+        if (!data.interior_door_open) {
+          messages.push("The interior pressure door was locked.");
+        }
+        return "I reached the cargo bay.\n\nA pressure door led forward to the docking airlock, and a control surface beside the door displayed the cargo bay's airlock status.\n\n" + (messages.join('\n\n'));
+      },
+      actions: {
+        Look: {
+          Around: "The compartment was twelve meters long, with a collection of large crates strapped to the floor. Actuators stood by to lower the cargo ramp or open the overhead bay doors.\n        \nThe floor and walls were covered with a course polysteel grating, and a set of heavy elastic ties hung against the wall. The rest of the ties were in use, holding the containers tight against the grating.\n\nThe aft section of the bay was a cargo ramp. The floor sloped upward to meet the ceiling, and a set of hydraulic actuators stood ready to lower it to the ground. More actuators were visible overhead, ready to open the ceiling when the Dreams was docked with a station.\n\nA control surface beside the door displayed the status of the airlock controls.",
+          "At the Crates": {
+            '#': "The crates were standard cubic shipping crates. They were roughly one meter on each side, with slight depressions across the top and sides to accomodate the hold-down straps.\n          \nThe crates were labelled with unified shipping codes - four letter abbreviations that described their contents. Today I had two CSGD crates, an EREP crate, and a dozen empty crates marked FDST.",
+            "Look at CSGD Crates": "The CSGD crates contained various consumer goods.\n\nCustoms offices tended to flag ships that docked without declaring anything. Carrying these two crates gave me something to put on the form, and since consumer goods carried a small tarrif, I even looked somewhat honest.\n\nI wondered what was in them.",
+            "Look at EREP Crate": "The EREP crate contained emergency repair supplies. The ship's autofac could manufacture replacement parts in a few hours, but when there was a fracture in the hull and your flight suit was leaking, a polysteel patch kit went a long way.",
+            "Look at FDST Crates": "The FDST crates were labelled as carrying foodstuffs.\n\nFoodstuffs were convenient because they had no electromagnetic signature. Automated customs sweeps saw FDST crates as transparent cubes, and these crates looked pretty transparent too, empty or otherwise."
+          },
+          "At the Hydraulics": "The hydraulic system was pressure-fed from the main fuel tanks, and controlled through a series of small actuator valves. The design saved a lot of weight, but it tended to lose pressure when the main engines were fired.",
+          "At the Airlock Controls": function() {
+            var control_action, data, exterior_message, interior_message;
+            data = between_dreams.cargo_bay.data;
+            exterior_message = function(open) {
+              if (open) {
+                return "Open [Depressurized]";
+              } else {
+                return "Closed [Sealed/Latched]";
+              }
+            };
+            interior_message = function(open) {
+              if (open) {
+                return "Open [Automatic]";
+              } else {
+                return "Closed [Sealed/Latched]";
+              }
+            };
+            control_action = function(options) {
+              return hidden_action((function() {
+                return options.visible_when;
+              }), function() {
+                if (options.failed_when) {
+                  return reply(options.failed_message);
+                }
+                if (data.controls_disabled) {
+                  return reply(data.controls_disabled_message);
+                }
+                if (options.is_bad_idea_when) {
+                  return reply(options.bad_idea_message);
+                }
+                options.action();
+                return reply(options.message);
+              });
+            };
+            return reply("The control surface displayed the bay's status:\n                  \nAtmosphere: " + (data.pressurized ? "Pressurized" : "Depressurized") + "\n\nRamp: " + (exterior_message(data.ramp_open)) + "\nBay Doors: " + (exterior_message(data.bay_doors_open)) + "\nInterior Door: " + (interior_message(data.interior_door_open)) + "\n\nThe control surface offered options to open or close the various doors, and pressurize or depressurize the cargo bay's atmosphere.", {
+              "Pressurize": control_action({
+                visible_when: !data.pressurized,
+                is_bad_idea_when: data.ramp_open || data.bay_doors_open,
+                bad_idea_message: "The bay couldn't pressurize with the exterior hatches open.",
+                failed_when: data.hull_breach,
+                failed_message: "The panel flashed red.\n\n\"Error: Pressurization failed // check hull integrity\"",
+                action: function() {
+                  return data.pressurized = true;
+                },
+                message: "I felt a reassuring resonance as the bay pressurized. \n\nThe process only took a few moments, and I dismissed my helmet as the last few kilos of air were pumped in."
+              }),
+              "Depressurize": control_action({
+                visible_when: data.pressurized,
+                is_bad_idea_when: data.interior_door_open,
+                bad_idea_message: "Depressurizing the cargo bay with the interior door open would have decompressed the entire ship. I took a second to think.",
+                action: function() {
+                  return data.pressurized = false;
+                },
+                message: "I snapped my helmet into place as the air hissed out of the bay. The metal grating on the floor seemed to resonate with the frequency of the compressors, but after a few short moments it was calm again."
+              }),
+              "Open Ramp": control_action({
+                visible_when: !data.ramp_open,
+                is_bad_idea_when: data.pressurized,
+                bad_idea_message: "Opening the ramp with the bay pressurized would have resulted in an explosive decompression.",
+                action: function() {
+                  return data.ramp_open = true;
+                },
+                message: "At the touch of the control, the two aft-most hydraulic cylinders groaned to life and began to lower the ramp.\n\nI couldn't hear them through my helmet, but I liked to think that the actuators made pleasant humming sound."
+              }),
+              "Close Ramp": control_action({
+                visible_when: data.ramp_open,
+                action: function() {
+                  return data.ramp_open = false;
+                },
+                message: "The ramp began its careful ascent back into the outer hull."
+              }),
+              "Open Overhead Doors": control_action({
+                visible_when: !data.bay_doors_open,
+                is_bad_idea_when: data.pressurized,
+                bad_idea_message: "Opening the overhead doors with the bay pressurized would have resulted in an explosive decompression.",
+                action: function() {
+                  return data.bay_doors_open = true;
+                },
+                message: "The overhead hydraulic cylinders pulled the two door panels back from against the outer hull, and carefully tucked them away to either side."
+              }),
+              "Close Overhead Doors": control_action({
+                visible_when: data.bay_doors_open,
+                action: function() {
+                  return data.bay_doors_open = false;
+                },
+                message: "The overhead door panels slid into view, and carefully reseated themselves against the outer hull."
+              }),
+              "Release Interior Door": control_action({
+                visible_when: !data.interior_door_open,
+                is_bad_idea_when: !data.pressurized,
+                bad_idea_message: "Opening the interior door with the bay depressurized would have decompressed the entire ship.",
+                action: function() {
+                  return data.interior_door_open = true;
+                },
+                message: "The latches on the interior pressure door clicked free."
+              }),
+              "Lock Interior Door": control_action({
+                visible_when: data.interior_door_open,
+                is_bad_idea_when: !data.pressurized && data.hull_breach,
+                bad_idea_message: "The entire ship had decompressed. If I locked the interior door, I wasn't sure I would be able to open it again.",
+                action: function() {
+                  return data.interior_door_open = false;
+                },
+                message: "The latches on the interior pressure door clicked into place, disconnecting the cargo bay from the rest of the ship."
+              })
+            });
+          }
+        },
+        Go: {
+          Foreward: function() {
+            if (!between_dreams.cargo_bay.data.interior_door_open) {
+              return reply("The interior pressure door is locked.");
+            }
+            return travel_to(between_dreams.airlock);
+          },
+          "Down the Ramp": hidden_action((function() {
+            return between_dreams.cargo_bay.data.ramp_open;
+          }), function() {
+            if (between_dreams.cargo_bay.data.exit_ramp == null) {
+              return reply("There is nothing outside the ramp.");
+            }
+            return between_dreams.cargo_bay.data.exit_ramp();
+          })
+        }
+      }
+    }
+  };
+};
+
+module.exports = {
+  base: construct_between_dreams(),
+  "with": function(customizations) {
+    return _.extend(construct_between_dreams(), customizations);
+  }
+};
+
+
+
+},{"../app/app.coffee":1}],10:[function(require,module,exports){
+module.exports = {
+  title: 'Episode 1',
+  act_1: require('./act-1-intro.coffee'),
+  act_2: require('./act-2-landing.coffee'),
+  act_3: require('./act-3-the-package.coffee'),
+  act_4: require('./act-4-fuel.coffee'),
+  act_5: require('./act-5-hayley.coffee')
+};
+
+
+
+},{"./act-1-intro.coffee":3,"./act-2-landing.coffee":4,"./act-3-the-package.coffee":5,"./act-4-fuel.coffee":6,"./act-5-hayley.coffee":7}],11:[function(require,module,exports){
+var add_action, between_dreams, conversation, create_martian_surface, extend, hidden_action, menu, menu_no_backsies, reply, travel_to, _;
+
+_ = require('../app/app.coffee');
+
+between_dreams = require('./between-dreams-variants.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+conversation = _.conversation;
+
+create_martian_surface = function() {
+  var martian_surface;
+  return martian_surface = {
+    data: {
+      hatch_unlocked: false,
+      carrying_spare_core: false,
+      dragging_fuel_line: false,
+      finished_fuel_line: false,
+      travel_to_cargo_bay: null,
+      found_repair_kit: null,
+      connected_fuel_line: null,
+      found_step_to_roof: false,
+      saw_hatch: false,
+      entered_hatch: null,
+      need_a_core: false,
+      ready_for_last_valve: false,
+      turned_last_valve: null,
+      had_to_leave: false,
+      ramp_sealed: false
+    },
+    cargo_ramp_base: {
+      theme: 'mars',
+      text: "I stood at the base of the Dreams' cargo ramp. \n\nDamaged crates were scattered across the bare rock. To one side, footprints in the sand led into the boulder field. To the other, the motionless crawler loomed in the distance.",
+      actions: {
+        Look: {
+          "At the Scattered Crates": function() {
+            return reply("The crates were scattered across the bare Martian rock, and fragments of the torn hold-down straps were visible here and there.\n                 \n" + between_dreams.base.cargo_bay.actions.Look["At the Crates"]['#'], between_dreams.crate_menu({
+              "Look at EREP Crate": function() {
+                return reply(between_dreams.base.cargo_bay.actions.Look["At the Crates"]["Look at EREP Crate"], {
+                  "Take Supplies": hidden_action((function() {
+                    return martian_surface.data.found_repair_kit != null;
+                  }), function() {
+                    martian_surface.data.found_repair_kit();
+                    martian_surface.data.found_repair_kit = null;
+                    return reply("I cracked open the crate and withdrew the hull repair kit.\n                                        \nIt was hard to grip with only one good hand, but I could walk once I'd braced it against my shoulder.");
+                  })
+                });
+              }
+            }));
+          },
+          "At the Cargo Ramp": hidden_action((function() {
+            return martian_surface.data.ramp_sealed;
+          }), function() {
+            return reply("The Dream's aft section was a featureless grey surface. The ramp was raised, sealed tight against the outer hull.");
+          })
+        },
+        Go: {
+          "Up the ramp": hidden_action((function() {
+            return !martian_surface.data.ramp_sealed;
+          }), function() {
+            if (martian_surface.data.dragging_fuel_line) {
+              return reply("Dragging the fuel line into the cargo bay seemed like a bad idea; I'd sever the line if I closed the ramp.");
+            }
+            return martian_surface.data.travel_to_cargo_bay();
+          }),
+          "Into the Boulder Field": "The last time I passed that way my ship exploded. I decided to stay put.",
+          "Under the Dreams' Port Wing": function() {
+            return travel_to(martian_surface.port_wing);
+          },
+          "Under the Dreams' Starboard Wing": function() {
+            return travel_to(martian_surface.starboard_wing);
+          }
+        }
+      }
+    },
+    port_wing: {
+      theme: 'mars',
+      text: "I walked under the Dreams' port wing.\n\nI could see the crawler in the distance.",
+      actions: {
+        Look: {
+          "At the Wing": "The wing was badly damaged, but the fuel tank seemed intact."
+        },
+        Go: {
+          "Around Aft": function() {
+            return travel_to(martian_surface.cargo_ramp_base);
+          },
+          "Toward the Crawler": function() {
+            return travel_to(martian_surface.fuel_crawler);
+          }
+        }
+      }
+    },
+    starboard_wing: {
+      theme: 'mars',
+      text: "I stood underneath the Dreams' starboard wing.",
+      actions: {
+        Look: {
+          "At the Wing": function() {
+            martian_surface.data.found_step_to_roof = true;
+            return reply("The Dreams' wings weren't \"wings\" in the conventional sense; they were flat fuel tanks sandwiched between oversized radiators. They weren't particularly aerodynamic, but they didn't need to be: the Dreams was, after all, a space ship.\n          \nThe starboard wing was generally intact, but one of the radiator lines had been dislodged. It looked like if I was careful, I could probably use it to climb up.");
+          }
+        },
+        Go: {
+          "Around Aft": function() {
+            return travel_to(martian_surface.cargo_ramp_base);
+          },
+          "Climb the Radiator Line": hidden_action((function() {
+            return martian_surface.data.found_step_to_roof;
+          }), function() {
+            return travel_to(martian_surface.roof);
+          })
+        }
+      }
+    },
+    roof: {
+      theme: 'mars',
+      text: "I climbed the exposed radiator line to the Dreams' roof.",
+      actions: {
+        Look: {
+          Around: "I stood on top of the Dreams' squat cylindrical body. The ship's wings stretched out to either side, and the exterior docking assembly and cargo doors were visible behind me.\n\nI could see the fuel crawler in the distance.",
+          "At the Port Wing": "The port wing was badly damaged.",
+          "At the Starboard Wing": "The starboard wing was mostly intact. A dislodged radiator line allowed me to climb back down.",
+          "At the Docking Assembly": function() {
+            martian_surface.data.saw_hatch = true;
+            return reply("The exterior side of the docking assembly was difficult to see; no more than a few gentle bulges in the polysteel hull.\n\nAt the center, I could see the one-meter-wide circular profile of the main hatch. On either side, the magnetic tips of the vertical latching assemblies portruded from the hull. Outside the latches were the umbilical hookups: power, fuel, and atmosphere.", {
+              "Connect Fuel Line to Port Umbilical": hidden_action((function() {
+                return martian_surface.data.dragging_fuel_line;
+              }), function() {
+                return reply("I dragged the fuel line up to the port-side umbilical hatch, but I couldn't retract the cover. It appeared to have seized in the crash.");
+              }),
+              "Connect Fuel Line to Starboard Umbilical": hidden_action((function() {
+                return martian_surface.data.dragging_fuel_line;
+              }), function() {
+                martian_surface.data.connected_fuel_line();
+                martian_surface.data.connected_fuel_line = null;
+                martian_surface.data.dragging_fuel_line = false;
+                martian_surface.data.finished_fuel_line = true;
+                return reply("I carefully slid the cover open and attached the fuel line to the awaiting coupler. All the fuel would end up in the starboard tank, but I trusted Hayley could transfer it from there.");
+              })
+            });
+          },
+          "At the Cargo Doors": "The cargo doors were no more than a faint outline in the hull."
+        },
+        Go: {
+          Down: function() {
+            return travel_to(martian_surface.starboard_wing);
+          },
+          "Down the Docking Hatch": hidden_action((function() {
+            return martian_surface.data.saw_hatch && (martian_surface.data.entered_hatch != null);
+          }), function() {
+            return martian_surface.data.entered_hatch();
+          })
+        }
+      }
+    },
+    fuel_crawler: {
+      theme: 'mars',
+      text: "I stood a few hundred meters from the fuel crawler.\n\nThe Dreams was visible in the distance, and a two meter wide access hatch was visible inside the crawler's nearest tread.",
+      actions: {
+        Look: {
+          "At the Crawler": "The fuel crawler was monumentally large.\n\nSix of these vehicles roamed the Martian surface, and together they refined enough fuel for the entire planetary industrial base.\n\nThe crawler was built around a sigma-five industrial fuel conversion assembly: an integrated reactor that refined raw planetary resources into nuclear-thermal rocket fuel. The Dreams' fuel converter was a scaled-down and highly experimental derivative of the crawler's core.\n                            \nOn either side of the reactor were two full-scale VTOL launchpads. An operational fuel crawler was an incredible sight: a steady stream of rockets landed on the pads, tanked up, and hoisted the refined fuel into orbit. Indifferent to the frantic activity, the crawler gently wandered the landscape in search of more resources.\n\nThis one, however, wasn't moving. The launchpads were dark, the lights were out, and the massive treads were still. An enourmous hole had been blown through the side of the reactor core, and traces of black smoke still hung in the air.",
+          "At the Between Dreams": "The Between Dreams was a beautiful ship.\n\nIn the distance it resembled a squat Earth airplane: its body was a silver tube, roughly five meters in diameter and 36 meters long, with a rounded nose and a raised tail. Slender wings stretched out to either side, housing fuel tanks and oversized radiator panels."
+        },
+        Go: {
+          "Into the Crawler's Tread": function() {
+            return travel_to(martian_surface.crawler_access);
+          },
+          "Back to the Between Dreams": function() {
+            return travel_to(martian_surface.port_wing);
+          }
+        }
+      }
+    },
+    crawler_access: {
+      theme: 'mars',
+      text: "I carefully stepped onto the crawler's tread.\n\nI could see the Martian desert to one side, and an access hatch on the other.",
+      actions: {
+        Look: {
+          Around: "The tread was a meter thick, and easily 20 meters wide. It stretched into the distance in front of me, and just as far behind, before eventually looping back 100 meters above my head.\n\nI could see the Martian desert to one side, and an access hatch on the other."
+        },
+        Go: {
+          "Into the Access Hatch": function() {
+            if (martian_surface.data.hatch_unlocked) {
+              return travel_to(martian_surface.crawler_control_room);
+            } else if (martian_surface.data.carrying_spare_core) {
+              martian_surface.data.hatch_unlocked = true;
+              return reply("I placed the core into the uplink terminal and the hatch hissed open.\n\n\"I have a deep link to the crawler now,\" Hayley said carefully, \"and it looks like there's still some refined fuel in the storage tanks. See if you can get it back to the ship.\"", function() {
+                return menu_no_backsies({
+                  "Enter Hatch": function() {
+                    return travel_to(martian_surface.crawler_control_room);
+                  }
+                });
+              });
+            } else {
+              martian_surface.data.need_a_core = true;
+              return reply("The access hatch was locked.\n       \n\"Richner,\" Hayley's voice crackled in my ear, \"I might be able to help with that. There's an uplink terminal beside the hatch; if you can swap its core with one of ours, I should be able to hack in and release the lockdown.\"");
+            }
+          },
+          "Out to the Desert": function() {
+            return travel_to(martian_surface.fuel_crawler);
+          }
+        }
+      }
+    },
+    crawler_control_room: {
+      theme: 'inside-dim',
+      text: "I stepped into Crawler Access Area #231.",
+      actions: {
+        Look: {
+          Around: "The access area was cramped.\n\nAlong the wall was long spool of flexihose, and a manually-actuated valve labelled \"Pressure Transfer 223 -> 222\"",
+          "At Flexihose": function() {
+            if (martian_surface.data.finished_fuel_line) {
+              return reply("The flexihose snaked out of the hatch towards the Dreams.");
+            } else if (martian_surface.data.dragging_fuel_line) {
+              return reply("I held the end of the hose.", {
+                "Release End of Hose": function() {
+                  martian_surface.data.dragging_fuel_line = false;
+                  return reply("I released the end of the hose, and it slid back onto the spool.");
+                }
+              });
+            } else {
+              return reply("The flexihose was wrapped around a large spool against the wall. It looked like it was long enough to reach all the way to the Dreams and back.", {
+                "Take End of Hose": function() {
+                  martian_surface.data.dragging_fuel_line = true;
+                  return reply("I picked up the end of the hose.");
+                }
+              });
+            }
+          },
+          "At Valve": {
+            '#': "The valve was labelled \"Pressure Transfer 223 -> 222\", and looked like it connected two of the crawler's fuel storage tanks.",
+            "Turn Valve": hidden_action((function() {
+              return !martian_surface.data.had_to_leave;
+            }), function() {
+              if (martian_surface.data.ready_for_last_valve) {
+                return martian_surface.data.turned_last_valve();
+              }
+              return reply("\"Wait, stop!\" Hayley interjected. \"We'll need that extra pressure to ignite the engines. Leave the valve closed for now, and we'll open it when we're ready to launch.");
+            })
+          }
+        },
+        Go: {
+          "Outside": function() {
+            return travel_to(martian_surface.crawler_access);
+          }
+        }
+      }
+    }
+  };
+};
+
+module.exports = {
+  "with": function(extension) {
+    return _.extend(create_martian_surface(), extension);
+  }
+};
+
+
+
+},{"../app/app.coffee":1,"./between-dreams-variants.coffee":8}],12:[function(require,module,exports){
+var act, act_link, app, content, default_act, episode, episode_div, id, requested_act, typeinator,
+  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+app = require('../../Data/app/app.coffee');
+
+content = require('../../Data/app/content.coffee');
+
+typeinator = {
+  seen_messages: [],
+  text: '',
+  start_time: null,
+  duration: 500.0,
+  menu_timeout: null,
+  type: function(text, loop_text) {
+    var fast_mode;
+    typeinator.base_text = text;
+    fast_mode = (__indexOf.call(typeinator.seen_messages, text) >= 0);
+    if (loop_text != null) {
+      text += '\n\n' + loop_text;
+    }
+    text = text.replace(/ *\n */g, "                 \n");
+    $("#text").text("");
+    $("#menu").css("transition", "all 0s");
+    $("#menu").css("opacity", "0");
+    typeinator.text = text;
+    typeinator.start_time = null;
+    typeinator.duration = text.length * 14.0;
+    if (typeinator.duration > 3000) {
+      typeinator.duration = 3000;
+    }
+    if (typeinator.duration > 750 && fast_mode) {
+      typeinator.duration = 750;
+    }
+    typeinator.fast_mode = fast_mode;
+    requestAnimationFrame(typeinator.type_now);
+    if (typeinator.menu_timeout != null) {
+      return window.clearTimeout(typeinator.menu_timeout);
+    }
+  },
+  type_now: function(timestamp) {
+    var progress, time_elapsed, visible_character_count, _ref;
+    if (typeinator.start_time == null) {
+      typeinator.start_time = timestamp;
+    }
+    time_elapsed = timestamp - typeinator.start_time;
+    progress = time_elapsed / typeinator.duration;
+    if (progress > 1) {
+      if (_ref = typeinator.base_text, __indexOf.call(typeinator.seen_messages, _ref) < 0) {
+        typeinator.seen_messages.push(typeinator.base_text);
+      }
+      typeinator.render_text(typeinator.text);
+      if (typeinator.fast_mode) {
+        typeinator.show_menu();
+      } else {
+        typeinator.menu_timeout = window.setTimeout(typeinator.show_menu, 500.0);
+      }
+      return;
+    }
+    visible_character_count = typeinator.text.length * progress;
+    typeinator.render_text(typeinator.text.substr(0, visible_character_count));
+    return requestAnimationFrame(typeinator.type_now);
+  },
+  show_menu: function() {
+    $("#menu").css("transition", "all 1s");
+    $("#menu").css("opacity", "1");
+    return typeinator.menu_timeout = null;
+  },
+  render_text: function(text) {
+    return $("#text").html(text.replace(/\n/g, '<br />'));
+  }
+};
+
+app.ui = {
+  display: function(text, loop_text) {
+    if (app.ui.last_action != null) {
+      $("#action").text(app.ui.last_action);
+    }
+    return typeinator.type(text, loop_text);
+  },
+  display_theme: function(theme) {
+    $(".theme").removeClass('visible');
+    return $(".theme." + theme).addClass('visible');
+  },
+  display_act: function(act) {
+    app.ui.last_action = '';
+    $("#action").text('');
+    return $("#location").text(act.title);
+  },
+  present_menu_options: function(options) {
+    var button, menu, option, _i, _len, _results;
+    menu = $("#menu");
+    menu.empty();
+    _results = [];
+    for (_i = 0, _len = options.length; _i < _len; _i++) {
+      option = options[_i];
+      button = $("<a class='menu-option' href='javascript:;'></a>");
+      button[0].data_action = option.action;
+      button[0].data_text = option.text;
+      button.text(option.text);
+      button.click(function() {
+        if ($("#menu").css("opacity") === "0") {
+          return;
+        }
+        if (this.data_text !== "<") {
+          app.ui.last_action = this.data_text;
+        }
+        return app.execute(this.data_action);
+      });
+      _results.push(menu.append(button));
+    }
+    return _results;
+  }
+};
+
+$("#select_location").click(function() {
+  return $("#select_location_menu").slideToggle();
+});
+
+for (id in content) {
+  episode = content[id];
+  if (typeof episode !== 'object') {
+    continue;
+  }
+  episode_div = $("<div class='episode'></div>");
+  episode_div.append($("<div class='title'></div>").text(episode.title));
+  for (id in episode) {
+    act = episode[id];
+    if (typeof act !== 'object') {
+      continue;
+    }
+    if (act.incomplete != null) {
+      continue;
+    }
+    act_link = $("<a class='act' href='javascript:;'></a>");
+    act_link[0].act = act;
+    act_link.text(act.title);
+    act_link.click(function() {
+      window.location.hash = "#!" + this.act.id;
+      return window.location.reload();
+    });
+    episode_div.append(act_link);
+  }
+  $("#select_location_menu").prepend(episode_div);
+}
+
+default_act = content.episode_1.act_1;
+
+if ((window.location.hash != null) && window.location.hash.length > 3) {
+  requested_act = content.find_act(window.location.hash.substr(2));
+}
+
+app.start_act(requested_act != null ? requested_act : default_act);
+
+
+
+},{"../../Data/app/app.coffee":1,"../../Data/app/content.coffee":2}]},{},[12]);
+</script></body></html>
