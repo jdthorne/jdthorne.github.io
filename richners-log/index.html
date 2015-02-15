@@ -64,7 +64,7 @@
   width: 800px;
   background: white;
   padding: 40px 40px 40px 40px;
-  margin: 8px auto 40px auto;
+  margin: 8px auto 8px auto;
   font-size: 16pt;
   overflow: auto;
 }
@@ -96,13 +96,27 @@
   background: #666666;
   color: white;
 }
+.latest-update {
+  width: 800px;
+  margin: 0px auto 0px auto;
+  background: white;
+  padding: 20px 40px 20px 40px;
+  font-size: 14pt;
+  margin-top: 10px;
+  color: black;
+}
 @media (max-width: 1000px) {
   .page,
   .info,
-  #select_location_menu {
+  #select_location_menu,
+  .latest-update {
     width: auto;
     margin-left: 40px;
     margin-right: 40px;
+  }
+  .info {
+    padding-left: 40px;
+    padding-right: 40px;
   }
 }
 </style><style>.theme {
@@ -385,25 +399,6 @@ var act, aid, content, eid, episode, _;
 _ = require('./app.coffee');
 
 content = {
-  introduction: {
-    title: "Richner's Log",
-    act: {
-      title: "Welcome",
-      start: {
-        text: function() {
-          content.introduction.act.start.actions["Continue to " + (content.latest_act().title)] = function() {
-            return _.start_act(content.latest_act());
-          };
-          return "Welcome to Richner's Log.";
-        },
-        actions: {
-          "Start at the Beginning": function() {
-            return _.start_act(content.episode_1.act_1);
-          }
-        }
-      }
-    }
-  },
   episode_1: require('../episode-1/episode-1.coffee'),
   find_act: function(id) {
     var a, act, e, episode;
@@ -2109,7 +2104,7 @@ create_martian_surface = function() {
       text: "I stood a few hundred meters from the fuel crawler.\n\nThe Dreams was visible in the distance, and a two meter wide access hatch was visible inside the crawler's nearest tread.",
       actions: {
         Look: {
-          "At the Crawler": "The fuel crawler was monumentally large.\n\nSix of these vehicles roamed the Martian surface, and together they refined enough fuel for the entire planetary industrial base.\n\nThe crawler was built around a sigma-five industrial fuel conversion assembly: an integrated reactor that refined raw planetary resources into nuclear-thermal rocket fuel. The Dreams' fuel converter was a scaled-down and highly experimental derivative of the crawler's core.\n                            \nOn either side of the reactor were two full-scale VTOL launchpads. An operational fuel crawler was an incredible sight: a steady stream of rockets landed on the pads, tanked up, and hoisted the refined fuel into orbit. Indifferent to the frantic activity, the crawler gently wandered the landscape in search of more resources.\n\nThis one, however, wasn't moving. The launchpads were dark, the lights were out, and the massive treads were still. An enourmous hole had been blown through the side of the reactor core, and traces of black smoke still hung in the air.",
+          "At the Crawler": "The fuel crawler was monumentally large.\n\nSix of these vehicles roamed the Martian surface, and together they refined enough fuel for the entire planetary industrial base.\n\nThe crawler was built around an Emery-Oxide industrial fuel conversion assembly: an integrated reactor that refined raw planetary resources into nuclear-thermal rocket fuel. The Dreams' fuel converter was a scaled-down and highly experimental derivative of the crawler's core.\n                            \nOn either side of the reactor were two full-scale VTOL launchpads. An operational fuel crawler was an incredible sight: a steady stream of rockets landed on the pads, tanked up, and hoisted the refined fuel into orbit. Indifferent to the frantic activity, the crawler gently wandered the landscape in search of more resources.\n\nThis one, however, wasn't moving. The launchpads were dark, the lights were out, and the massive treads were still. An enourmous hole had been blown through the side of the reactor core, and traces of black smoke still hung in the air.",
           "At the Between Dreams": "The Between Dreams was a beautiful ship.\n\nIn the distance it resembled a squat Earth airplane: its body was a silver tube, roughly five meters in diameter and 36 meters long, with a rounded nose and a raised tail. Slender wings stretched out to either side, housing fuel tanks and oversized radiator panels."
         },
         Go: {
