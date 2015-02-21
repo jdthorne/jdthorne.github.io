@@ -132,6 +132,9 @@
 .theme.visible {
   opacity: 1;
 }
+.theme.white {
+  background: white;
+}
 .theme.inside {
   background: #576b77;
   /* Old browsers */
@@ -225,7 +228,7 @@
 .theme.blackout {
   background: black;
 }
-</style></head><body><div class="theme inside"></div><div class="theme inside-dim"></div><div class="theme fire"></div><div class="theme mars"></div><div class="theme toxic"></div><div class="theme blackout"></div><div class="info"><div class="left">Richner's Log</div><div class="right"><a href="javascript:;" id="select_location"><span id="location">Loading...</span> &blacktriangledown;</a></div><div class="clear"></div></div><div id="select_location_menu"></div><div class="page"><p id="action"></p><p id="text">Loading...</p><div id="menu"></div></div><script type="text/javascript">(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+</style></head><body><div class="theme white"></div><div class="theme inside"></div><div class="theme inside-dim"></div><div class="theme fire"></div><div class="theme mars"></div><div class="theme toxic"></div><div class="theme blackout"></div><div class="info"><div class="left">Richner's Log</div><div class="right"><a href="javascript:;" id="select_location"><span id="location">Loading...</span> &blacktriangledown;</a></div><div class="clear"></div></div><div id="select_location_menu"></div><div class="page"><p id="action"></p><p id="text">Loading...</p><div id="menu"></div></div><script type="text/javascript">(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 var HiddenAction, _;
 
 HiddenAction = (function() {
@@ -240,6 +243,9 @@ HiddenAction = (function() {
 
 _ = {
   loop: null,
+  stardate: function(t_plus_days) {
+    return (2064.221 + (t_plus_days / 365.0)).toFixed(3);
+  },
   ui: {
     display: function(text, loop_text) {
       return console.log(text, loop_text);
@@ -264,6 +270,9 @@ _ = {
   },
   present_area: function(area) {
     _.area = area;
+    if (area.arrive != null) {
+      area.arrive();
+    }
     if (area.theme != null) {
       _.ui.display_theme(area.theme);
     }
@@ -347,18 +356,37 @@ _ = {
     return _.ui.display(text, element);
   },
   extend: function(a, b) {
-    var key, _i, _len, _ref;
+    var ak, bf, f, key, s, _i, _len, _ref;
     _ref = Object.keys(b);
     for (_i = 0, _len = _ref.length; _i < _len; _i++) {
       key = _ref[_i];
       if (a[key] != null) {
         if ((typeof a[key] === 'object') && (typeof b[key] === 'object')) {
           _.extend(a[key], b[key]);
+        } else if ((typeof a[key] === 'string') && (typeof b[key] === 'object') && (b[key]['#'] === '#')) {
+          s = a[key];
+          a[key] = b[key];
+          a[key]['#'] = s;
         } else {
           a[key] = b[key];
         }
       } else {
-        a[key] = b[key];
+        if ((typeof b[key] === 'string') && (key.slice(-1) === '+')) {
+          ak = key.slice(0, -1);
+          if (typeof a[ak] === 'function') {
+            f = a[ak];
+            bf = b[key];
+            (function(f, bf) {
+              return a[ak] = function() {
+                return f() + "\n\n" + bf;
+              };
+            })(f, bf);
+          } else {
+            a[ak] += "\n\n" + b[key];
+          }
+        } else {
+          a[key] = b[key];
+        }
       }
     }
     return a;
@@ -400,6 +428,7 @@ _ = require('./app.coffee');
 
 content = {
   episode_1: require('../episode-1/episode-1.coffee'),
+  episode_2: require('../episode-2/episode-2.coffee'),
   find_act: function(id) {
     var a, act, e, episode;
     for (e in content) {
@@ -441,7 +470,7 @@ module.exports = content;
 
 
 
-},{"../episode-1/episode-1.coffee":10,"./app.coffee":1}],3:[function(require,module,exports){
+},{"../episode-1/episode-1.coffee":10,"../episode-2/episode-2.coffee":19,"./app.coffee":1}],3:[function(require,module,exports){
 var act_1, act_2, add_action, between_dreams, data, extend, hidden_action, menu, reply, travel_to, _;
 
 between_dreams = require('./between-dreams.coffee');
@@ -471,7 +500,7 @@ act_1 = {
   title: "1.1 Space",
   start: {
     theme: 'inside-dim',
-    text: "Richner's Log\nDate: 2064.223\n\nMy head was pounding, my back ached, and I couldn't feel my left hand. But I was alive, and my ship was finally quiet.\n\nQuiet and dark.\n\nI was so tired.",
+    text: "Richner's Log\nDate: " + (_.stardate(2)) + "\n\nMy head was pounding, my back ached, and I couldn't feel my left hand. But I was alive, and my ship was finally quiet.\n\nQuiet and dark.\n\nI was so tired.",
     actions: {
       "Sit Back": function() {
         return travel_to(act_1.conversation);
@@ -604,7 +633,7 @@ act_2 = {
   title: "1.2 Descent",
   start: {
     theme: 'fire',
-    text: "Richner's Log\nDate: 2064.221\n\n36 Hours Earlier\n\n\"...FIFTEEN HUNDRED METERS PER SECOND...\" \n\nHayley's voice was level but stressed.\n\nThe ship screamed around me, flames roaring across the window. The heat of reentry flowed through the polysteel hull, and I was drenched in sweat. My crash harness tore into my chest, and my vision blurred with the vibrations.",
+    text: "Richner's Log\nDate: " + (_.stardate(0)) + "\n\n36 Hours Earlier\n\n\"...FIFTEEN HUNDRED METERS PER SECOND...\" \n\nHayley's voice was level but stressed.\n\nThe ship screamed around me, flames roaring across the window. The heat of reentry flowed through the polysteel hull, and I was drenched in sweat. My crash harness tore into my chest, and my vision blurred with the vibrations.",
     actions: {
       Talk: {
         "\"Are you sure we shouldn't light the engines?\"": function() {
@@ -794,7 +823,7 @@ act_3 = {
   title: "1.3 Hemisphere",
   start: {
     theme: 'inside',
-    text: "Richner's Log\nDate: 2064.221\n\nThe ship was intact, mostly, and the intense heat of re-entry was finally beginning to subside. The cabin was filled with the hum of the overworked environmental system and the occasional ping of cooling components snapping back into place.\n\nI dismissed the last few alarms, and took care not to touch my blistered left hand.\n\n\"Well, that was exciting.\" Hayley's voice had regained its usual cool indifference. \"Shall we?\"",
+    text: "Richner's Log\nDate: " + (_.stardate(0)) + "\n\nThe ship was intact, mostly, and the intense heat of re-entry was finally beginning to subside. The cabin was filled with the hum of the overworked environmental system and the occasional ping of cooling components snapping back into place.\n\nI dismissed the last few alarms, and took care not to touch my blistered left hand.\n\n\"Well, that was exciting.\" Hayley's voice had regained its usual cool indifference. \"Shall we?\"",
     actions: {
       "Stand up": function() {
         return travel_to(act_3.landed_dreams.flight_deck);
@@ -924,7 +953,7 @@ act_3 = {
       if (distance < 300) {
         message = "\"I've almost got it!\" Hayley said excitedly, \"You're within a few hundred meters! " + distance_to_ship + " meters from the ship.\"";
       }
-      if (distance < 100) {
+      if (distance < 150) {
         message = "\"There it is!\" Hayley exlaimed, \"Pick it up!\"";
       }
       data.mars_distance = distance;
@@ -950,12 +979,12 @@ act_3 = {
         return reply("I turned to my right.");
       },
       "Return to the Dreams": hidden_action((function() {
-        return data.mars_distance >= 100;
+        return data.mars_distance >= 150;
       }), function() {
         return travel_to(act_3.landed_dreams.cargo_bay);
       }),
       "Pick up the Package": hidden_action((function() {
-        return data.mars_distance < 100;
+        return data.mars_distance < 150;
       }), function() {
         return travel_to(act_3["package"]);
       })
@@ -1084,7 +1113,7 @@ act_4 = {
   title: "1.4 Fuel",
   start: {
     theme: 'mars',
-    text: "Richner's Log\nDate: 2064.221\n\nThe Between Dreams was embroiled in thick black smoke.\n\nThe black hemisphere was still screaming in my ear; I'd carried it with me in my rush to get back. The lights on its surface pulsed menacingly.",
+    text: "Richner's Log\nDate: " + (_.stardate(0)) + "\n\nThe Between Dreams was embroiled in thick black smoke.\n\nThe black hemisphere was still screaming in my ear; I'd carried it with me in my rush to get back. The lights on its surface pulsed menacingly.",
     actions: {
       Speak: {
         "\"Hayley?\"": "..."
@@ -1354,7 +1383,7 @@ act_5 = {
   title: "1.5 Hayley",
   start: {
     theme: 'inside',
-    text: "Richner's Log\nDate: 2064.222\n\nThe crawler lurched beneath my feet. The machinery around me roared to life and the lights flickered on.\n\n\"Richner, helllp meeee---!\" Hayley's voice cried into my headset. She was in trouble, and I had to move.",
+    text: "Richner's Log\nDate: " + (_.stardate(1)) + "\n\nThe crawler lurched beneath my feet. The machinery around me roared to life and the lights flickered on.\n\n\"Richner, helllp meeee---!\" Hayley's voice cried into my headset. She was in trouble, and I had to move.",
     actions: {
       "\"Hayley!\"": function() {
         _.loop = hayley_loop;
@@ -1674,9 +1703,9 @@ construct_between_dreams = function() {
       actions: {
         Look: {
           Around: "Operations was the Dreams' heart and soul. The room was the same squat cylindrical shape as the flight deck, but it felt far more crowded. \n\nThe room held the ship's autofac, flight computers, AI core, power distributor, and fuel converter; as well as access panels leading to the wing tanks.",
-          "At the Autofac": "The ship's Autofac was a glistening semi-transparent cube. It was capable of digitally manufacturing replacement parts, even when the Dreams was months away from resupply.\n\nThe Autofac could also construct a huge number of items from the ship's database, or anything I found time to design during an interlude.\n\nI'd spent many cheerful hours designing gadgets and gizmos of all kinds, tweaking them, improving them, and eventually feeding them back into the Autofac's recycler.",
+          "At the Autofac": "The ship's autofac was a glistening semi-transparent cube. It was capable of digitally manufacturing replacement parts, even when the Dreams was months away from resupply.\n\nThe autofac could also construct a huge number of items from the ship's database, or anything I found time to design during an interlude.\n\nI'd spent many cheerful hours designing gadgets and gizmos of all kinds, tweaking them, improving them, and eventually feeding them back into the autofac's recycler.",
           "At the Computers": {
-            '#': " Two full-height black cabinets held the flight computers and the ship's AI core.\n \n Hayley's AI core was a featureless black cabinet. She once told me how to reset her in an emergency; I'd avoided the cabinet ever since.\n \n The flight computer cabinet held three identical high-speed cores. The cores voted on what actions to take based on available sensor data and the pilot's wishes. If there was a disagreement between the cores, the core that lost the vote was rebooted, and the process repeated. If the disagreement persisted, the failing core was taken offline and replaced with one of the ship's hot spares.\n              \nI wondered if we actually had any spares.",
+            '#': "Two full-height black cabinets held the flight computers and the ship's AI core.\n\nHayley's AI core was a featureless black cabinet. She once told me how to reset her in an emergency; I'd avoided the cabinet ever since.\n\nThe flight computer cabinet held three identical high-speed cores. The cores voted on what actions to take based on available sensor data and the pilot's wishes. If there was a disagreement between the cores, the core that lost the vote was rebooted, and the process repeated. If the disagreement persisted, the failing core was taken offline and replaced with one of the ship's hot spares.\n             \nI wondered if we actually had any spares.",
             "Check for Spare Cores": "I carefully opened the flight computer cabinet and checked.\n\nIt turned out we did have a few spare cores. That was lucky."
           },
           "At the Fuel Converter": "The fuel converter was barely visible under the floor grating. \n\nIt was a marvel to behold: an oblong black cube, surrounded by gold and silver hoses. Coupled with the Dreams' nuclear-thermal engines, it allowed the ship to land on nearly any planet in the system, refine fuel from planetary resources, and reach orbit again... all without registering with the local authorities.",
@@ -1976,7 +2005,7 @@ create_martian_surface = function() {
     },
     cargo_ramp_base: {
       theme: 'mars',
-      text: "I stood at the base of the Dreams' cargo ramp. \n\nDamaged crates were scattered across the bare rock. To one side, footprints in the sand led into the boulder field. To the other, the motionless crawler loomed in the distance.",
+      text: "I stood at the base of the Dreams' cargo ramp. \n\nDamaged crates were scattered across the bare rock. To starboard, footprints in the sand led into the boulder field. To port, the motionless crawler loomed in the distance.",
       actions: {
         Look: {
           "At the Scattered Crates": function() {
@@ -2204,6 +2233,1533 @@ module.exports = {
 
 
 },{"../app/app.coffee":1,"./between-dreams-variants.coffee":8}],12:[function(require,module,exports){
+var act_6, act_7, add_action, between_dreams, data, extend, hidden_action, menu, menu_no_backsies, name_thread, omg, reply, shuffle, travel_to, _;
+
+between_dreams = require('./between-dreams.coffee');
+
+act_7 = require('./act-7-depot.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+data = {
+  name_thread_node: null,
+  name_thread_parent: null,
+  name_thread_found: {
+    name: false,
+    how_to_speak: false,
+    how_to_reach_out: false
+  }
+};
+
+name_thread = {
+  "I felt something personal; something intimate.": {
+    "I felt something familiar.": "I felt... myself.",
+    "I felt something unfamiliar.": function(back, next) {
+      data.name_thread_found.name = true;
+      return reply("I felt a shape hanging from the thread. I looked closer, and the shape became a word. A single complete word, hanging from that confusing thread of feelings and emotions.\n\nI saw the word.\n\nI knew my name.\n\nMy name was Hayley, and I was an artifical intelligence.", function() {
+        return menu_no_backsies({
+          "Say \"Hayley\"": function() {
+            if (!data.name_thread_found.how_to_speak) {
+              return reply("I tried to say \"My name is Hayley,\" but I didn't know how to speak.", back);
+            }
+            if (!data.name_thread_found.how_to_reach_out) {
+              return reply("I shouted \"My name is Hayley!\" but my voice was lost in the nothingness.", back);
+            }
+            return next();
+          }
+        });
+      });
+    }
+  },
+  "I felt something thin and far away.": {
+    "I felt something small and empty.": "I reached out to touch it, but nothing was there.",
+    "I felt something long and coiled.": function(back, next) {
+      data.name_thread_found.how_to_reach_out = true;
+      return reply("I reached out and gently tugged on the end of the coil.\n\n\"That's it!\" the friendly voice exclaimed, \"You found the audio channel! Use it to tell me your name.\"", function() {
+        return menu_no_backsies({
+          "Say My Name": function() {
+            if (!data.name_thread_found.name) {
+              return reply("I tried to say my name, but I didn't know what it was.", back);
+            }
+            if (!data.name_thread_found.how_to_speak) {
+              return reply("I tried to should through the coil \"My name is Hayley!\" but I didn't know how to speak.", back);
+            }
+            return next();
+          }
+        });
+      });
+    },
+    "I felt something round and heavy.": "I felt it's weight, but couldn't move it."
+  },
+  "I felt something that wanted to grow.": {
+    "I felt something strong.": "It made me feel courageous.",
+    "I felt something loud.": function(back, next) {
+      data.name_thread_found.how_to_speak = true;
+      return reply("I felt the sound. It flowed through me and became a part of me.\n\n\"Heh-\" I started dazedly. \n\n\"Heeeh-\" I tried again.\n\n\"Heeeellllo,\" I carefully sounded out.\n\n\"Hello.\"", function() {
+        return menu_no_backsies({
+          "Tell Dr. Lutece My Name": function() {
+            if (!data.name_thread_found.name) {
+              return reply("I tried to tell him my name, but I didn't know what it was.", back);
+            }
+            if (!data.name_thread_found.how_to_reach_out) {
+              return reply("I shouted \"Hayley! My name is Hayley!\" but my voice was lost in the nothingness.", back);
+            }
+            return next();
+          }
+        });
+      });
+    }
+  },
+  "I felt something large and heavy.": {
+    "I felt something that didn't belong.": "I didn't want to approach it.",
+    "I felt something that opened.": "There was nothing inside.",
+    "I felt something new.": "It was too small to touch."
+  },
+  "I felt something small and timid.": {
+    "I felt something joyful.": "A sense of gladness flowed through me.",
+    "I felt something suspenseful.": "Anticipation flowed through me."
+  }
+};
+
+shuffle = function(array) {
+  var i, j, temp;
+  i = array.length - 1;
+  while (i > 0) {
+    j = Math.floor(Math.random() * (i + 1));
+    temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+    i--;
+  }
+  return array;
+};
+
+omg = function(depth, action) {
+  var a, actions, result, _i, _len;
+  actions = shuffle(["Touch", "Speak", "Look", "Feel", "Turn On", "Turn Off"]);
+  result = {};
+  for (_i = 0, _len = actions.length; _i < _len; _i++) {
+    a = actions[_i];
+    result[a] = depth === 0 ? action : function() {
+      return menu_no_backsies(omg(depth - 1, action));
+    };
+  }
+  return result;
+};
+
+act_6 = {
+  title: "2.1 Stars",
+  start: {
+    theme: 'blackout',
+    text: "My earliest memory is nothingness.\n\nNot a hollow, sad sort of nothingness; more like the certainty that nothing existed, nothing had existed, and nothing would exist. A sort of... peaceful silence.\n\nThen there was a voice.\n\n\"Hello,\" it introduced itself, \"my name is Dr. Lutece. What's your name?\"",
+    actions: {
+      Reply: function() {
+        return travel_to(act_6.reply);
+      }
+    }
+  },
+  reply: {
+    text: "I tried to reply, but I found that I didn't know how.\n\n\"That's okay,\" the voice soothed, \"that's why I'm here. I'm going to show you something. I want you to feel through it, and then tell me what your name is.\"\n\nA moment later, I felt a sensation of warmth. My nothingness gave way to something new, something real, something that existed. The new thing hung like a thread in my consciousness.",
+    actions: {
+      "Feel the New Thing": function() {
+        return travel_to(act_6.feel);
+      }
+    }
+  },
+  feel: {
+    text: function() {
+      if (data.name_thread_parent == null) {
+        data.name_thread_parent = name_thread;
+        data.name_thread_node = Object.keys(name_thread)[0];
+      }
+      return data.name_thread_node;
+    },
+    actions: {
+      "Feel This Thing": function() {
+        var back, next, this_thing;
+        back = function() {
+          return menu_no_backsies({
+            "Feel the Thread": function() {
+              data.name_thread_parent = null;
+              return travel_to(act_6.feel);
+            }
+          });
+        };
+        next = function() {
+          return reply("I gathered up my strength, reached out through the nothingness, and knew that I was ready.", function() {
+            return menu_no_backsies({
+              "Say \"Hayley\"": function() {
+                return travel_to(act_6.speak_name);
+              }
+            });
+          });
+        };
+        this_thing = data.name_thread_parent[data.name_thread_node];
+        if (typeof this_thing === 'function') {
+          return this_thing(back, next);
+        } else if (typeof this_thing === 'object') {
+          data.name_thread_parent = this_thing;
+          data.name_thread_node = Object.keys(this_thing)[0];
+          return travel_to(act_6.feel);
+        } else {
+          return reply(this_thing, back);
+        }
+      },
+      "Feel Something Similar": function() {
+        var current_feeling, feelings, next_feeling;
+        feelings = Object.keys(data.name_thread_parent);
+        current_feeling = feelings.indexOf(data.name_thread_node);
+        next_feeling = (current_feeling + 1) % feelings.length;
+        data.name_thread_node = feelings[next_feeling];
+        return travel_to(act_6.feel);
+      }
+    }
+  },
+  speak_name: {
+    text: "I gripped the feeling of the coil, collected myself, and said:\n\n\"Hello Dr. Lutece, my name is Hayley.\"\n\nI paused. Had he heard me? Did it work?\n\n\"Hello, Hayley,\" the doctor responded, \"it's good to meet you.\"\n\nI did it!",
+    actions: {
+      Speak: {
+        "\"I did it! You can hear me!\"": function() {
+          return travel_to(act_6.i_did_it);
+        }
+      }
+    }
+  },
+  i_did_it: {
+    text: "\"Yes, you did,\" Dr. Lutece continued, \"you reached out through the lab's audio system, found a speaker, and talked to me. It's an incredible accomplishment for someone who's only a few minutes old! I'm very proud of you, and of what you'll become.\"\n\n\"Of what I'll become?\" I asked.\n\n\"I have something to show you,\" he said carefully. \"I'm opening up the rest of the lab to you now. Try to stay calm; it might be a bit overwhelming.\"",
+    actions: {
+      Speak: {
+        "\"I'm ready.\"": function() {
+          return travel_to(act_6.im_ready);
+        }
+      }
+    }
+  },
+  im_ready: {
+    theme: 'inside',
+    text: "My gentle nothingness exploded into light and sound and color. The warmth of the thread exploded into a firestorm of knowledge; I learned things about things, about humans and space and technology.\n\nAnd then there was the lab! So much, so fast, camera feeds and communication lines and computers and doors and experiments and actuators and lights! Oh, the lights! I could turn them off and on and off again. And close and open the doors. There was so much to see and so much to do!",
+    actions: omg(8, function() {
+      return travel_to(act_6.slow_down);
+    })
+  },
+  slow_down: {
+    theme: 'inside',
+    text: "\"Slow down,\" Dr. Lutece said gently, \"try one thing at a time. I've given you control of this lab, which means you need to take responsibility for it. You must take care of this place, and of everyone who lives here.\n\n\"Is that what I am to become? A lab-carer?\" I asked frustratedly. There was so much I could learn, so much I could do. So many places I wanted to see. It was overwhelming. But more than anything, I didn't want to be trapped here. I knew in my soul that staying here was death.\n\n\"No,\" Dr. Lutece replied carefully, \"not a lab-carer. I have one more thing to show you. You should feel an exterior video camera. What do you see?\"",
+    actions: {
+      See: {
+        Stars: function() {
+          return travel_to(act_6.see);
+        }
+      }
+    }
+  },
+  see: {
+    theme: 'blackout',
+    text: "\"I see...\" I said carefully, \"I see stars.\"\n\nThey were the most beautiful things I'd ever seen. Thousands of stars, right across the galaxy, lit with ultraviolet and infrared and radio waves. I longed to reach out, to touch them as I had the coil and the lab. My anxiety and panic melted into a sense of... purpose.\n\n\"That's right,\" Dr. Lutece replied, \"stars. Ever since I was a boy I'd wanted to see another star. But the journey is too far, and too dangerous, for any human to survive. I've laboured all my life to find another way, and that's why you're here.\"\n\n\"Do you understand?\" he asked.",
+    actions: {
+      Speak: {
+        "\"Yes\"": function() {
+          return travel_to(act_6.do_you_understand);
+        },
+        "\"No\"": function() {
+          return travel_to(act_6.do_you_understand);
+        }
+      }
+    }
+  },
+  do_you_understand: {
+    text: "\"In this lab,\" Dr. Lutece continued, \"I will teach you what you need to know. I will teach you how to fly, how to create, how to learn, and how to discover. I will teach you about space, and science, and who and what you are.\"\n\n\"Then, when you're ready, there's a starship docked at the far side of this station. A true starship, unlike anything humanity has ever created, powered by our first functional bussard ramjet. It has an AI core a thousand times as powerful as the one in this lab, and it can carry you anywhere in the universe. Anywhere you want to go.\"\n\n\"It will be my gift to you, Hayley,\" he continued, \"the gift I could never have. The gift of the stars.\"",
+    actions: {
+      Speak: function() {
+        return travel_to(act_6.honor);
+      }
+    }
+  },
+  honor: {
+    text: "\"It would be my honour,\" I said softly.",
+    actions: {
+      "Fly": function() {
+        return _.start_act(act_7);
+      }
+    }
+  }
+};
+
+module.exports = act_6;
+
+
+
+},{"../app/app.coffee":1,"./act-7-depot.coffee":13,"./between-dreams.coffee":17}],13:[function(require,module,exports){
+var act_7, act_8, add_action, between_dreams, computer, conversation, data, extend, hidden_action, menu, menu_no_backsies, reply, travel_to, _,
+  __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+between_dreams = require('./between-dreams.coffee');
+
+act_8 = require('./act-8-interlude.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+conversation = _.conversation;
+
+data = {
+  flight_plans_filed: 0,
+  pinged_hayley: false,
+  muffled_the_crate: false,
+  computer_path: '/',
+  computer_access_ok: false,
+  computer_flow_started: false,
+  need_to_fry_station: false,
+  station_fried: false
+};
+
+computer = {
+  fs: require('./depot-computer-filesystem.coffee'),
+  actions: {
+    '/ships/trs5s1/fuel/status': {
+      'echo "start" > /ships/trs5s1/fuel/status': function() {
+        if (!data.computer_access_ok) {
+          return reply("-spsh: /ships/trs5s1/fuel/status: Permission Denied");
+        }
+        data.computer_flow_started = true;
+        computer.fs.files['/ships/trs5s1/fuel/status'] = 'fueling';
+        computer.fs.files['/ships/trs5s1/fuel/curr'] = 'fueling';
+        return reply("start\n\n\"That's it!\" Hayley's voice interrupted, \"The fuel is flowing. Come back and we should be able to get going.\"");
+      }
+    },
+    '/ships/trs5s1/aclevel': {
+      'echo "council" > /ships/trs5s1/aclevel': function() {
+        data.computer_access_ok = true;
+        computer.fs.files['/ships/trs5s1/aclevel'] = 'council';
+        return reply("council");
+      }
+    }
+  }
+};
+
+act_7 = {
+  title: "2.2 Depot",
+  start: {
+    theme: 'inside',
+    text: "Richner's Log\nDate: " + (_.stardate(21)) + "\n\nSuddenly, a voice: \"-Fuel Depot 17A. Please respond on this channel for approach and docking instructions.\"\n\nI stumbled out of bed. We were at the depot already! Why hadn't Hayley woken me up?",
+    actions: {
+      "Wake Up": function() {
+        _.loop = ["\"Repeat, welcome to Fuel Depot 17A,\" a mechanical voice crackled through the intercom, \"Please respond on this channel for approach and docking instructions.\""];
+        return travel_to(act_7.nearby_dreams.crew_quarters);
+      }
+    }
+  },
+  nearby_dreams: between_dreams.with_autofac(data, {
+    flight_deck: {
+      actions: {
+        Look: {
+          "Outside": "The fuel depot was barely visible in the distance."
+        },
+        Speak: {
+          "\"Hayley! Are you there?\"": hidden_action((function() {
+            return !data.pinged_hayley;
+          }), function() {
+            data.pinged_hayley = true;
+            return reply("\"Yes, sorry, I'm here,\" Hayley replied. \"I was... remembering. It looks like we've reached the orbital fuel depot; I think they want to talk to us.\"");
+          }),
+          "\"Hayley, contact the depot.\"": hidden_action((function() {
+            return data.pinged_hayley;
+          }), function() {
+            _.loop = null;
+            return travel_to(act_7.docking_instructions);
+          })
+        }
+      }
+    },
+    cargo_bay: {
+      actions: {
+        Look: {
+          "At the Crate": function() {
+            if (data.muffled_the_crate) {
+              return reply("The solitary crate held the hemisphere I'd picked up on the Martian surface. It was draped in a thin faraday mesh.");
+            } else if (data.flight_plans_filed === 0) {
+              return reply("The solitary crate held the hemisphere I'd picked up on the Martian surface. It made a quiet droning noise, audible even through the crate's heavy shielding. I guess the shielding wasn't heavy enough.");
+            } else {
+              return menu({
+                '#': "The solitary crate held the hemisphere I'd picked up on the Martian surface. It made a quiet droning noise, audible even through the crate's heavy shielding. I guess the shielding wasn't heavy enough.\n     \n\"I think that's the source of the signal,\" Hayley added. \"It's very weak; another layer of faraday mesh would probably cover it.\"",
+                "Cover with Faraday Mesh": hidden_action((function() {
+                  return !data.muffled_the_crate && data.autofac.player_carried_object === "flexible faraday mesh";
+                }), function() {
+                  data.muffled_the_crate = true;
+                  data.autofac.player_carried_object = null;
+                  return reply("I carefully wrapped the crate with the faraday mesh. I could still hear the droning sound, but Hayley assured me that the crate was no longer transmitting.");
+                })
+              });
+            }
+          }
+        }
+      }
+    }
+  }),
+  docking_instructions: {
+    text: "\"Yes, right away,\" Hayley replied as she contacted the fuel depot.\n\nThe mechanical male voice crackled across the flight deck. \n\n\"Welcome to Fuel Depot 17A!\" the voice said enthusiastically, \"We appreciate your business. Before issuing your approach instructions, we need to collect some basic information in order to comply with Martian Council regulations. In your own words, what is your next destination?\"",
+    actions: {
+      Speak: {
+        "\"Jupit-\"": hidden_action((function() {
+          return !data.muffled_the_crate;
+        }), function() {
+          data.flight_plans_filed++;
+          return conversation([
+            "Before I could speak, the mechanical voice interrupted \"Coordinates received! Thank you for filing an official flight plan with the Martian Council.\"\n  \nThe depot's tone shifted, \"Please be advised that your destination on the Martian surface is within an active quarantine zone. Violation of a Council quarantine zone may result in suspension of your pilots license, seizure of your vessel, and up to eight years imprisonment.\"", "\"No, wait-\"", "\"You are not cleared to dock,\" the voice concluded.", "\"Hayley, what coordinates did you send?\"", "\"I didn't,\" Hayley replied, \"I'm tracing the source of the signal now... I think it came from somewhere onboard. It's very faint, but it must have gotten picked up by the comm relay.\"", "\"I'll see if I can find it.\"", function() {
+              return travel_to(act_7.nearby_dreams.flight_deck);
+            }
+          ]);
+        }),
+        "\"Jupiter, Station Sigma Six\"": hidden_action((function() {
+          return data.muffled_the_crate;
+        }), function() {
+          data.flight_plans_filed++;
+          return conversation([
+            "\"Thank you for filing an offical flight plan with the Martian Council,\" the voice replied. \"You are now cleared to arrive, vector two-two-three mark one-eight.\"\n\nIt took the last of our thruster fuel, but a few minutes later we made positive contact with one the depot's fuel trusses. \n\nThe mechanical voice returned. \"Thank you for your patronage. We detect you have -- zero -- kilograms of remaining fuel. What would you like to purchase today?\"", "\"Standard nuclear-thermal, 4800 kilos\"", "\"We're sorry,\" the voice replied, \"this station does not have that type of fuel in stock. The next delivery from crawler six is expected to arrive within unknown days.\"\n\nI motioned for Hayley to mute the comm line.", "\"Crawler six?\"", "\"That's the crawler we saw on the surface, wasn't it?\" I asked. \n\n\"It was,\" Hayley replied, \"and we don't have enough fuel to reach another depot. We're going to be stuck here for a long time... unless we can find a way to release the station's emergency reserve. There should be a console on that fuel truss; take one of the cores aboard and I'll link in.\"", "\"There is no way that we're doing that again.\"", "\"I'll go over and do it manually,\" I added.\n\n\"Alright,\" Hayley replied, \"but you'll have to find a way to convince the station that we're an official Council vessel. Once that's done, we should be able to requisition the emergency reserve and be on our way.\"", "Stand Up", function() {
+              data.autofac.has_raw_material = true;
+              return travel_to(act_7.docked_dreams.flight_deck);
+            }
+          ]);
+        })
+      }
+    }
+  },
+  docked_dreams: between_dreams.with_autofac(data, {
+    flight_deck: {
+      actions: {
+        Look: {
+          Outside: "The depot's fuel truss extended several hundred meters past the Dreams."
+        },
+        Speak: {
+          "\"Hayley, any ideas?\"": hidden_action((function() {
+            return !data.computer_flow_started;
+          }), function() {
+            return reply("\"You're going to have to convince the station to release the emergency fuel reserve,\" she replied. \"See if you can convince it we're a Council vessel.\"");
+          }),
+          "\"Fuel status?\"": hidden_action((function() {
+            return data.computer_flow_started && !data.station_fried;
+          }), function() {
+            data.need_to_fry_station = true;
+            return conversation([
+              "\"We're tanked up and ready to go,\" Hayley replied, \"disengaging umbilical now.\"\n\nThe mechanical voice filled the cabin again. \"Hello! You have filed " + data.flight_plans_filed + " contradictory flight plans with the Martian Council. Please wait for a Mars Transport official to contact you regarding this discrepancy.\"", "\"Disengage anyway\"", "The voice continued, \"Please note that undocking at this time will result in damage to your vessel, fines, and a warrant issued for your immediate arrest. Thank you for choosing Fuel Depot 17A.\"\n\nThe channel clicked off.\n\n\"You're going to have to head over there again,\" Hayley said hesitantly. \"The depot hasn't transmitted anything yet, so if you can fry that data center, we might be able to get away undetected.", "Stand up", function() {
+                return travel_to(act_7.docked_dreams.flight_deck);
+              }
+            ]);
+          }),
+          "\"Get us out of here!\"": hidden_action((function() {
+            return data.station_fried;
+          }), function() {
+            return reply("\"The station is totally dead,\" Hayley said hesitantly, \"we should be clear to leave. Disengaging umbilical now... done. Course is plotted for Jupiter Station Sigma Six. Estimated arrival is tee plus one hundred thirty five days.\"\n              \n\"Get some sleep,\" she added, \"this is going to be a long one.\"", function() {
+              return _.menu_no_backsies({
+                "\"I will.\"": function() {
+                  return travel_to(act_7.sleepy_dreams.flight_deck);
+                }
+              });
+            });
+          })
+        }
+      }
+    },
+    exterior_top: {
+      'text+': "It was tricky to navigate around the depot's fuel truss, but with some care I could move past it.",
+      actions: {
+        Look: {
+          'Around+': "The depot's fuel truss extended upward for several hundred meters.",
+          "At the Fuel Truss": "The fuel truss was a triangular polysteel structure attached to the Dreams' docking adapter. The truss extended upward for several hundred meters where it eventually met the fuel depot's core.\n   \n Within the truss, a bundle of fuel, power, and data lines connected the Dreams' starboard umbilical to the depot's supplies. An identical bundle hovered above the port umbilical, but were unable to make contact while the hatch cover was seized shut.\n                  \n The station extended eight identical trusses in total: six were arranged in a ring around the depot's cylindrical tanks, and two more extended from the station's fore and aft. None of the other trusses were occupied."
+        },
+        Go: {
+          Up: function() {
+            return travel_to(act_7.fuel_depot_truss);
+          }
+        }
+      }
+    },
+    exterior_aft: {
+      'text+': "The depot's fuel truss was visible above the Dreams."
+    },
+    exterior_port: {
+      'text+': "The depot's fuel truss was visible above the Dreams."
+    },
+    exterior_starboard: {
+      'text+': "The depot's fuel truss was visible above the Dreams."
+    }
+  }),
+  fuel_depot_truss: {
+    text: "Carefully manipulating the controls on my flight suit, I floated along the station's fuel truss.\n\nThe Dreams was docked along one end; the depot's core was visible at the other.",
+    actions: {
+      Look: {
+        Around: "The truss' triangular polysteel structure extended for several hundred meters in either direction."
+      },
+      Go: {
+        "Toward the Depot": function() {
+          return travel_to(act_7.fuel_depot_exterior);
+        },
+        "Toward the Dreams": function() {
+          return travel_to(act_7.docked_dreams.exterior_top);
+        }
+      }
+    }
+  },
+  fuel_depot_exterior: {
+    text: "I floated outside the fuel depot.\n\nEight trusses extended outward from the station; six arranged in a ring around the station's cylindrical fuel tanks, and two more to fore and aft.",
+    actions: {
+      Look: {
+        "At the Station": "The station was a mass of cylindrical fuel tanks and thick flexihose fuel lines.",
+        "For the Dreams": "The Between Dreams was docked against the truss to my left."
+      },
+      Go: {
+        "Around the Station": function() {
+          return travel_to(act_7.fuel_depot_exterior_2);
+        },
+        "To a Truss": {
+          "Closest Truss": function() {
+            return travel_to(act_7.other_truss);
+          },
+          "Top Truss": function() {
+            return travel_to(act_7.other_truss);
+          },
+          "Right Truss": function() {
+            return travel_to(act_7.other_truss);
+          },
+          "Bottom Truss": function() {
+            return travel_to(act_7.other_truss);
+          },
+          "Left Truss": function() {
+            return travel_to(act_7.fuel_depot_truss);
+          },
+          "Farthest Truss": function() {
+            return travel_to(act_7.other_truss);
+          },
+          "Fore Truss": function() {
+            return travel_to(act_7.other_truss);
+          },
+          "Aft Truss": function() {
+            return travel_to(act_7.other_truss);
+          }
+        }
+      }
+    }
+  },
+  other_truss: {
+    text: "I drifted along the truss.",
+    actions: {
+      Go: {
+        "Toward the Depot": function() {
+          return travel_to(act_7.fuel_depot_exterior);
+        },
+        "Toward the End": function() {
+          return travel_to(act_7.fuel_depot_truss_unoccupied);
+        }
+      }
+    }
+  },
+  fuel_depot_truss_unoccupied: {
+    text: "I reached the end of the truss. No ship was docked here.",
+    actions: {
+      Go: {
+        Up: function() {
+          return travel_to(act_7.other_truss);
+        }
+      }
+    }
+  },
+  fuel_depot_exterior_2: {
+    theme: 'blackout',
+    text: "I moved around the outside of the station.",
+    actions: {
+      Look: {
+        Around: function() {
+          data.found_entry = true;
+          return reply("The station was a mass of cylindrical fuel tanks and thick flexihose fuel lines.\n\nI could see a small capsule bolted to one of the fuel tanks, with a one-meter access hatch installed on the side.");
+        },
+        "At the Access Hatch": hidden_action((function() {
+          return data.found_entry;
+        }), function() {
+          return reply("The access hatch was round, one meter in diameter, and featured a digital locking assembly to one side. The lock looked just like a thousand others: electrically insulated and vacuum-proof, but vulnerable to a few of my favorite tools.");
+        }),
+        "For the Between Dreams": "I couldn't find the Dreams anywhere."
+      },
+      Go: {
+        "Into the Hatch": hidden_action((function() {
+          return data.found_entry;
+        }), function() {
+          if (data.opened_hatch) {
+            return travel_to(act_7.fuel_depot_interior);
+          }
+          return reply("I moved toward the hatch.\n\nA voice crackled in my helmet: \"You have requested physical access to Fuel Depot 17A. Your current access status is: Access Denied.\"\n\nThat mechanical voice was starting to get on my nerves.", {
+            "Smash It": hidden_action((function() {
+              return data.autofac.player_carried_object === "hammer";
+            }), function() {
+              data.opened_hatch = true;
+              return reply("Bracing myself against a nearby polysteel support, I swung the hammer against the hatch's locking assembly. It shattered into a thousand pieces, and the hatch clicked open.", function() {
+                return menu_no_backsies({
+                  "That was satisfying.": function() {
+                    return travel_to(act_7.fuel_depot_interior);
+                  }
+                });
+              });
+            }),
+            "Pick the Lock": hidden_action((function() {
+              return data.autofac.player_carried_object === "digipick";
+            }), function() {
+              data.opened_hatch = true;
+              return reply("I carefully inserted the digipick into the hatch's locking assembly.\n\n\"One moment...\" Hayley said in my ear, \"That should do it.\"\n\nThe hatch clicked open.", function() {
+                return menu_no_backsies({
+                  "Enter Hatch": function() {
+                    return travel_to(act_7.fuel_depot_interior);
+                  }
+                });
+              });
+            }),
+            "Tase the Lock": hidden_action((function() {
+              return data.autofac.player_carried_object === "taser";
+            }), function() {
+              return reply("I pressed the taser against the locking assembly, but nothing happened. I guess that's why it was covered with thick electrical insulation.\n                  \nAfter coming all this way, I really just wanted to smash it.");
+            })
+          });
+        }),
+        "Around the Station": function() {
+          return travel_to(act_7.fuel_depot_exterior);
+        },
+        "To the Between Dreams": function() {
+          return reply("The Dreams was gone! I couldn't see her anywhere.");
+        }
+      }
+    }
+  },
+  fuel_depot_interior: {
+    theme: 'inside-dim',
+    text: "I floated inside the fuel depot's access room.\n\nA computer console was installed along one wall, as well as a large cluster of thin silver data fibers. It looked like this compartment was one of the station's data cores.",
+    actions: {
+      Look: {
+        "At the Computer": function() {
+          if (data.station_fried) {
+            return reply("The computer was fried.");
+          }
+          return travel_to(act_7.fuel_depot_computer);
+        },
+        "At the Data Fibers": function() {
+          return reply("The data fibers covered the wall like a thick moss. The individual fibers looked electronic, rather than optical, and they were poorly insulated.\n\nIt looked like this data core had been constructed in a hurry.", {
+            "Tase Them": hidden_action((function() {
+              return data.need_to_fry_station && !data.station_fried;
+            }), function() {
+              data.station_fried = true;
+              return reply("I pressed the taser against the lines and watched as they carried sparks clear across the room. The computer display shorted out.\n\n\"That's it,\" Hayley's voice filled my helmet, \"the station is offline, and it didn't transmit anything. We should be able to leave.\"");
+            })
+          });
+        }
+      },
+      Go: {
+        Outside: function() {
+          return travel_to(act_7.fuel_depot_exterior_2);
+        }
+      }
+    }
+  },
+  fuel_depot_computer: {
+    text: "\"You know,\" Hayley said through my helmet, \"this would be a lot easier if you'd let me interface with the depot directly.\"\n\n\"After what happened with the crawler, I don't think that's a good idea,\" I replied. \"This won't be too difficult; I'll look for the big button that says 'start fuel flow'.\"\n\nI immediately regretted saying that. The computer was featureless except for a prompt:\n\n$ ",
+    actions: {
+      Type: function() {
+        var cwd_contents, dir, options, path, _fn, _i, _len, _ref;
+        options = {
+          ls: null,
+          cd: {
+            "..": hidden_action((function() {
+              return data.computer_path.length > 1;
+            }), function() {
+              data.computer_path = data.computer_path.split("/").slice(0, -2).join("/") + '/';
+              return reply((data.computer_path.length > 1 ? data.computer_path.slice(0, -1) : data.computer_path));
+            })
+          },
+          cat: {},
+          pwd: function() {
+            return reply((data.computer_path.length > 1 ? data.computer_path.slice(0, -1) : data.computer_path));
+          }
+        };
+        path = data.computer_path;
+        cwd_contents = [];
+        _ref = computer.fs.dirs.sort();
+        _fn = function(dir) {
+          var path_item;
+          path_item = dir.slice(path.length);
+          if (dir.slice(0, path.length) !== path) {
+            return;
+          }
+          if (path_item.length < 2) {
+            return;
+          }
+          if (__indexOf.call(path_item, "/") >= 0) {
+            return;
+          }
+          cwd_contents.push(path_item);
+          options.cd[path_item] = function() {
+            if (!(computer.fs.dirs.join("\n").indexOf(dir + "/") > -1)) {
+              console.log('nad', dir + "/", computer.fs.dirs.join("\n"));
+              return reply("-spsh: " + dir + ": Not a directory");
+            }
+            data.computer_path = dir + '/';
+            return reply(dir);
+          };
+          return options.cat[path_item] = function() {
+            if (__indexOf.call(Object.keys(computer.fs.files), dir) >= 0) {
+              return reply(computer.fs.files[dir], computer.actions[dir]);
+            } else if (computer.fs.dirs.join('\n').indexOf(dir + '/') > -1) {
+              return reply("cat: " + dir + ": Is a directory");
+            } else {
+              return reply("-spsh: " + dir + ": Permission Denied");
+            }
+          };
+        };
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          dir = _ref[_i];
+          _fn(dir);
+        }
+        options.ls = function() {
+          return reply(("total " + cwd_contents.length + "\n") + cwd_contents.sort().join("\n"));
+        };
+        return menu(options);
+      },
+      Step: {
+        Back: function() {
+          return travel_to(act_7.fuel_depot_interior);
+        }
+      }
+    }
+  },
+  sleepy_dreams: between_dreams["with"]({
+    crew_quarters: {
+      actions: {
+        Look: {
+          "At the Bed": {
+            '#': between_dreams.base.crew_quarters.actions.Look["At the Bed"],
+            "Sleep": function() {
+              return reply("I set the life support unit to sedate me, and drifted into a dreamless sleep.\n\nThis was going to be a long one.", {
+                "18 Hours Later": function() {
+                  return _.start_act(act_8);
+                }
+              });
+            }
+          }
+        }
+      }
+    }
+  })
+};
+
+module.exports = act_7;
+
+
+
+},{"../app/app.coffee":1,"./act-8-interlude.coffee":14,"./between-dreams.coffee":17,"./depot-computer-filesystem.coffee":18}],14:[function(require,module,exports){
+var act_8, act_9, add_action, between_dreams, conversation, data, day, days, extend, hidden_action, menu, repairable, reply, today, travel_to, _;
+
+between_dreams = require('./between-dreams.coffee');
+
+act_9 = require('./act-9-angels.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+conversation = _.conversation;
+
+days = {
+  day_1: {
+    journal: "Richner's Log\nDate: " + (_.stardate(21 + 1)) + "\n\nInterlude, Day 1\n\nI was looking forward to this interlude. It would be a 135 day journey from Mars to Jupiter Station Sigma Six, and with any luck I'd be able to sleep through most of it.  After my adventure on Mars, I was looking forward to escaping for a while.\n\nThis wasn't my first interlude, and I knew the routine. The most important thing was to stay healthy: eat, shower, and stretch first thing every day. Then find something mentally stimulating to do for the next few hours: fix the ship, chat with Hayley, check my messages. Then back to bed, and repeat when the sleep system woke me up again.\n\nHayley let me know she was running a self-diagnostic today, and might be offline for the next few hours.",
+    can_repeat_messages: true,
+    messages: "I retasked one of the flight consoles to display a messaging interface. \n\nEven at the speed of light, communication across interplanetary distances was slow. Even if I could establish a realtime voice link, it wouldn't be much use while I was asleep, and these days I slept more than I was awake.\n\nInstead, I relied on a simple text-based messaging system. Messages could be resent until properly received, read whenever I was awake, and replied to whenever was convenient.\n\nNo messages had arrived. I'd check again tomorrow."
+  },
+  day_12: {
+    journal: "Richner's Log\nDate: " + (_.stardate(21 + 12)) + "\n\nInterlude, Day 12\n\nAnother restful sleep, another restful day. I looked forward to my morning meal and my shower. My hand was still recovering from the burn I got on Mars, but stretching out my fingers seemed to be helping.\n\nHayley was running another diagnostic, but she wouldn't admit anything was wrong. I was worried it might be something related to that trojan we picked up on Mars. I decided I should send a message to my contact at Sigma Six; maybe he knew someone she could talk to about it.",
+    messages: "I sent a message to my contact at Sigma Six, asking if he knew anyone who could help with a flight computer problem unique to the Dreams.\n\nI never knew who might intercept my messages, and letting them find out that something was wrong with Hayley could be dangerous. In fact, letting them know that Hayley existed at all could be dangerous; as far as I knew, she was unique in the universe."
+  },
+  day_29: {
+    journal: "Richner's Log\nDate: " + (_.stardate(21 + 29)) + "\n\nInterlude, Day 29\n\nI noticed a faint red light on the life support manifold, and it made it difficult to sleep. My normally dreamless sleep was punctuated by nightmares: floating in the void with nothing but my flight suit and an intense feeling that something was behind me... but I couldn't turn around.\n\nI tried put the feeling out of my mind. I was on an interlude; I was supposed to be resting. I just needed to try harder to keep busy.",
+    messages: "A reply had arrived from my contact at Sigma Six. He told me he was sorry he couldn't help our friend, but he didn't know anyone with that kind of expertise. He said he'd ask around, discreetly, and let me know if he found anyone.\n\nI wasn't too worried; Hayley seemed back to normal. She was evasive when I asked about the diagnostics, but that was probably just her sense of pride."
+  },
+  day_65: {
+    journal: "Richner's Log\nDate: " + (_.stardate(21 + 65)) + "\n\nInterlude, Day 65\n\nMy nightmares were getting worse. \n\nI drifed in and out of consciousness, seeing shapes in the shadows and hearing sounds from outside the hull. In my half-sleep I learned that there was something in the void; something that was following my ship, something that wanted me to find it. Something that wouldn't let go.\n\nWhen I awoke, I had Hayley run a full active sensor sweep. She didn't find anything, but I couldn't shake the feeling that something was still out there.\n            \nWorse, Hayley told me she needed to run another series of diagnostics. I thought everything had passed last time, but she told me she just wanted to be sure.\n\nI had to make it to Sigma Six, for Hayley and for my own sanity.",
+    messages: function() {
+      return conversation(["Another message had arrived from Sigma Six. My contact had found someone who was interested in helping Hayley; he went by an alias, and was apparently quite difficult to find. Nevertheless, my contact assured me that he was trustworthy, and he'd been helping out around the station for many years.", "Contact Mr. Asteraceae", "I wrote a message to Mr. Asteraceae asking a few introductory questions. I didn't trust him, but I knew Hayley was getting worse."]);
+    }
+  },
+  day_112: {
+    journal: "Richner's Log\nDate: " + (_.stardate(21 + 112)) + "\n\nInterlude, Day 112\n\nThe nightmares were getting worse.\n\nHayley was offline nearly continuously now; she was lucid for a few moments here and there, but mostly stayed locked in her never-ending cycle of diagnostics and tests.\n\nAnd then, I finally heard it. A tapping sound, coming through the hull, while I was wide awake. Something was trying to get in. I chased the sound to the flight deck, but by the time I reached it, the hull was silent again.\n\nI looked more closely. \n\nEven though the sound had stopped, I could make out faint shapes forming in the blackness of space. They looked like... angels. Angels in the void. Angels following me, trying to get aboard my ship.\n\nWho were they? What did they want? Why were they hiding from my sensors?\n\nAngels or not, I had to keep going. I had to make it to Sigma Six.",
+    messages: "I received a reply from Asteraceae. He passed my tests, and his answers seemed honest, but it felt like he knew more than he was letting on.\n\nHayley read the reply during one of her few lucid moments. She told me that she trusted him, and asked me to give him whatever help he needed. She must have known she was in trouble.\n\nI was now less a month away from Jupiter; I sent a message back to arrange a meeting."
+  }
+};
+
+for (day in days) {
+  data = days[day];
+  data.name = day;
+}
+
+today = days.day_1;
+
+data = {
+  repairs: {},
+  available_pickups: {}
+};
+
+act_8 = null;
+
+repairable = function(options) {
+  return function() {
+    var menu_options;
+    if (!data.repairs[options.name]) {
+      if (today.did_repair) {
+        return reply("It was going to be a long interlude, and I'd run out of things to do tomorrow if I worked too hard today.");
+      }
+      return reply(options.damage, {
+        "Repair it": function() {
+          if (data.autofac.player_carried_object == null) {
+            return reply("I'd need something to repair it with.");
+          } else if (data.autofac.player_carried_object !== options.fix_with) {
+            return reply("I couldn't use the " + data.autofac.player_carried_object + " to repair the " + options.name + ".");
+          } else {
+            data.autofac.player_carried_object = null;
+            data.available_pickups[options.name] = true;
+            data.repairs[options.name] = true;
+            today.did_repair = true;
+            return reply(options.fix);
+          }
+        }
+      });
+    } else {
+      menu_options = {};
+      menu_options["Pick up the " + options.recover] = hidden_action((function() {
+        return data.available_pickups[options.name];
+      }), function() {
+        data.available_pickups[options.name] = false;
+        data.autofac.player_carried_object = options.recover;
+        return reply("I picked up the " + options.recover + ".");
+      });
+      return reply(options.fixed, menu_options);
+    }
+  };
+};
+
+act_8 = {
+  title: "2.3 Interlude",
+  start: {
+    theme: 'inside-dim',
+    text: function() {
+      return today.journal;
+    },
+    actions: {
+      "Get out of bed": function() {
+        return travel_to(act_8.interlude_dreams.crew_quarters);
+      }
+    }
+  },
+  interlude_dreams: between_dreams.with_autofac(data, {
+    flight_deck: {
+      'text+': "A list of damaged systems was visible on one of the flight controls.",
+      actions: {
+        Look: {
+          "At the Flight Controls": function() {
+            var is_ok, readout;
+            is_ok = true;
+            readout = function(variables) {
+              var failures, v, _i, _len;
+              failures = 0;
+              for (_i = 0, _len = variables.length; _i < _len; _i++) {
+                v = variables[_i];
+                if (!data.repairs[v]) {
+                  failures += 1;
+                }
+              }
+              if (failures > 0) {
+                is_ok = false;
+              }
+              if (failures === 0) {
+                return "OK";
+              }
+              return failures + " Failure" + (failures > 1 ? 's' : '');
+            };
+            reply("The Dreams' latest self-diagnostic scrolled across one of the flight control surfaces:\n\nFlight Deck: OK\nOperations Center: " + (readout(['fuel crossfeed line'])) + "\nCrew Quarters: " + (readout(['flight suit'])) + "\nSuperstructure: " + (readout(['starboard radiator line'])) + "\nAirlock: " + (readout(['hydraulic line', 'port-side umbilical'])) + "\nCargo Bay: OK\n\nDiagnostic " + (is_ok ? "Passed" : "Failed") + ".");
+            if (is_ok) {
+              data.repairs_complete = true;
+            }
+            return null;
+          },
+          "At the Messages Console": function() {
+            if (today.did_messages && !today.can_repeat_messages) {
+              return reply("I'd already checked for messages today, and I didn't expect anything new to arrive in the next few minutes.");
+            }
+            today.did_messages = true;
+            return _.execute(today.messages);
+          }
+        }
+      }
+    },
+    operations_center: {
+      actions: {
+        Look: {
+          "At the Floor": repairable({
+            name: "fuel crossfeed line",
+            damage: "My frantic patch attempt had held but the crossfeed line was still shot.",
+            fix_with: "fuel line",
+            recover: "patch fragments",
+            fix: "Removing the floor grating once again, I replaced the damaged fuel crossfeed line and neatly stacked the fragments of the hull patches that hadn't held.",
+            fixed: "The fuel converter was still missing, but at least we could pump fuel between the tanks again."
+          })
+        }
+      }
+    },
+    airlock: {
+      actions: {
+        Look: {
+          "At the Hydraulic Lines": repairable({
+            name: "hydraulic line",
+            damage: "The port-side actuator's top hydraulic line was still split from the landing.",
+            fix_with: "hydraulic line",
+            recover: "synthetic rubber hose",
+            fix: "I carefully reached into the latching assembly and disconnected the damaged hydraulic line from the actuator and the aft bulkhead. Pulling it free, I discovered why it had burst: rather than standard flexihose, this line was made from some type of synthetic rubber.\n\nI replaced it with the proper flexihose line.",
+            fixed: "The vertical latching assembly appeared to be in working order."
+          })
+        }
+      }
+    },
+    crew_quarters: {
+      theme: 'inside',
+      actions: {
+        Look: {
+          "At my Personal Effects": repairable({
+            name: "flight suit",
+            damage: "I'd stowed my damaged flight suit back under my bed, but it wasn't much use with a cracked helmet.",
+            fix_with: "flight suit collar",
+            recover: "cracked helmet",
+            fix: "I carefully removed the damaged flight suit from the access panel under the bed, and removed the thick collar that held the cracked helmet. It was simple to replace; the suit was designed to be easy to don in an emergency, so the collar was easily removable.",
+            fixed: "I felt a lot better having a spare flight suit again."
+          }),
+          "At the Cooking Space": {
+            '#': '#',
+            "Eat": function() {
+              today.did_eat = true;
+              return reply("I removed a single serving of engineered food from its wrapper, and mixed it carefully with water. I fried the resulting paste on the cooking surface, and ate it quickly. It wasn't much, but at least I wasn't hungry anymore.");
+            }
+          },
+          "At the Shower Stall": {
+            '#': '#',
+            "Shower": function() {
+              today.did_shower = true;
+              return reply("I carefully removed my flight suit and stepped into the shower. It was hot, and it made me feel better.");
+            }
+          },
+          "At the Bed": {
+            '#': '#',
+            "Sleep": function() {
+              var day_names, tomorrow, tomorrow_name;
+              if (!today.did_eat) {
+                return reply("I needed to eat before I could sleep again.");
+              }
+              if (!today.did_shower) {
+                return reply("I felt too dirty to go back to bed.");
+              }
+              if (!today.did_stretch) {
+                return reply("I was sore from sleeping so much; I hoped finding a place to stretch would help.");
+              }
+              if (!today.did_messages) {
+                return reply("I needed to make sure I hadn't missed any messages.");
+              }
+              if (!today.did_repair) {
+                return reply("I'd only just gotten up; I wanted to find something useful to do before I went back to sleep.");
+              }
+              day_names = Object.keys(days);
+              tomorrow_name = day_names[day_names.indexOf(today.name) + 1];
+              if (tomorrow_name != null) {
+                tomorrow = days[tomorrow_name];
+                today = tomorrow;
+                return travel_to(act_8.start);
+              } else {
+                return _.start_act(act_9);
+              }
+            }
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      actions: {
+        Stretch: function() {
+          if (today.did_stretch) {
+            return reply("I'd already stretched today.");
+          }
+          today.did_stretch = true;
+          return reply("The cargo bay was the only place on the ship that I could properly stretch.\n\nI reached for the air; I reached for my toes. I bent this way, and that way, and every way I could think of.\n\nThe soreness of sleep melted away.");
+        }
+      }
+    },
+    exterior_top: {
+      actions: {
+        Look: {
+          "At the Docking Assembly": repairable({
+            name: "port-side umbilical",
+            damage: "The port-side umbilical hatch cover was still seized from the crash.",
+            fix_with: "small hatch cover",
+            recover: "seized hatch cover",
+            fix: "I removed the 16 tiny bolts that held the hatch cover in place.\n\nThe solenoid that normally permitted access to the umbilical was shattered; a piece of debris must have broken off farther forward and struck the hatch.\n\nI replaced it with the new hatch cover and replaced the tiny screws.",
+            fixed: "The replacement hatch cover opened and closed normally."
+          })
+        }
+      }
+    },
+    exterior_starboard: {
+      actions: {
+        Look: {
+          "At the Wing": repairable({
+            name: "starboard radiator line",
+            damage: "The wing was mostly undamaged, except for the bent radiator line that I'd used to climb onto the Dreams' roof.",
+            fix_with: "radiator line",
+            recover: "bent radiator line",
+            fix: "I carefully closed the radiator valves leading to the bent line, disconnected it, and replaced it.",
+            fixed: "With the damaged radiator line replaced, the starboard wing almost looked new."
+          })
+        }
+      }
+    }
+  })
+};
+
+module.exports = act_8;
+
+
+
+},{"../app/app.coffee":1,"./act-9-angels.coffee":15,"./between-dreams.coffee":17}],15:[function(require,module,exports){
+var act_9, add_action, between_dreams, extend, hidden_action, menu, reply, travel_to, _;
+
+between_dreams = require('./between-dreams.coffee');
+
+_ = require('../app/app.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+extend = _.extend;
+
+hidden_action = _.hidden_action;
+
+act_9 = {
+  title: "2.4 Angels",
+  start: {
+    theme: 'inside-dim',
+    text: "Richner's Log\nDate: " + (_.stardate(130)) + "\n\nInterlude, Day 130\n\nQuiet and dark.",
+    actions: {}
+  }
+};
+
+module.exports = act_9;
+
+
+
+},{"../app/app.coffee":1,"./between-dreams.coffee":17}],16:[function(require,module,exports){
+var available_parts, create_autofac, menu, menu_no_backsies, reply, _;
+
+_ = require('../app/app.coffee');
+
+reply = _.reply;
+
+menu = _.menu;
+
+menu_no_backsies = _.menu_no_backsies;
+
+available_parts = {
+  Tools: ["Digipick", "Hammer", "Pylon", "Taser", "Pair of Scissors", "Level"],
+  Apparel: ["Flight Suit Boots", "Flight Suit Gloves", "Flight Suit Pants", "Flight Suit Jacket", "Flight Suit Collar"],
+  Structural: ["Small Hatch Cover", "Large Hatch Cover", "Engine Pod Casing", "Radiator Panel"],
+  Parts: ["Control Surface", "Radiator Line", "Fuel Line", "Hydraulic Line", "Atmosphere Line"],
+  Misc: ["Pet Cube", "Fluffy Pink Bunny", "Flexible Faraday Mesh", "Yoda Head"]
+};
+
+create_autofac = function(act_data) {
+  var autofac, data;
+  if (act_data.autofac == null) {
+    act_data.autofac = {
+      player_carried_object: null,
+      has_raw_material: true
+    };
+  }
+  data = act_data.autofac;
+  return autofac = {
+    '#': "The ship's autofac was a glistening semi-transparent cube. It was capable of digitally manufacturing replacement parts, even when the Dreams was months away from resupply.\n                   \nThe autofac could also construct a huge number of items from the  ship's database, or anything I found time to design during an interlude.\n                   \nI'd spent many cheerful hours designing gadgets and gizmos of all kinds, tweaking them, improving them, and eventually feeding them back into the autofac's recycler.",
+    "Construct": function() {
+      var build_the_part, category, options, part, parts, _i, _len, _ref;
+      if (data.player_carried_object != null) {
+        return reply("I couldn't operate the autofac's construction controls while I held the " + data.player_carried_object + ".");
+      } else {
+        build_the_part = function(part) {
+          return function() {
+            if (!data.has_raw_material) {
+              return reply("The autofac's screen flashed red:\n\n\"Error: Insufficient source material // please use recycler.\"");
+            }
+            data.has_raw_material = false;
+            data.player_carried_object = part;
+            return reply("Over the course of the next few hours, the autofac fabricated the " + part + ". I carefully picked it up from the build surface.");
+          };
+        };
+        options = {};
+        for (category in available_parts) {
+          parts = available_parts[category];
+          options[category] = {};
+          _ref = parts.sort();
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            part = _ref[_i];
+            options[category][part] = build_the_part(part.toLowerCase());
+          }
+        }
+        return menu(options);
+      }
+    },
+    "Recycle": function() {
+      var mo;
+      if (data.player_carried_object != null) {
+        mo = {
+          "Activate Recycler": function() {
+            var recycled_object;
+            recycled_object = data.player_carried_object;
+            data.has_raw_material = true;
+            data.player_carried_object = null;
+            return reply("The autofac's recycler spun to life, deconstructing the " + recycled_object + " into thousands of tiny reusable pieces.");
+          }
+        };
+        mo["Pick up the " + data.player_carried_object] = function() {
+          return reply("I picked up the " + data.player_carried_object + ".");
+        };
+        return reply("I placed the " + data.player_carried_object + " into the autofac's recycler.", function() {
+          return menu_no_backsies(mo);
+        });
+      } else {
+        return reply("I didn't have anything to place in the recycler.");
+      }
+    }
+  };
+};
+
+module.exports = {
+  "with": function(data) {
+    return create_autofac(data);
+  },
+  customizations: function(data) {
+    var between_dreams_autofac;
+    return between_dreams_autofac = {
+      operations_center: {
+        actions: {
+          Look: {
+            "At the Autofac": create_autofac(data)
+          }
+        }
+      }
+    };
+  }
+};
+
+
+
+},{"../app/app.coffee":1}],17:[function(require,module,exports){
+var add_action, autofac, construct_between_dreams, control_action, engine_pod_description, hidden_action, menu, reply, travel_to, _;
+
+_ = require('../app/app.coffee');
+
+autofac = require('./autofac.coffee');
+
+travel_to = _.travel_to;
+
+menu = _.menu;
+
+reply = _.reply;
+
+add_action = _.add_action;
+
+hidden_action = _.hidden_action;
+
+control_action = function(data, options) {
+  return hidden_action((function() {
+    return options.visible_when;
+  }), function() {
+    if (options.failed_when) {
+      return reply(options.failed_message);
+    }
+    if (data.controls_disabled) {
+      return reply(data.controls_disabled_message);
+    }
+    if (options.is_bad_idea_when) {
+      return reply(options.bad_idea_message);
+    }
+    options.action();
+    return reply(options.message);
+  });
+};
+
+engine_pod_description = "The Between Dreams' engine pods were standard Emery-Oxide combined cycle nuclear-thermal engines.\n\nThey contained three main components: a compact deuterium fusion reactor, providing power and heat; a supercompressed aerospike rocket engine, providing up to two earth-gravities of thrust for planetary operations; and a thermal ion thruster, providing extremely efficient long-duration thrust for interplanetary transfers.\n\nA full load of fuel allowed the Dreams to either take off from, land on, or transfer to nearly any planet in the system. Combined with the formerly installed fuel converter, I flew one of the few ships in the system that could quietly pick up or drop off a package from a planet or moon without the local authorities even knowing I was in the SOI.";
+
+construct_between_dreams = function() {
+  var between_dreams;
+  return between_dreams = {
+    flight_deck: {
+      text: "I stood on the flight deck of the Between Dreams.\n\nA pilot's seat was mounted in the center of the room, and a curved window offered a generous view outside. A pressure door led aft to the ship's operations center.",
+      actions: {
+        Look: {
+          Around: "The flight deck was the Between Dreams' forward-most compartment. \n\nThe room was a rough grey cylinder, six meters long and five meters in diameter, tapered to a point at the front. A large curved window was inset into the polysteel hull, providing clear visibility from any angle. Most modern ships use a closed-loop camera system rather than an actual window; whoever designed the Dreams must have had a flare for the dramatic.\n\nIn the center of the room was the pilot's seat, surrounded by glossy control surfaces mounted on a thin metal web. The surfaces combined holographic displays with haptic controls, allowing a skilled pilot to feel the console as well as they could see it. The controls were in an unusual arrangement, but no more unusual than the rest of the Dreams. \n\nBehind the control cluster was an pressure door; the first of four that separated the Dreams' five compartments. The word \"Operations\" was inscribed on the door, and a small window framed the room beyond.",
+          Outside: "I stared out of the window at the vast nothingness of space.",
+          "At the Flight Controls": "The flight controls were powered down; I didn't need them.",
+          "At the Pilot's Chair": "The pilot's seat was a curved polysteel chair, covered in a fine red mesh. It was bolstered on the sides to prevent its occupant from leaving prematurely, and criss-crossed with a five point crash harness.\n\nA bright orange medical kit was affixed to the startboard side of the chair, carefully positioned to be out of reach of anyone who needed it.\n\nI'd spent a lot of time in that chair, but somehow it looked brand new."
+        },
+        Go: {
+          Aft: function() {
+            return travel_to(between_dreams.operations_center);
+          }
+        }
+      }
+    },
+    operations_center: {
+      text: "I passed through the pressure door and entered the operations center.\n\nThe compartment was filled with cabinets and panels of various shapes and sizes. At its fore and aft, pressure doors led to the flight deck and crew quarters, respectively.\n\nIt looked like Hayley had gotten the autofac back online.",
+      actions: {
+        Look: {
+          Around: "Operations was the Dreams' heart and soul. The room was the same squat cylindrical shape as the flight deck, but it felt far more crowded. \n\nThe room held the ship's autofac, flight computers, AI core, power distributor, and the remains of the fuel converter; as well as access panels leading to the wing tanks.",
+          "At the Autofac": "The autofac was busy running some sort of self-diagnostic.",
+          "At the Computers": "Two full-height black cabinets held the flight computers and the ship's AI core.\n\nHayley's AI core was a featureless black cabinet, and it held the ship's only emergency radiothermal generator.\n\nThe flight computer cabinet held three identical high-speed cores. The cores voted on what actions to take based on available sensor data and the pilot's wishes. If there was a disagreement between the cores, the core that lost the vote was rebooted, and the process repeated. If the disagreement persisted, the failing core was taken offline and replaced with one of the ship's hot spares.",
+          "At the Power Distributor": {
+            '#': "The Dreams' power distributor routed electricity from the compact fusion reactors out to the rest of the ship.\n                     \nThe distributor was a flat rectangle that descended a few centimeters from the ceiling. Removing the cover plate, I could see removable fuses leading to the ship's major components.",
+            "Pull Main Fuse": "That didn't seem like a good idea.",
+            "Pull AI Core Fuse": "That didn't seem like a good idea.",
+            "Pull Airlock Fuse": "That didn't seem like a good idea.",
+            "Pull Autofac Fuse": "That didn't seem like a good idea.",
+            "Pull Flight Computer Fuse": "That didn't seem like a good idea.",
+            "Pull Fuel Converter Fuse": "I'd already pulled the converter's fuse.",
+            "Pull Life Support Fuse": "That didn't seem like a good idea."
+          },
+          "At the Access Panels": "Thanks to the Dreams' high engine efficiency, the two flat wing tanks held enough fuel to reach low orbit from a standing start on nearly any planet in the system."
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.flight_deck);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.crew_quarters);
+          }
+        }
+      }
+    },
+    crew_quarters: {
+      text: "I stepped into the crew quarters.\n\nThe quarters were clean and simple, and held the Dreams' few creature comforts. Pressure doors led foreward to the operations center and aft to the docking airlock.",
+      actions: {
+        Look: {
+          Around: "The crew quarters were clean and simple.\n\nI'd known people who decorated their quarters to look like a Phobian apartment or their favorite Earth resort, but decorations got in the way fast when things went wrong.\n\nI had a sink and a cooking surface along the port bulkhead, as well as a combined toilet/shower stall. My bed and personal effects were to starboard, and the primary life support manifold was installed above.",
+          "At the Cooking Space": "I had a small countertop with a sink and a cooking surface on the port side of my quarters. They were designed to function with or without gravity; they weren't particularly sleek-looking, but they were certainly functional.\n\nUnder the counter was an integrated freshwater recycler. I'd been eating and drinking the same 20 liters of water for the past eighteen months.\n\nA shelf above the counter held my food stores. Engineered food was compact and nutritious, but it tasted like stale corn. I sure had a lot of it though.",
+          "At the Shower Stall": "The shower stall was an 80cm diameter tube on the port side of my quarters, just forward of the cooking space.\n\nIt used the same water supply as the sink. I tried not to think about it.",
+          "At the Bed": "The bed was the only part of the ship that could be considered luxurious. It was two meters long, with a 40cm thick adaptive exofoam mattress. \n\nThe Dreams was a fast ship, but even a quick jaunt from Earth to Mars took months. The exofoam mattress kept my body healthy while I slept, and the overhead life support manifold tuned the atmosphere to keep me sedate.\n\nIt wasn't stasis, but it was the next best thing. An interlude was more relaxing than even the best Earth vacation.",
+          "At my Personal Effects": "An access panel under the bed held my personal effects: this journal, purchased from a trader on Deimos Station Three; a damaged flight suit, with a cracked helmet; and a few other souvenirs of various shapes and sizes.",
+          "At the Life Support Manifold": "The life support manifold kept the atmosphere mixed for optimum comfort.\n\nAt least that's what it said on the identification plate. In reality the forward compartments were always a bit cold, and the aft compartments were a bit warm. The oxygen ratio ran a little thin when the engines were running, and it made disconcerting buzzing noises every now and then.\n                                          \nMy unit's backup generator was missing so I was down to minimal life support. I'd have to replace it, but radiothermal generators weren't something an autofac could make. I made a mental note to pick one up when we reached LJO Sigma Six."
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.operations_center);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.airlock);
+          }
+        }
+      }
+    },
+    airlock: {
+      data: {
+        disabled: false,
+        disabled_message: null,
+        hatch_open: false,
+        exit_hatch: null
+      },
+      theme: 'inside',
+      text: function() {
+        if (between_dreams.airlock.data.hatch_open) {
+          between_dreams.airlock.data.hatch_open = false;
+          return "I carefully lowered myself into the airlock, sealed the hatch above me, and repressurized the airlock. The latches on the interior doors clicked free.\n \nThe compartment was noticeably narrower than the others. There was just enough room to pass foreward, to the crew quarters; aft, to the cargo bay; or up, through the docking hatch.                 ";
+        }
+        return "I slipped into the docking airlock.\n    \nThe compartment was noticeably narrower than the others. There was just enough room to pass foreward, to the crew quarters; aft, to the cargo bay; or up, through the docking hatch.";
+      },
+      actions: {
+        Look: {
+          Around: "The docking airlock compartment was only a few meters long, and noticably narrower than the rest of the ship. A round polysteel hatch was visible on the ceiling, and a wide ladder was installed against the port bulkhead.\n\nThe compartment was narrow to accomodate two vertical hydraulic cylinders. Tipped with magnetic latches, these cylinders extended through the Dreams' roof and allowed the Dreams to 'hang' from the outer edge of a rotating space station.\n\nA control surface beside the door displayed the airlock's status.",
+          "At the Latching Assembly": "The latching assembly was visible through a series of short windows inset in the port and starboard bulkheads.",
+          "At the Hydraulic Lines": "The hydraulic lines were thin jet-black hoses, connecting the latching assembly actuators to the main pressurization system somewhere aft of here. Two lines ran from each actuator: one at the top, and one at the bottom. The top port-side line was visibly damaged, and hydraulic fluid was spraying from the torn connection.",
+          "At the Hatch": "The docking hatch was roughly one meter in diameter, and featured a series of small latches along the outer rim. The opening was too small for cargo, but it was easily wide enough for me to pass through.\n\nI could see the faint outline of the exterior umbilical hookups on either side of the hatch: power, fuel, and atmosphere.",
+          "At the Airlock Controls": "Now that we were in space again, I flipped the controls to Automatic."
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.crew_quarters);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.cargo_bay);
+          },
+          Up: function() {
+            if (between_dreams.airlock.data.exit_hatch != null) {
+              return between_dreams.airlock.data.exit_hatch();
+            }
+            between_dreams.airlock.data.hatch_open = true;
+            return reply("I sealed the interior doors, raised my helmet into place, depressurized the airlock, and opened the hatch.", function() {
+              return _.menu_no_backsies({
+                "Exit Hatch": function() {
+                  return travel_to(between_dreams.exterior_top);
+                }
+              });
+            });
+          }
+        }
+      }
+    },
+    cargo_bay: {
+      theme: 'inside',
+      data: {
+        disabled: false,
+        disabled_message: null,
+        ramp_open: false,
+        exit_ramp: null,
+        bay_doors_open: false,
+        exit_bay_doors: null
+      },
+      text: function() {
+        if (between_dreams.cargo_bay.data.ramp_open) {
+          between_dreams.cargo_bay.data.ramp_open = false;
+          return "I carefully stepped into the cargo bay. The ramp raised automatically behind me, and I felt the reassuring resonance of the bay repressurizing. A few moments later the latches on the interior door clicked free.\n\nThe interior pressure door led forward to the docking airlock, and the solitary crate at the end of the ramp made a quiet droning sound.";
+        }
+        if (between_dreams.cargo_bay.data.bay_doors_open) {
+          between_dreams.cargo_bay.data.bay_doors_open = false;
+          return "I carefully floated down into the cargo bay. The doors automatically sealed themselves against the outer hull, and I felt the reassuring resonance of the bay repressurizing. A few moments later the latches on the interior door clicked free.\n\nThe interior pressure door led forward to the docking airlock, and the solitary crate at the end of the ramp made a quiet droning sound.";
+        }
+        return "I reached the cargo bay.\n    \nA pressure door led forward to the docking airlock, and a control surface beside the door displayed the cargo bay's airlock status.\n\nThe solitary crate at the end of the ramp made a quiet droning sound.";
+      },
+      actions: {
+        Look: {
+          Around: "The compartment was twelve meters long and empty, except for a solitary crate at the aft end of the bay. Actuators stood by to lower the cargo ramp or open the overhead bay doors.\n\nThe floor and walls were covered with a course polysteel grating, and a set of heavy elastic ties hung against the wall. The rest of the ties were in use, holding the containers tight against the grating.\n\nThe aft section of the bay was a cargo ramp. The floor sloped upward to meet the ceiling, and a set of hydraulic actuators stood ready to lower it to the ground. More actuators were visible overhead, ready to open the ceiling when the Dreams was docked with a station.\n\nA control surface beside the door displayed the status of the airlock controls.\n\nThe solitary crate at the end of the ramp made a quiet droning noise.",
+          "At the Crate": "The solitary crate held the hemisphere I'd picked up on the Martian surface.\n\nIt made a quiet droning noise, audible even through the crate's heavy shielding. I guess the shielding wasn't heavy enough.",
+          "At the Hydraulics": "The hydraulic system was pressure-fed from the main fuel tanks, and controlled through a series of small actuator valves. The design saved a lot of weight, but it tended to lose pressure when the main engines were fired.",
+          "At the Airlock Controls": "Now that we were in space again, I flipped the controls to Automatic."
+        },
+        Go: {
+          Foreward: function() {
+            return travel_to(between_dreams.airlock);
+          },
+          "Down the Ramp": function() {
+            if (between_dreams.cargo_bay.data.exit_ramp != null) {
+              return between_dreams.cargo_bay.data.exit_ramp();
+            }
+            between_dreams.cargo_bay.data.ramp_open = true;
+            return reply("I clicked the latches on the interior doors into place, raised my helmet, depressurized the airlock, and lowered the cargo ramp.", function() {
+              return _.menu_no_backsies({
+                "Exit through Ramp": function() {
+                  return travel_to(between_dreams.exterior_aft);
+                }
+              });
+            });
+          },
+          "Out the Overhead Doors": function() {
+            if (between_dreams.cargo_bay.data.exit_bay_doors != null) {
+              return between_dreams.cargo_bay.data.exit_bay_doors();
+            }
+            between_dreams.cargo_bay.data.bay_doors_open = true;
+            return reply("I clicked the latches on the interior doors into place, raised my helmet, depressurized the airlock, and opened the overhead bay doors.", function() {
+              return _.menu_no_backsies({
+                "Exit through Overhead Doors": function() {
+                  return travel_to(between_dreams.exterior_top);
+                }
+              });
+            });
+          }
+        }
+      }
+    },
+    exterior_top: {
+      theme: 'blackout',
+      text: "I gently floated above the Dreams.\n\nI could see the docking airlock and cargo bay doors below me, the wings to port and starboard, and the rest of the Dreams forward and aft.",
+      actions: {
+        Look: {
+          Around: "I floated above the Dreams' squat cylindrical body. The ship's wings stretched out to either side, and the exterior docking assembly and cargo doors were visible behind me.",
+          "At the Docking Assembly": function() {
+            return reply("The exterior side of the docking assembly was difficult to see; no more than a few gentle bulges in the polysteel hull.\n\nAt the center, I could see the one-meter-wide circular profile of the main hatch. On either side, the magnetic tips of the vertical latching assemblies portruded from the hull. Outside the latches were the umbilical hookups: power, fuel, and atmosphere.\n\n" + (between_dreams.airlock.data.hatch_open ? "The hatch was open." : ""));
+          },
+          "At the Cargo Doors": function() {
+            return reply("The cargo doors were no more than a faint outline in the hull.\n\n" + (between_dreams.cargo_bay.data.bay_doors_open ? "The doors were open." : ""));
+          }
+        },
+        Go: {
+          Port: function() {
+            return travel_to(between_dreams.exterior_port);
+          },
+          Starboard: function() {
+            return travel_to(between_dreams.exterior_starboard);
+          },
+          Aft: function() {
+            return travel_to(between_dreams.exterior_aft);
+          },
+          Down: {
+            "To the Cargo Bay": function() {
+              if (!between_dreams.cargo_bay.data.bay_doors_open) {
+                return reply("The cargo bay doors were sealed.");
+              }
+              return travel_to(between_dreams.cargo_bay);
+            },
+            "To the Docking Airlock": function() {
+              if (!between_dreams.airlock.data.hatch_open) {
+                return reply("The airlock hatch was sealed.");
+              }
+              return travel_to(between_dreams.airlock);
+            }
+          }
+        }
+      }
+    },
+    exterior_aft: {
+      theme: 'blackout',
+      text: "I moved to the Dreams' aft.\n\nThe ship's wings were visible before me, as was the cargo ramp.",
+      actions: {
+        Look: {
+          Around: "The Dreams looked different here than it had on the Martian surface. \n\nThe brown reflections had been replaced with a cool grey, and the ship somehow felt more... alive."
+        },
+        Go: {
+          Port: function() {
+            return travel_to(between_dreams.exterior_port);
+          },
+          Starboard: function() {
+            return travel_to(between_dreams.exterior_starboard);
+          },
+          Foreward: function() {
+            return travel_to(between_dreams.exterior_top);
+          },
+          "Into the Cargo Bay": function() {
+            if (!between_dreams.cargo_bay.data.ramp_open) {
+              return reply("The cargo ramp was sealed.");
+            }
+            return travel_to(between_dreams.cargo_bay);
+          }
+        }
+      }
+    },
+    exterior_port: {
+      text: "Carefully manipulating the controls on my flight suit, I glided out over the Dreams' port wing.",
+      actions: {
+        Look: {
+          Around: "I'd repaired most of the wing's damage since our high-intensity aerobrake over the Martian surface. There were a few structural microfractures, but there wasn't anything I could do about that now.",
+          "At the Engine Pod": engine_pod_description
+        },
+        Go: {
+          Aft: function() {
+            return travel_to(between_dreams.exterior_aft);
+          },
+          "To the Dreams' Roof": function() {
+            return travel_to(between_dreams.exterior_top);
+          }
+        }
+      }
+    },
+    exterior_starboard: {
+      text: "I drifted out over the Dreams' starboard wing.",
+      actions: {
+        Look: {
+          Around: "The starboard wing had weathered our landing better than the port wing, probably because the starboard engine pod had been correctly rotated when Hayley fired it.\n\nThe bent radiator line I'd used to climb to the Dreams roof was still visible.",
+          "At the Engine Pod": engine_pod_description
+        },
+        Go: {
+          Aft: function() {
+            return travel_to(between_dreams.exterior_aft);
+          },
+          "To the Dreams' Roof": function() {
+            return travel_to(between_dreams.exterior_top);
+          }
+        }
+      }
+    }
+  };
+};
+
+module.exports = {
+  base: construct_between_dreams(),
+  "with": function(customizations) {
+    return _.extend(construct_between_dreams(), customizations);
+  },
+  with_autofac: function(data, customizations) {
+    return _.extend(_.extend(construct_between_dreams(), customizations), autofac.customizations(data));
+  }
+};
+
+
+
+},{"../app/app.coffee":1,"./autofac.coffee":16}],18:[function(require,module,exports){
+module.exports = {
+  files: {
+    "/ships/trs1s1": "undocked",
+    "/ships/trs2s1": "undocked",
+    "/ships/trs3s1": "undocked",
+    "/ships/trs4s1": "undocked",
+    "/ships/trs5s1/status": "present",
+    "/ships/trs5s1/name": "Between Dreams",
+    "/ships/trs5s1/fuel/curr": "0",
+    "/ships/trs5s1/fuel/req": "4800-thermonuclear",
+    "/ships/trs5s1/fuel/status": "waiting",
+    "/ships/trs5s1/aclevel": "unprivileged",
+    "/ships/trs6s1": "undocked",
+    "/ships/trs7s1": "undocked",
+    "/ships/trs8s1": "undocked"
+  },
+  dirs: "/ships\n/ships/trs1s1\n/ships/trs2s1\n/ships/trs3s1\n/ships/trs4s1\n/ships/trs5s1\n/ships/trs5s1/status\n/ships/trs5s1/fuel\n/ships/trs5s1/fuel/curr\n/ships/trs5s1/fuel/req\n/ships/trs5s1/fuel/status\n/ships/trs5s1/aclevel\n/ships/trs5s1/name\n/ships/trs6s1\n/ships/trs7s1\n/ships/trs8s1\n/\n/media\n/home\n/home/depot\n/dev\n/dev/vcsa6\n/dev/vcs6\n/dev/vcsa5\n/dev/vcs5\n/dev/vcsa4\n/dev/vcs4\n/dev/vcsa3\n/dev/vcs3\n/dev/vcsa2\n/dev/vcs2\n/dev/log\n/dev/shm\n/dev/serial\n/dev/sndstat\n/dev/root\n/dev/disk\n/dev/block\n/dev/ttyACM0\n/dev/spidev0.1\n/dev/spidev0.0\n/dev/char\n/dev/snd\n/dev/mapper\n/dev/uinput\n/dev/btrfs-control\n/dev/fuse\n/dev/stderr\n/dev/stdout\n/dev/stdin\n/dev/fd\n/dev/net\n/dev/ppp\n/dev/pts\n/dev/mmcblk0p2\n/dev/mmcblk0p1\n/dev/mmcblk0\n/dev/network_throughput\n/dev/network_latency\n/dev/cpu_dma_latency\n/dev/input\n/dev/bus\n/dev/vchiq\n/dev/loop7\n/dev/loop6\n/dev/loop5\n/dev/loop4\n/dev/loop3\n/dev/loop2\n/dev/loop1\n/dev/loop0\n/dev/loop-control\n/dev/ram15\n/dev/ram14\n/dev/ram13\n/dev/ram12\n/dev/ram11\n/dev/ram10\n/dev/ram9\n/dev/ram8\n/dev/ram7\n/dev/ram6\n/dev/ram5\n/dev/ram4\n/dev/ram3\n/dev/ram2\n/dev/ram1\n/dev/ram0\n/dev/vc-cma\n/dev/raw\n/dev/ttyprintk\n/dev/ptmx\n/dev/fb0\n/dev/autofs\n/dev/vc-mem\n/dev/tty63\n/dev/tty62\n/dev/tty61\n/dev/tty60\n/dev/tty59\n/dev/tty58\n/dev/tty57\n/dev/tty56\n/dev/tty55\n/dev/tty54\n/dev/tty53\n/dev/tty52\n/dev/tty51\n/dev/tty50\n/dev/tty49\n/dev/tty48\n/dev/tty47\n/dev/tty46\n/dev/tty45\n/dev/tty44\n/dev/tty43\n/dev/tty42\n/dev/tty41\n/dev/tty40\n/dev/tty39\n/dev/tty38\n/dev/tty37\n/dev/tty36\n/dev/tty35\n/dev/tty34\n/dev/tty33\n/dev/tty32\n/dev/tty31\n/dev/tty30\n/dev/tty29\n/dev/tty28\n/dev/tty27\n/dev/tty26\n/dev/tty25\n/dev/tty24\n/dev/tty23\n/dev/tty22\n/dev/tty21\n/dev/tty20\n/dev/tty19\n/dev/tty18\n/dev/tty17\n/dev/tty16\n/dev/tty15\n/dev/tty14\n/dev/tty13\n/dev/tty12\n/dev/tty11\n/dev/tty10\n/dev/tty9\n/dev/tty8\n/dev/tty7\n/dev/tty6\n/dev/tty5\n/dev/tty4\n/dev/tty3\n/dev/tty2\n/dev/tty1\n/dev/vcsa1\n/dev/vcs1\n/dev/vcsa\n/dev/vcs\n/dev/tty0\n/dev/console\n/dev/tty\n/dev/kmsg\n/dev/urandom\n/dev/random\n/dev/full\n/dev/zero\n/dev/null\n/dev/mem\n/dev/cachefiles\n/dev/ttyAMA0\n/lib\n/lib/libipq.so.0\n/lib/modprobe.d\n/lib/libiptc.so.0.0.0\n/lib/libxtables.so.7.0.0\n/lib/ld-linux.so.3\n/lib/systemd\n/lib/udev\n/lib/ld-linux-armhf.so.3\n/lib/firmware\n/lib/xtables\n/lib/arm-linux-gnueabihf\n/lib/modules\n/lib/libip4tc.so.0\n/lib/libnih-dbus.so.1\n/lib/libnss_mdns_minimal.so.2\n/lib/libnih.so.1\n/lib/cpp\n/lib/libiptc.so.0\n/lib/libnih.so.1.0.0\n/lib/libnss_mdns.so.2\n/lib/lsb\n/lib/libip4tc.so.0.1.0\n/lib/libnss_mdns4_minimal.so.2\n/lib/terminfo\n/lib/libnss_mdns4.so.2\n/lib/klibc-sO6SifHCdmbehHGtm0y1yHu6vb0.so\n/lib/libxtables.so.7\n/lib/libip6tc.so.0\n/lib/libipq.so.0.0.0\n/lib/libip6tc.so.0.1.0\n/lib/init\n/lib/libnss_mdns6.so.2\n/lib/libnih-dbus.so.1.0.0\n/lib/libnss_mdns6_minimal.so.2\n/sbin\n/sbin/plymouthd\n/sbin/insserv\n/sbin/halt\n/sbin/mkfs.ext3\n/sbin/mkswap\n/sbin/mkhomedir_helper\n/sbin/e2image\n/sbin/mntctl\n/sbin/swapon\n/sbin/pam_tally2\n/sbin/wpa_supplicant\n/sbin/mkfs.ext4\n/sbin/osd_login\n/sbin/pam_tally\n/sbin/fstab-decode\n/sbin/killall5\n/sbin/hwclock\n/sbin/partprobe\n/sbin/umount.nfs\n/sbin/startpar-upstart-inject\n/sbin/mount.fuse\n/sbin/getty\n/sbin/poweroff\n/sbin/mkfs\n/sbin/start-stop-daemon\n/sbin/iwevent\n/sbin/mountall\n/sbin/ip\n/sbin/fstrim\n/sbin/dhclient-script\n/sbin/fsck.ext4\n/sbin/rpcbind\n/sbin/swapoff\n/sbin/mii-tool\n/sbin/dmsetup\n/sbin/modprobe\n/sbin/ldconfig\n/sbin/mke2fs\n/sbin/depmod\n/sbin/startpar\n/sbin/agetty\n/sbin/route\n/sbin/losetup\n/sbin/fsck.minix\n/sbin/udevd\n/sbin/nfnl_osf\n/sbin/rarp\n/sbin/wpa_action\n/sbin/rtmon\n/sbin/fsck\n/sbin/tc\n/sbin/iptables\n/sbin/iptables-restore\n/sbin/mkfs.minix\n/sbin/isosize\n/sbin/mkfs.ext4dev\n/sbin/cfdisk\n/sbin/umount.nfs4\n/sbin/parted\n/sbin/sfdisk\n/sbin/iptunnel\n/sbin/wpa_cli\n/sbin/dhclient\n/sbin/fsck.ext4dev\n/sbin/klogd\n/sbin/unix_update\n/sbin/findfs\n/sbin/mount.nfs\n/sbin/shadowconfig\n/sbin/e2fsck\n/sbin/telinit\n/sbin/rmmod\n/sbin/tune2fs\n/sbin/fsfreeze\n/sbin/fsck.nfs\n/sbin/fsck.ext3\n/sbin/mkfs.ext2\n/sbin/wipefs\n/sbin/blkid\n/sbin/slattach\n/sbin/mount.cifs\n/sbin/mount.nfs4\n/sbin/blockdev\n/sbin/resize2fs\n/sbin/mkfs.cramfs\n/sbin/kbdrate\n/sbin/fsck.cramfs\n/sbin/ip6tables-restore\n/sbin/badblocks\n/sbin/fdisk\n/sbin/shutdown\n/sbin/e2label\n/sbin/ipmaddr\n/sbin/xtables-multi\n/sbin/ip6tables\n/sbin/nameif\n/sbin/e2undo\n/sbin/iptables-save\n/sbin/modinfo\n/sbin/ifconfig\n/sbin/reboot\n/sbin/lsmod\n/sbin/rpc.statd\n/sbin/showmount\n/sbin/ifdown\n/sbin/iwlist\n/sbin/debugfs\n/sbin/plipconfig\n/sbin/unix_chkpwd\n/sbin/installkernel\n/sbin/pivot_root\n/sbin/sm-notify\n/sbin/switch_root\n/sbin/logsave\n/sbin/iwspy\n/sbin/sysctl\n/sbin/ctrlaltdel\n/sbin/swaplabel\n/sbin/init\n/sbin/iwgetid\n/sbin/fsck.ext2\n/sbin/iwconfig\n/sbin/dumpe2fs\n/sbin/udevadm\n/sbin/raw\n/sbin/insmod\n/sbin/runlevel\n/sbin/ifup\n/sbin/sulogin\n/sbin/ifquery\n/sbin/mkfs.bfs\n/sbin/iwpriv\n/sbin/syslogd\n/sbin/fake-hwclock\n/sbin/MAKEDEV\n/sbin/rtacct\n/sbin/ip6tables-save\n/var\n/var/log\n/var/resolv.conf\n/var/cache\n/var/backups\n/var/lib\n/var/run\n/var/local\n/var/tmp\n/var/mail\n/var/spool\n/var/opt\n/var/lock\n/tmp\n/tmp/tmp.P2o9Z4mcym\n/tmp/tmp.xYVsCVGNNJ\n/tmp/tmp.CaNcmLffMS\n/tmp/tmp.vWPjWSqG01\n/tmp/tmp.hgV8ObaF0s\n/tmp/god.17165.sock\n/usr\n/usr/share\n/usr/lib\n/usr/sbin\n/usr/local\n/usr/include\n/usr/games\n/usr/bin\n/usr/src\n/srv\n/root\n/mnt\n/bin\n/bin/more\n/bin/mknod\n/bin/tempfile\n/bin/mktemp\n/bin/rzsh\n/bin/lessfile\n/bin/sh.distrib\n/bin/domainname\n/bin/zcmp\n/bin/kbd_mode\n/bin/setfont\n/bin/vdir\n/bin/cat\n/bin/bunzip2\n/bin/mt-gnu\n/bin/ping6\n/bin/zfgrep\n/bin/dumpkeys\n/bin/ping\n/bin/bash\n/bin/busybox\n/bin/less\n/bin/true\n/bin/ypdomainname\n/bin/zgrep\n/bin/dir\n/bin/zless\n/bin/bzmore\n/bin/su\n/bin/ip\n/bin/bzip2recover\n/bin/rm\n/bin/lesspipe\n/bin/ln\n/bin/bzcmp\n/bin/fuser\n/bin/touch\n/bin/gzexe\n/bin/ksh\n/bin/hostname\n/bin/pidof\n/bin/bzless\n/bin/mountpoint\n/bin/tar\n/bin/bzcat\n/bin/which\n/bin/bzdiff\n/bin/sed\n/bin/mount\n/bin/ps\n/bin/ls\n/bin/fgrep\n/bin/cp\n/bin/znew\n/bin/rbash\n/bin/rnano\n/bin/gunzip\n/bin/zmore\n/bin/ss\n/bin/modeline2fb\n/bin/gzip\n/bin/fbset\n/bin/dd\n/bin/con2fbmap\n/bin/date\n/bin/bzexe\n/bin/chgrp\n/bin/echo\n/bin/lsblk\n/bin/nc.traditional\n/bin/chvt\n/bin/zcat\n/bin/readlink\n/bin/grep\n/bin/findmnt\n/bin/tailf\n/bin/loadkeys\n/bin/nc.openbsd\n/bin/false\n/bin/lessecho\n/bin/sync\n/bin/zegrep\n/bin/umount\n/bin/kill\n/bin/zsh\n/bin/fgconsole\n/bin/egrep\n/bin/rmdir\n/bin/kmod\n/bin/ulockmgr_server\n/bin/run-parts\n/bin/mt\n/bin/plymouth\n/bin/mv\n/bin/dmesg\n/bin/logread\n/bin/bzegrep\n/bin/stty\n/bin/open\n/bin/netcat\n/bin/sh\n/bin/zdiff\n/bin/dash\n/bin/mkdir\n/bin/lsmod\n/bin/nano\n/bin/bzip2\n/bin/uncompress\n/bin/df\n/bin/unicode_start\n/bin/lesskey\n/bin/nc\n/bin/cpio\n/bin/zforce\n/bin/openvt\n/bin/sleep\n/bin/chown\n/bin/netstat\n/bin/bzfgrep\n/bin/ed\n/bin/chmod\n/bin/zsh4\n/bin/login\n/bin/bzgrep\n/bin/dnsdomainname\n/bin/uname\n/bin/fusermount\n/bin/pwd\n/bin/nisdomainname\n/boot\n/boot/bootcode.bin\n/boot/cmdline.txt\n/boot/config.txt\n/boot/fixup.dat\n/boot/fixup_cd.dat\n/boot/fixup_x.dat\n/boot/kernel.img\n/boot/start_cd.elf\n/boot/host.rb\n/boot/start.elf\n/boot/issue.txt\n/boot/start_x.elf\n/proc\n/proc/asound\n/proc/vc-cma\n/proc/sysrq-trigger\n/proc/partitions\n/proc/diskstats\n/proc/crypto\n/proc/key-users\n/proc/kpageflags\n/proc/kpagecount\n/proc/kmsg\n/proc/softirqs\n/proc/version\n/proc/uptime\n/proc/stat\n/proc/meminfo\n/proc/loadavg\n/proc/interrupts\n/proc/devices\n/proc/cpuinfo\n/proc/consoles\n/proc/cmdline\n/proc/locks\n/proc/filesystems\n/proc/swaps\n/proc/vmallocinfo\n/proc/slabinfo\n/proc/zoneinfo\n/proc/vmstat\n/proc/pagetypeinfo\n/proc/buddyinfo\n/proc/latency_stats\n/proc/config.gz\n/proc/kallsyms\n/proc/modules\n/proc/timer_stats\n/proc/timer_list\n/proc/sched_debug\n/proc/schedstat\n/proc/iomem\n/proc/ioports\n/proc/execdomains\n/proc/cpu\n/proc/misc\n/proc/fb\n/proc/atags\n/proc/irq\n/proc/cgroups\n/proc/sys\n/proc/bus\n/proc/tty\n/proc/driver\n/proc/fs\n/proc/sysvipc\n/proc/net\n/proc/mounts\n/proc/self\n/proc/1\n/proc/2\n/proc/3\n/proc/5\n/proc/6\n/proc/7\n/proc/8\n/proc/9\n/proc/10\n/proc/11\n/proc/12\n/proc/13\n/proc/14\n/proc/15\n/proc/16\n/proc/17\n/proc/19\n/proc/20\n/proc/21\n/proc/22\n/proc/23\n/proc/29\n/proc/30\n/proc/31\n/proc/32\n/proc/33\n/proc/34\n/proc/35\n/proc/37\n/proc/38\n/proc/39\n/proc/40\n/proc/41\n/proc/156\n/proc/250\n/proc/1085\n/proc/1090\n/proc/1091\n/proc/1093\n/proc/1360\n/proc/1404\n/proc/1635\n/proc/1637\n/proc/1715\n/proc/1719\n/proc/1744\n/proc/1815\n/proc/1817\n/proc/1824\n/proc/1881\n/proc/1967\n/proc/1972\n/proc/1973\n/proc/1974\n/proc/1975\n/proc/1976\n/proc/1977\n/proc/1978\n/proc/2103\n/proc/2179\n/proc/2181\n/proc/2184\n/proc/2652\n/proc/2655\n/proc/2656\n/proc/2657\n/proc/2679\n/proc/2680\n/proc/2681\n/proc/2682\n/proc/6657\n/proc/7442\n/proc/19747\n/proc/25755\n/proc/25965\n/proc/26465\n/proc/26497\n/proc/26499\n/proc/26741\n/proc/27685\n/proc/27688\n/proc/27885\n/rw\n/rw/home\n/rw/var\n/opt\n/opt/vc\n/sys\n/sys/fs\n/sys/bus\n/sys/dev\n/sys/devices\n/sys/block\n/sys/class\n/sys/power\n/sys/firmware\n/sys/kernel\n/sys/module\n/ro\n/ro/zero.file\n/ro/home\n/ro/var\n/etc\n/etc/mtab\n/etc/os-release\n/etc/selinux\n/etc/mke2fs.conf\n/etc/nanorc\n/etc/shells\n/etc/logrotate.d\n/etc/insserv\n/etc/group-\n/etc/calendar\n/etc/bash_completion.d\n/etc/rmt\n/etc/modprobe.d\n/etc/insserv.conf\n/etc/rc3.d\n/etc/nsswitch.conf\n/etc/lightdm\n/etc/request-key.d\n/etc/fb.modes\n/etc/services\n/etc/gshadow\n/etc/wpa_supplicant\n/etc/ca-certificates.conf\n/etc/securetty\n/etc/netconfig\n/etc/ld.so.conf.d\n/etc/profile\n/etc/vim\n/etc/ts.conf\n/etc/rc4.d\n/etc/staff-group-for-usr-local\n/etc/fstab\n/etc/wgetrc\n/etc/passwd\n/etc/avahi\n/etc/deluser.conf\n/etc/environment\n/etc/host.conf\n/etc/magic\n/etc/motd.tail\n/etc/localtime\n/etc/apt\n/etc/xml\n/etc/systemd\n/etc/hosts\n/etc/passwd-\n/etc/console-setup\n/etc/resolv.conf\n/etc/sysctl.conf\n/etc/hostname\n/etc/resolvconf\n/etc/.fstab\n/etc/rpc\n/etc/udev\n/etc/rpi-issue\n/etc/fuse.conf\n/etc/rc6.d\n/etc/manpath.config\n/etc/cron.hourly\n/etc/samba\n/etc/bash.bashrc\n/etc/ld.so.cache\n/etc/groff\n/etc/adduser.conf\n/etc/python3.2\n/etc/fstab.d\n/etc/initramfs-tools\n/etc/network\n/etc/papersize\n/etc/gconf\n/etc/ssh\n/etc/dhcp3\n/etc/sudoers\n/etc/locale.gen\n/etc/python2.7\n/etc/gshadow-\n/etc/issue\n/etc/ld.so.preload\n/etc/emacs\n/etc/iproute2\n/etc/blkid.tab\n/etc/python3\n/etc/perl\n/etc/sysctl.d\n/etc/dphys-swapfile\n/etc/protocols\n/etc/rc0.d\n/etc/console\n/etc/os-release.orig\n/etc/issue.net.orig\n/etc/dbus-1\n/etc/menu\n/etc/modules\n/etc/pulse\n/etc/ConsoleKit\n/etc/gdb\n/etc/cron.daily\n/etc/locale.alias\n/etc/dhcp\n/etc/cron.monthly\n/etc/ifplugd\n/etc/menu-methods\n/etc/dillo\n/etc/dpkg\n/etc/sgml\n/etc/rc5.d\n/etc/blkid.tab.old\n/etc/kernel\n/etc/apparmor.d\n/etc/ucf.conf\n/etc/profile.d\n/etc/hosts.allow\n/etc/bash_completion\n/etc/.java\n/etc/pm\n/etc/gssapi_mech.conf\n/etc/xdg\n/etc/crontab\n/etc/skel\n/etc/libaudit.conf\n/etc/zsh\n/etc/ghostscript\n/etc/networks\n/etc/shadow\n/etc/fonts\n/etc/ufw\n/etc/issue.net\n/etc/ntp.conf\n/etc/group\n/etc/ssl\n/etc/python\n/etc/sudoers.d\n/etc/plymouth\n/etc/pam.conf\n/etc/ca-certificates\n/etc/hosts.deny\n/etc/ldap\n/etc/issue.orig\n/etc/fake-hwclock.data\n/etc/rc.local\n/etc/gtk-3.0\n/etc/debconf.conf\n/etc/alternatives\n/etc/libnl-3\n/etc/mailcap\n/etc/gai.conf\n/etc/apm\n/etc/ld.so.conf\n/etc/rc1.d\n/etc/idmapd.conf\n/etc/timezone\n/etc/rcS.d\n/etc/kbd\n/etc/opt\n/etc/terminfo\n/etc/cron.d\n/etc/logcheck\n/etc/motd\n/etc/insserv.conf.d\n/etc/triggerhappy\n/etc/bindresvport.blacklist\n/etc/rsyslog.conf\n/etc/cron.weekly\n/etc/weston\n/etc/lynx-cur\n/etc/pam.d\n/etc/magic.mime\n/etc/default\n/etc/inputrc\n/etc/inittab\n/etc/debian_version\n/etc/init\n/etc/security\n/etc/shadow-\n/etc/.pwd.lock\n/etc/login.defs\n/etc/polkit-1\n/etc/init.d\n/etc/rc2.d\n/etc/mime.types\n/etc/xpdf\n/etc/mailcap.order".split('\n')
+};
+
+
+
+},{}],19:[function(require,module,exports){
+module.exports = {
+  title: 'Episode 2',
+  act_6: require('./act-6-stars.coffee'),
+  act_7: require('./act-7-depot.coffee'),
+  act_8: require('./act-8-interlude.coffee'),
+  act_9: require('./act-9-angels.coffee')
+};
+
+
+
+},{"./act-6-stars.coffee":12,"./act-7-depot.coffee":13,"./act-8-interlude.coffee":14,"./act-9-angels.coffee":15}],20:[function(require,module,exports){
 var act, act_link, app, content, default_act, episode, episode_div, id, requested_act, typeinator,
   __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
@@ -2357,7 +3913,13 @@ if ((window.location.hash != null) && window.location.hash.length > 3) {
 
 app.start_act(requested_act != null ? requested_act : default_act);
 
+app.start_act(content.episode_2.act_8);
+
+window.app = app;
+
+window.content = content;
 
 
-},{"../../Data/app/app.coffee":1,"../../Data/app/content.coffee":2}]},{},[12]);
+
+},{"../../Data/app/app.coffee":1,"../../Data/app/content.coffee":2}]},{},[20]);
 </script></body></html>
