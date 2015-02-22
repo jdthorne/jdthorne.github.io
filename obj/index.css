@@ -169,6 +169,18 @@ body {
 #fuzzytec .call-to-action:hover {
   background-image: url(img/fuzzytec-calltoaction-hover.png);
 }
+#fuzzytec .iphone {
+  background: url(img/fuzzytec-iphone.png);
+  position: absolute;
+  bottom: 0px;
+  width: 390px;
+  height: 531px;
+}
+#fuzzytec .iphone img {
+  position: absolute;
+  bottom: 0px;
+  left: 75px;
+}
 #contact {
   background-image: url(img/james-background.jpg);
 }
