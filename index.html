@@ -181,75 +181,79 @@ body {
   bottom: 0px;
   left: 75px;
 }
+#isthereanaccidentondeerfoot {
+  background: #333;
+}
+#isthereanaccidentondeerfoot .logo {
+  font-size: 28px;
+  font-weight: 400;
+}
+#isthereanaccidentondeerfoot .demo .text {
+  text-align: center;
+  padding: 10px;
+  font-size: 14px;
+  color: #777;
+}
+#isthereanaccidentondeerfoot .demo .yes,
+#isthereanaccidentondeerfoot .demo .no {
+  text-align: center;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: 400;
+}
+#isthereanaccidentondeerfoot .demo .yes {
+  background: #FF8E00;
+  border-top: solid 2px #FFA739;
+  border-bottom: solid 2px #C56E00;
+}
+#isthereanaccidentondeerfoot .demo .no {
+  background: #00B25C;
+  border-top: solid 2px #29B672;
+  border-bottom: solid 2px #008947;
+}
+#isthereanaccidentondeerfoot .demo .initially-hidden {
+  display: none;
+}
+#isthereanaccidentondeerfoot .demo-footer {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+  height: 80px;
+  background-color: #222;
+}
+#isthereanaccidentondeerfoot .call-to-action {
+  border-top: solid 2px #666;
+  background: #555;
+  border-bottom: solid 2px #444;
+  padding: 14px;
+}
+#isthereanaccidentondeerfoot .call-to-action:hover {
+  border-top: solid 2px #777;
+  background: #666;
+  border-bottom: solid 2px #555;
+}
 #contact {
   background-image: url(img/james-background.jpg);
 }
+#contact .logo {
+  font-size: 74px;
+  font-weight: 100;
+}
 </style><script type="text/javascript">(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var chain, show_panel, show_panel_functions;
-
-show_panel_functions = {};
-
-show_panel = function(name, action) {
-  return show_panel_functions[name] = action;
-};
+var toggle_deerfoot;
 
 $(document).ready(function() {
-  return show_panel_functions['#jamesthorne']();
+  return $("a").attr('target', '_new');
 });
 
-$(window).scroll(function() {
-  return $('.panel').each(function() {
-    var center_of_panel, one_third_of_window;
-    center_of_panel = $(this).position().top + ($(this).outerHeight() / 2);
-    one_third_of_window = $(window).scrollTop() + ($(window).height() * 0.7);
-    if (!(center_of_panel < one_third_of_window)) {
-      return;
-    }
-    if (show_panel_functions["#" + this.id] == null) {
-      return;
-    }
-    show_panel_functions["#" + this.id]();
-    return delete show_panel_functions["#" + this.id];
-  });
-});
-
-chain = function(actions) {
-  var run_next_action;
-  run_next_action = function() {
-    if (actions.length > 0) {
-      return actions.shift()(run_next_action);
-    }
-  };
-  return run_next_action();
+toggle_deerfoot = function() {
+  return $("#isthereanaccidentondeerfoot .toggles").toggle();
 };
 
-show_panel('#jamesthorne', function() {
-  return chain([
-    (function(next) {
-      return $("#jamesthorne .picture").animate({
-        opacity: 1
-      }, 200, next);
-    }), (function(next) {
-      return $("#jamesthorne .name").animate({
-        opacity: 1
-      }, 200, next);
-    }), (function(next) {
-      return $("#jamesthorne .title").animate({
-        opacity: 1
-      }, 200, next);
-    }), (function(next) {
-      return $("#jamesthorne .description").animate({
-        opacity: 1
-      }, 200, next);
-    })
-  ]);
-});
-
-show_panel('#printtopeer', function() {
-  return console.log('hello');
-});
+window.setInterval(toggle_deerfoot, 2000);
 
 
 
 },{}]},{},[1]);
-</script></head><body><div class="panel" id="jamesthorne"><div class="grid"><div class="span3"><img class="picture" src="img/james-pic.png" /></div><div class="span1">&nbsp; </div><div class="span6"><div class="name">James Thorne</div><div class="title">Entrepreneur, Developer, and Maker of Things</div><div class="description">I can't stop making things. I've built everything from digital manufacturing systems to WebGL and iOS games to military-grade aircraft control software. I'm always on the lookout for new technologies to explore.</div></div></div><div class="header">Some Things I Made &blacktriangledown;</div></div><div class="panel" id="printtopeer"><div class="grid"><div class="span5"><img class="logo" src="img/printtopeer-logo.png" /><div class="description">We're making 3D printing easier, faster, and more powerful, so all it takes is one click. PrintToPeer is the easiest way to use your 3D printer, and the easiest way to coordinate multiple 3D printers.</div><a class="call-to-action" href="http://printtopeer.com" target="_new">Start Printing</a></div><div class="span5">&nbsp;</div></div></div><div class="panel" id="richners-log"><div class="grid"><div class="span4"><img class="demo" src="img/richnerslog-demo.gif" /></div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Richner's Log</div><div class="description">A story of adventure, isolation, and travel to the stars. Play a classic text-adventure game, reimagined for today's touch devices, and help Richner and Hayley complete their mission and save the galaxy.</div><a class="call-to-action" href="http://jamesthorne.ca/richners-log" target="_new">Play Now</a></div></div></div><div class="panel" id="fuzzytec"><div class="grid"><div class="span5"><img class="logo" src="img/fuzzytec-logo.png" /><div class="description">The Evil Robots have captured Presley and his fellow fuzzles! It's up to you to help Ted rescue them, upgrade his ship, find some extra special powerups, and stop the robots!</div><a class="call-to-action" href="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;amp;mt=8">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4"><div class="iphone"><img src="img/fuzzytec-demo.gif" /></div></div></div></div><div class="panel" id="contact"></div></body></html>
+</script></head><body><div class="panel" id="jamesthorne"><div class="grid"><div class="span3"><img class="picture" src="img/james-pic.png" /></div><div class="span1">&nbsp; </div><div class="span6"><div class="name">James Thorne</div><div class="title">Entrepreneur, Developer, and Maker of Things</div><div class="description">I can't stop making things. I've built everything from digital manufacturing systems to WebGL and iOS games to military-grade aircraft control software. I'm always on the lookout for new technologies to explore.</div></div></div><div class="header">Some Things I Made &blacktriangledown;</div></div><div class="panel" id="printtopeer"><div class="grid"><div class="span5"><img class="logo" src="img/printtopeer-logo.png" /><div class="description">We're making 3D printing easier, faster, and more powerful, so all it takes is one click. PrintToPeer is the easiest way to use your 3D printer, and the easiest way to coordinate multiple 3D printers.</div><a class="call-to-action" href="http://printtopeer.com">Start Printing</a></div><div class="span5">&nbsp;</div></div></div><div class="panel" id="richners-log"><div class="grid"><div class="span4"><img class="demo" src="img/richnerslog-demo.gif" /></div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Richner's Log</div><div class="description">A story of adventure, isolation, and travel to the stars. Play a classic text-adventure game, reimagined for today's touch devices, and help Richner and Hayley complete their mission and save the galaxy.</div><a class="call-to-action" href="http://jamesthorne.ca/richners-log">Play Now</a></div></div></div><div class="panel" id="fuzzytec"><div class="grid"><div class="span5"><img class="logo" src="img/fuzzytec-logo.png" /><div class="description">The Evil Robots have captured Presley and his fellow fuzzles! It's up to you to help Ted rescue them, upgrade his ship, find some extra special powerups, and stop the robots!</div><a class="call-to-action" href="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;amp;mt=8">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4"><div class="iphone"><img src="img/fuzzytec-demo.gif" /></div></div></div></div><div class="panel" id="lintr"><div class="grid"><div class="span4">Demo</div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">lintr.co</div><div class="description">Linter</div><a class="call-to-action" href="http://lintr.co">Check my Grammar</a></div></div></div><div class="panel" id="antex"><div class="grid"><div class="span5"><div class="logo">Antex</div><div class="description">Antex</div><a class="call-to-action" href="https://itunes.apple.com/us/app/antex/id656352369?ls=1&amp;amp;mt=8">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4">Demo</div></div></div><div class="panel" id="isthereanaccidentondeerfoot"><div class="grid"><div class="span4"><div class="demo"><div class="text">Is there an accident on Deerfoot?</div><div class="yes toggles initially-hidden">Yes</div><div class="no toggles">No</div><div class="text toggles initially-hidden">And the current slowness index is <b>86</b></div><div class="text toggles">And traffic isn't too bad either.</div></div><div class="demo-footer"></div></div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Is there an accident on Deerfoot?</div><div class="description">Deerfoot Trail is a major freeway in Calgary. Traffic gets really bad when there's an accident. "Is there an accident on Deerfoot?" uses the Bing and Twitter APIs to tell you, in realtime, if there's an accident on Deerfoot.</div><a class="call-to-action" href="http://isthereanaccidentondeerfoot.herokuapp.com">Well, is there?</a></div></div></div><div class="panel" id="whitesky"><div class="grid"><div class="span5"><div class="logo">White Sky</div><div class="description">Hey there</div><a class="call-to-action" href="http://whitesky.jamesthorne.ca">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4">Demo?</div></div></div><div class="panel" id="teamlunch"><div class="grid"><div class="span4">Demo</div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Team Lunch</div><div class="description">This drone is safe.</div><a class="call-to-action" href="http://teamlunch.github.io">More Information</a></div></div></div><div class="panel" id="pokemon"><div class="grid"><div class="span5"><div class="logo">Pokemon: Zoo Version</div><div class="description">Silly Video</div><a class="call-to-action" href="https://www.youtube.com/watch?v=OxTxx9HpZeg">Watch Now</a></div><div class="span1">&nbsp;</div><div class="span4">Demo?</div></div></div><div class="panel" id="contact"><div class="grid"><div class="span3"><img class="picture" src="img/contact-mail.png" /></div><div class="span1">&nbsp;</div><div class="span6"><div class="logo">Good Stuff.</div><div class="description">I'm always looking for new technologies to explore! If you're interested in working together, shoot me an email, or take a look at my linkedin or my resume.</div></div></div></div></body></html>
