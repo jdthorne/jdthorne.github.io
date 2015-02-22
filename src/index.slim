@@ -1,0 +1,50 @@
+doctype html
+
+html
+  head
+    title James Thorne
+    script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"
+
+    style== File.open("obj/index.css").read
+    script type="text/javascript"== File.open("obj/index.js").read
+  
+  body
+    .panel#jamesthorne
+      .grid
+        .span3
+          img.picture src="img/james-pic.png"
+        .span1 &nbsp; 
+        .span6
+          .name James Thorne
+          .title Entrepreneur, Developer, and Maker of Things
+          .description
+            | I can't stop making things. I've built everything from digital manufacturing control systems to WebGL and iOS games to military-grade aircraft control software, and I'm always on the lookout for new projects.
+      
+      .header Some Things I Made &blacktriangledown;
+  
+    .panel#printtopeer
+      .grid
+        .span5
+          img.logo src="img/printtopeer-logo.png"
+          .description
+            | We're making 3D printing easier, faster, and more powerful, so all it takes is one click. PrintToPeer is the easiest way to use your 3D printer, and the easiest way to coordinate multiple 3D printers.
+            
+          a.call-to-action href="http://printtopeer.com" target="_new" Start Printing
+          
+        .span5 &nbsp;
+    
+    .panel#richners-log
+      .grid
+        .span4
+          img.demo src="img/richnerslog-demo.gif"
+        .span1 &nbsp;
+        .span5
+          .logo Richner's Log
+          .description
+            | A story of adventure, isolation, and travel to the stars. Play a classic text-adventure game, reimagined for today's touch devices, and help Richner and Hayley complete their mission and save the galaxy.
+
+          a.call-to-action href="http://jamesthorne.ca/richners-log" target="_new" Play Now
+            
+      
+    .panel#contact
+      

@@ -1,0 +1,159 @@
+
+@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
+
+body {
+  margin: 0px;
+  padding: 0px;
+  
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
+  color: white;
+  background: #333;
+}
+
+.vertical-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  -webkit-justify-content: center;  
+
+  display: -ms-flex;
+  -ms-align-items: center;
+  -ms-justify-content: center;  
+}
+
+.panel {
+  position: relative;
+  box-sizing: border-box;
+  min-height: 90vh;
+  background-size: cover;
+  
+  padding: 80px 0px 80px 0px;
+
+  .vertical-center;
+  
+  .logo {
+    width: 430px;
+  }
+
+  .description {
+    margin-top: 20px;
+    line-height: 140%; 
+    font-size: 20px;
+    text-align: justify;
+  }
+  
+  .call-to-action {
+    display: block;
+    margin: 40px auto 20px auto;
+    box-sizing: border-box;
+    width: 258px;
+    padding: 20px;
+    font-size: 20px;
+    font-weight: 300;
+    
+    color: white;
+    text-decoration: none;
+    text-align: center;
+  }
+}
+
+.header {
+  background: rgba(0, 0, 0, 0.3);
+  color: white;
+  font-size: 21px;
+  text-align: center;
+  padding: 20px;
+  
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  left: 0px;
+}
+
+.grid {
+  width: 860px;
+  margin: auto;
+  clear: both;
+  overflow: hidden;
+  
+  .vertical-center;
+  
+  [class*='span'] {
+    float: left;
+  }
+
+  .span1 { width:  86px; }  
+  .span2 { width: 172px; }  
+  .span3 { width: 258px; }  
+  .span4 { width: 344px; }  
+  .span5 { width: 430px; }  
+  .span6 { width: 516px; }  
+}
+
+#jamesthorne {
+  background-image: url(img/james-background.jpg);  
+  padding-bottom: 140px;
+  
+  .name {
+    font-size: 62px;
+    font-weight: 400;
+    line-height: 100%;
+  }  
+  
+  .title {
+    font-size: 20px;
+    font-weight: 300;
+  }
+  
+  .description {
+    color: #CCC;
+  }
+}
+
+#printtopeer {
+  background-image: url(img/printtopeer-background.jpg);    
+  
+  .call-to-action {
+    background: #1cb699;
+    border-radius: 1000px;
+  }
+  .call-to-action:hover {
+    background: #06826a;
+  }
+}
+
+#richners-log {
+  background: rgb(87,107,119); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(87,107,119,1) 0%, rgba(130,140,149,1) 46%, rgba(181,189,200,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(87,107,119,1)), color-stop(46%,rgba(130,140,149,1)), color-stop(100%,rgba(181,189,200,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#576b77', endColorstr='#b5bdc8',GradientType=0 ); /* IE6-9 */
+
+  .logo {
+    font-size: 74px; 
+    font-weight: 100;
+  }
+  
+  .call-to-action {
+    border: solid 2px white;
+    border-radius: 1000px;
+    padding: 14px; 
+  }
+  
+  .call-to-action:hover {
+    border: solid 2px #white;
+    background: white;
+    color: #333; 
+  }
+}
+
+#contact {
+  background-image: url(img/james-background.jpg);    
+}

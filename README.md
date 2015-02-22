@@ -1,6 +1,4 @@
 jdthorne.github.io
 ==================
 
-Personal Website
-
-Hello!
+James Thorne's Personal Website
