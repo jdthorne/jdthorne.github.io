@@ -2,8 +2,6 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
 @import url(http://fonts.googleapis.com/css?family=Advent+Pro:300);
 
-// 499BC9
-
 body {
   margin: 0px;
   padding: 0px;
@@ -14,9 +12,12 @@ body {
   background: url(img/background.png);
   
   font-size: 16px;
+  
+  line-height: 150%;
 }
 
 #header {
+  display: none;
   background: white;
   
   .header-bar {
@@ -42,21 +43,30 @@ body {
 }
 
 #jamesthorne {
-  background: #EAEAEA;
-  padding: 100px 80px 100px 80px;
+  background: url(img/james-background.jpg);
+  background-size: cover;
+  padding: 12vw 80px 12vw 80px;
+  
+  text-align: center;
   
   * {
-    vertical-align: top;
+    vertical-align: middle;
   }
   
   .picture {
-    width: 140px;
-    height: 140px; 
-    margin: 0px 40px 40px 0px;
+    width: 16vw;
+    margin: 20px 40px 20px 0px;
+    
+    min-width: 140px;
+    transition: all 0.25s;
   }
   .text { 
     display: inline-block; 
     max-width: 420px;
+    text-align: justify;
+  
+    color: white;
+    margin: 20px 0px 20px 0px;
 
     .name {
       font-size: 50px;
@@ -65,13 +75,13 @@ body {
     }  
     
     .title {
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 300;
       margin-bottom: 10px;
     }
     
     .description {
-      color: #555;
+      color: #CCC;
     }
   }
 }
@@ -82,19 +92,26 @@ body {
   margin: 40px 80px 40px 80px;
   padding-bottom: 40px;
   border-bottom: solid 1px #EAEAEA;
+  line-height: 160%;
+  
+  span.triangle {
+    font-size: 0.5em;
+    position: relative;
+    top: -3px;
+  }
 } 
 
 .panels {
   margin: 0px 80px 0px 80px;
   position: relative;
-}
 
-.panel:nth-child(even) {
-  padding-left: 20px;
-}
+  .panel:nth-child(even) {
+    padding-left: 20px;
+  }
 
-.panel:nth-child(odd) {
-  padding-right: 20px;
+  .panel:nth-child(odd) {
+    padding-right: 20px;
+  }
 }
 
 .panel {
@@ -204,7 +221,8 @@ body {
     
     top: 20%;
     bottom: 20%;
-    right: 36%;
+    right: 39%;
+    left: 5%;
   }
 }
 
@@ -279,10 +297,10 @@ body {
     position: absolute;
     top: 15%;
     bottom: 15%;
-    right: -33%;
-    left: 66%;
+    right: -36%;
+    left: 69%;
     
-    transition: all 0.25s;
+    transition: all 0.5s;
   }
   
   .demo:hover {
@@ -337,6 +355,19 @@ body {
 #antex {
   .demo {
     background-image: url(img/antex-background.jpg);  
+  }
+
+  .iPad {
+    background: url(img/antex-ipad.png) center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    right: 15%;
+    left: 15%;    
+    transition: all 0.25s;
   }
 }
 
@@ -431,26 +462,57 @@ body {
 }
 
 #contact-me {
-  background: #EAEAEA;
-  padding: 80px 80px 80px 80px;
+  background: url(img/james-background.jpg);
+  background-size: cover;
+  padding: 120px 80px 120px 80px;
   
-  text-align: right;
+  color: white;
+  text-align: center;
+  
+  img {
+    width: 120px;
+    margin-bottom: 20px;
+  }
   
   .title {
-    font-size: 2em;
-    font-weight: 200;
-    margin-bottom: 10px;
+    font-size: 3em;
+    font-weight: 100;
+    margin-bottom: 30px;
   } 
   
   .description {
     max-width: 420px;
     display: inline-block;
     text-align: justify;
+    
+    margin-bottom: 10px;
+  }
+  
+  .buttons {
+    a {
+      display: inline-block;
+      color: white;
+      background: #499BC9;
+      
+      padding: 12px 32px 12px 32px;
+      margin: 8px;
+      text-decoration: none;
+      
+      transition: all 0.25s;
+    }
+    
+    a:hover {
+      background: #333;
+    }
   }
 }
 
+#contact-me:hover .buttons a {
+  padding: 12px 48px 12px 48px;
+}
+
 footer {
-  background: #444;
+  background: #222;
   color: white;
   font-size: 0.8em;
   padding: 40px 80px 60px 80px;

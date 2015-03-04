@@ -1,8 +1,5 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
 @import url(http://fonts.googleapis.com/css?family=Advent+Pro:300);
-#old {
-  display: none;
-}
 body {
   margin: 0px;
   padding: 0px;
@@ -11,8 +8,10 @@ body {
   color: #333;
   background: url(img/background.png);
   font-size: 16px;
+  line-height: 150%;
 }
 #header {
+  display: none;
   background: white;
 }
 #header .header-bar {
@@ -33,20 +32,26 @@ body {
   cursor: pointer;
 }
 #jamesthorne {
-  background: #EAEAEA;
-  padding: 100px 80px 100px 80px;
+  background: url(img/james-background.jpg);
+  background-size: cover;
+  padding: 12vw 80px 12vw 80px;
+  text-align: center;
 }
 #jamesthorne * {
-  vertical-align: top;
+  vertical-align: middle;
 }
 #jamesthorne .picture {
-  width: 140px;
-  height: 140px;
-  margin: 0px 40px 40px 0px;
+  width: 16vw;
+  margin: 20px 40px 20px 0px;
+  min-width: 140px;
+  transition: all 0.25s;
 }
 #jamesthorne .text {
   display: inline-block;
   max-width: 420px;
+  text-align: justify;
+  color: white;
+  margin: 20px 0px 20px 0px;
 }
 #jamesthorne .text .name {
   font-size: 50px;
@@ -54,28 +59,34 @@ body {
   line-height: 100%;
 }
 #jamesthorne .text .title {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 300;
   margin-bottom: 10px;
 }
 #jamesthorne .text .description {
-  color: #555;
+  color: #CCC;
 }
 .header {
   font-size: 2em;
   font-weight: 200;
   margin: 40px 80px 40px 80px;
   padding-bottom: 40px;
-  border-bottom: solid 1px #499BC9;
+  border-bottom: solid 1px #EAEAEA;
+  line-height: 160%;
+}
+.header span.triangle {
+  font-size: 0.5em;
+  position: relative;
+  top: -3px;
 }
 .panels {
   margin: 0px 80px 0px 80px;
   position: relative;
 }
-.panel:nth-child(even) {
+.panels .panel:nth-child(even) {
   padding-left: 20px;
 }
-.panel:nth-child(odd) {
+.panels .panel:nth-child(odd) {
   padding-right: 20px;
 }
 .panel {
@@ -158,7 +169,8 @@ body {
   background-image: url(img/printtopeer-demo.gif);
   top: 20%;
   bottom: 20%;
-  right: 36%;
+  right: 39%;
+  left: 5%;
 }
 #richners-log .demo {
   background: #576b77;
@@ -216,9 +228,9 @@ body {
   position: absolute;
   top: 15%;
   bottom: 15%;
-  right: -33%;
-  left: 66%;
-  transition: all 0.25s;
+  right: -36%;
+  left: 69%;
+  transition: all 0.5s;
 }
 #fuzzytec .demo:hover .iPhone {
   top: 5%;
@@ -259,6 +271,17 @@ body {
 }
 #antex .demo {
   background-image: url(img/antex-background.jpg);
+}
+#antex .iPad {
+  background: url(img/antex-ipad.png) center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  right: 15%;
+  left: 15%;
+  transition: all 0.25s;
 }
 #isthereanaccidentondeerfoot .demo {
   background-color: #333;
@@ -341,22 +364,44 @@ body {
   background: linear-gradient(top, #373737, #212121);
 }
 #contact-me {
-  background: #EAEAEA;
-  padding: 80px 80px 80px 80px;
-  text-align: right;
+  background: url(img/james-background.jpg);
+  background-size: cover;
+  padding: 120px 80px 120px 80px;
+  color: white;
+  text-align: center;
+}
+#contact-me img {
+  width: 120px;
+  margin-bottom: 20px;
 }
 #contact-me .title {
-  font-size: 2em;
-  font-weight: 200;
-  margin-bottom: 10px;
+  font-size: 3em;
+  font-weight: 100;
+  margin-bottom: 30px;
 }
 #contact-me .description {
   max-width: 420px;
   display: inline-block;
   text-align: justify;
+  margin-bottom: 10px;
+}
+#contact-me .buttons a {
+  display: inline-block;
+  color: white;
+  background: #499BC9;
+  padding: 12px 32px 12px 32px;
+  margin: 8px;
+  text-decoration: none;
+  transition: all 0.25s;
+}
+#contact-me .buttons a:hover {
+  background: #333;
+}
+#contact-me:hover .buttons a {
+  padding: 12px 48px 12px 48px;
 }
 footer {
-  background: #444;
+  background: #222;
   color: white;
   font-size: 0.8em;
   padding: 40px 80px 60px 80px;
