@@ -1,9 +1,6 @@
 
 $(document).ready ->
-  $("a").attr 'target', '_new'
+  $(".demo").each (i, demo)->
+    do (demo) ->
+      $(demo).click -> window.open $(demo).attr("data-url"), "_new"
 
-
-toggle_deerfoot = ->
-  $("#isthereanaccidentondeerfoot .toggles").toggle()
-  
-window.setInterval toggle_deerfoot, 2000

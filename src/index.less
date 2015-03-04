@@ -2,297 +2,466 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
 @import url(http://fonts.googleapis.com/css?family=Advent+Pro:300);
 
+// 499BC9
+
 body {
   margin: 0px;
   padding: 0px;
   
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  color: white;
-  background: #333;
+  color: #333;
+  background: url(img/background.png);
+  
+  font-size: 16px;
 }
 
-.vertical-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;  
-
-  display: -webkit-flex;
-  -webkit-align-items: center;
-  -webkit-justify-content: center;  
-
-  display: -ms-flex;
-  -ms-align-items: center;
-  -ms-justify-content: center;  
-}
-
-.panel {
-  position: relative;
-  box-sizing: border-box;
-  min-height: 90vh;
-  background-size: cover;
+#header {
+  background: white;
   
-  padding: 80px 0px 80px 0px;
-
-  .vertical-center;
-  
-  .logo {
-    width: 430px;
-  }
-
-  .description {
-    margin-top: 20px;
-    line-height: 140%; 
-    font-size: 20px;
-    text-align: justify;
-  }
-  
-  .call-to-action {
-    display: block;
-    margin: 40px auto 20px auto;
-    box-sizing: border-box;
-    width: 258px;
-    padding: 20px;
-    font-size: 20px;
-    font-weight: 300;
+  .header-bar {
+    margin: 0px 80px 0px 80px;
+    border-right: solid 1px #F2F2F2; 
     
-    color: white;
-    text-decoration: none;
-    text-align: center;
+    div {
+      display: inline-block;
+      padding: 20px;
+      border-left: solid 1px #F2F2F2; 
+    }
+  }
+  
+  .small {
+    font-size: 0.7em; 
+    color: #888;
+  }
+  
+  .navigation {
+    float: right;
+    cursor: pointer;
+  }
+}
+
+#jamesthorne {
+  background: #EAEAEA;
+  padding: 100px 80px 100px 80px;
+  
+  * {
+    vertical-align: top;
+  }
+  
+  .picture {
+    width: 140px;
+    height: 140px; 
+    margin: 0px 40px 40px 0px;
+  }
+  .text { 
+    display: inline-block; 
+    max-width: 420px;
+
+    .name {
+      font-size: 50px;
+      font-weight: 400;
+      line-height: 100%;
+    }  
+    
+    .title {
+      font-size: 20px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+    
+    .description {
+      color: #555;
+    }
   }
 }
 
 .header {
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  font-size: 21px;
-  text-align: center;
-  padding: 20px;
-  
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  left: 0px;
+  font-size: 2em;
+  font-weight: 200;
+  margin: 40px 80px 40px 80px;
+  padding-bottom: 40px;
+  border-bottom: solid 1px #EAEAEA;
+} 
+
+.panels {
+  margin: 0px 80px 0px 80px;
+  position: relative;
 }
 
-.grid {
-  width: 860px;
-  margin: auto;
-  clear: both;
-  overflow: hidden;
-  
-  .vertical-center;
-  
-  [class*='span'] {
-    float: left;
-  }
-
-  .span1 { width:  86px; }  
-  .span2 { width: 172px; }  
-  .span3 { width: 258px; }  
-  .span4 { width: 344px; }  
-  .span5 { width: 430px; }  
-  .span6 { width: 516px; }  
+.panel:nth-child(even) {
+  padding-left: 20px;
 }
 
-#jamesthorne {
-  background-image: url(img/james-background.jpg);  
-  padding-bottom: 140px;
-  
-  .name {
-    font-size: 62px;
-    font-weight: 400;
-    line-height: 100%;
-  }  
-  
-  .title {
-    font-size: 20px;
-    font-weight: 300;
+.panel:nth-child(odd) {
+  padding-right: 20px;
+}
+
+.panel {
+  vertical-align: top;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 50%;
+    
+  // Demo images should be 1200 x 780
+  img {
+    width: 100%;
   }
   
   .description {
-    color: #CCC;
+    transition: all 0.25s;
+    margin: 0px 0px 80px 0px;
+    padding-top: 20px;
+    
+    .name {
+      font-weight: 500;
+      margin-bottom: 10px;
+    }
+    .stack {
+      margin-bottom: 10px;
+    }
+    .tech {
+      div {
+        display: inline-block;
+        padding: 4px 8px 4px 8px;
+        margin: 0px 4px 4px 0px;
+        font-size: 0.8em;
+        background: #E6E6E6;
+        color: #777;
+      }
+    }
+  }
+  
+  // HACK: Make demo divs be 1200 x 780
+  .demo { 
+    cursor: pointer;
+    background-size: cover;
+    position: relative; 
+    width: 100%; 
+    transition: all 0.5s;
+  }
+  .demo:before {
+    font-size: 0px;
+    content: "";
+    display: block;
+    padding-top: 65%;
+  }
+  // END HACK
+  
+  .demo:after {
+    content: "";
+    
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    
+    border-sizing: box-sizing;
+    
+    font-size: 2em;
+    color: white;
+  }
+}
+.panel:hover {
+  .description {
+    // background: #E2E2E2;
+  }
+  
+  .demo:after {
+    content: "";
   }
 }
 
 #printtopeer {
-  background-image: url(img/printtopeer-background.jpg);    
-  
-  .call-to-action {
-    background: #1cb699;
-    border-radius: 1000px;
+  .demo {
+    background-image: url(img/printtopeer-background.jpg);
   }
-  .call-to-action:hover {
-    background: #06826a;
+  
+  .printtopanel {
+    position: absolute;
+    top: 33%;
+    bottom: 33%;
+    left: 8%;
+    right: 58%;
+    
+    box-sizing: border-box;
+    border-top: solid 1.25vw #1CB699;
+    
+    background-image: url(img/printtopeer-splash.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    
+    box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+    transition: all 0.25s;
+  }
+  
+  .demo:hover .printtopanel {
+    background-image: url(img/printtopeer-demo.gif);
+    
+    top: 20%;
+    bottom: 20%;
+    right: 36%;
   }
 }
 
 #richners-log {
-  background: rgb(87,107,119); /* Old browsers */
-  background: -moz-linear-gradient(top, rgba(87,107,119,1) 0%, rgba(130,140,149,1) 46%, rgba(181,189,200,1) 100%); /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(87,107,119,1)), color-stop(46%,rgba(130,140,149,1)), color-stop(100%,rgba(181,189,200,1))); /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* IE10+ */
-  background: linear-gradient(to bottom, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#576b77', endColorstr='#b5bdc8',GradientType=0 ); /* IE6-9 */
-
-  .logo {
-    font-size: 74px; 
-    font-weight: 100;
+  .demo {
+    background: rgb(87,107,119);
+    background: -moz-linear-gradient(top, rgba(87,107,119,1) 0%, rgba(130,140,149,1) 46%, rgba(181,189,200,1) 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(87,107,119,1)), color-stop(46%,rgba(130,140,149,1)), color-stop(100%,rgba(181,189,200,1))); 
+    background: -webkit-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); 
+    background: -o-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); 
+    background: -ms-linear-gradient(top, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); 
+    background: linear-gradient(to bottom, rgba(87,107,119,1) 0%,rgba(130,140,149,1) 46%,rgba(181,189,200,1) 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#576b77', endColorstr='#b5bdc8',GradientType=0 ); 
   }
   
-  .call-to-action {
-    border: solid 2px white;
-    border-radius: 1000px;
-    padding: 14px; 
+  .gif {
+    background: url(img/richnerslog-splash.jpg) center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    right: 15%;
+    left: 15%;
+    
+    transition: all 0.25s;
   }
   
-  .call-to-action:hover {
-    border: solid 2px #white;
-    background: white;
-    color: #333; 
+  .demo:hover .gif {
+    background-image: url(img/richnerslog-demo.gif);
+    
+    top: 10%;
+    bottom: 10%;
   }
 }
 
 #fuzzytec {
-  background-image: url(img/fuzzytec-background.jpg);    
-  
-  .call-to-action {
-    background: url(img/fuzzytec-calltoaction.png) no-repeat center; 
-  }
-  .call-to-action:hover {
-    background-image: url(img/fuzzytec-calltoaction-hover.png); 
-  }
-  
-  .iphone {
-    background: url(img/fuzzytec-iphone.png);
-    position: absolute;
-    bottom: 0px;
-    
-    width: 390px;
-    height: 531px;
-
-    img {
-      position: absolute;
-      bottom: 0px;
-      left: 75px;
-    }
-  }
-}
-
-#isthereanaccidentondeerfoot {
-  background: #333;
-  
-  .logo {
-    font-size: 28px; 
-    font-weight: 400;
-  } 
-  
   .demo {
-    .text {
-      text-align: center;
-      padding: 10px;
-      font-size: 14px;
-      color: #777;
-    }
-    
-    .yes, .no {
-      text-align: center;
-      padding: 20px;
-      font-size: 26px;
-      font-weight: 400;
-    }
+    background-image: url(img/fuzzytec-background.jpg);
+    overflow: hidden;
+  }  
+  
+  .iPhone {
+    background: url(img/fuzzytec-iphone.png) center;
+    background-size: contain;
+    background-repeat: no-repeat;
 
-    .yes { 
-      background: #FF8E00;
-      border-top: solid 2px #FFA739;
-      border-bottom: solid 2px #C56E00;
-    }
-    
-    .no {
-      background: #00B25C;
-      border-top: solid 2px #29B672;
-      border-bottom: solid 2px #008947;
-    }
-    
-    .initially-hidden {
-      display: none;
-    }
+    position: absolute;
+    top: 10%;
+    bottom: -5%;
+    right: 33%;
+    left: 0px;    
+    transition: all 0.25s;
   }
   
-  .demo-footer {
+  .gif {
+    background: url(img/fuzzytec-splash.jpg) no-repeat center;
+    background-size: contain;
+
     position: absolute;
+    top: 19.5%;
     bottom: 0px;
     right: 0px;
-    left: 0px;
-    height: 80px;
-    background-color: #222; 
+    left: 0px;    
   }
   
-  .call-to-action {
-    border-top: solid 2px #666;
-    background: #555;
-    border-bottom: solid 2px #444;
-    padding: 14px;
+  .presley {
+    background: url(img/fuzzytec-presley.png) no-repeat center;
+    background-size: contain;
+
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    right: -33%;
+    left: 66%;
+    
+    transition: all 0.25s;
   }
   
-  .call-to-action:hover {
-    border-top: solid 2px #777;
-    background: #666;
-    border-bottom: solid 2px #555;     
+  .demo:hover {
+    .iPhone {
+      top: 5%;
+      bottom: 0%;
+    }
+    .gif {
+      background-image: url(img/fuzzytec-demo.gif);
+    }
+    .presley {
+      left: 56%;
+      right: -23%;
+    }
   }
 }
 
 #lintr {
-  background: rgb(145,145,145); /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%, rgba(51,51,51,1) 100%); /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(145,145,145,1)), color-stop(100%,rgba(51,51,51,1))); /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); /* IE10+ */
-  background: radial-gradient(ellipse at center, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#919191', endColorstr='#333333',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+  .demo {
+    background: rgb(145,145,145);
+    background: -moz-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%, rgba(51,51,51,1) 100%); 
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,rgba(145,145,145,1)), color-stop(100%,rgba(51,51,51,1))); 
+    background: -webkit-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); 
+    background: -o-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); 
+    background: -ms-radial-gradient(center, ellipse cover, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); 
+    background: radial-gradient(ellipse at center, rgba(145,145,145,1) 0%,rgba(51,51,51,1) 100%); 
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#919191', endColorstr='#333333',GradientType=1 ); 
+  }
+  
+  .gif {
+    background: url(img/lintr-splash.jpg) center;
+    background-size: contain;
+    background-repeat: no-repeat;
 
-  .logo {
-    font-family: serif;
-    font-size: 70px; 
-    font-weight: 100;
+    position: absolute;
+    top: 15%;
+    bottom: 15%;
+    right: 15%;
+    left: 15%;  
+    
+    transition: all 0.25s;  
   }
   
-  .demo img {
-    border: solid 1px #555;
-  }
-  
-  .call-to-action {
-    background: #22B573;
-  }  
-  .call-to-action:hover {
-    background: #B52222; 
+  .demo:hover .gif {
+    background-image: url(img/lintr-demo.gif);
+    
+    top: 10%;
+    bottom: 10%;
   }
 }
 
 #antex {
-  background-image: url(img/antex-sky.jpg);  
-  
-  .logo {
-    font-family: 'Advent Pro', sans-serif;
-    font-size: 64px;
-    font-weight: 300;
-  }
-  
-  .ipad {
-    background: url(img/antex-ipad.png);
-    width: 344px;
-    height: 486px; 
+  .demo {
+    background-image: url(img/antex-background.jpg);  
   }
 }
 
-#contact {
-  background-image: url(img/james-background.jpg);    
+#isthereanaccidentondeerfoot {
+  .demo {
+    background-color: #333;
+  }
+  .page {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    
+    box-sizing: border-box;
+    padding-top: 5%;
+  }
 
-  .logo {
-    font-size: 74px; 
-    font-weight: 100;
+  .text {
+    text-align: center;
+    padding: 1vw;
+    font-size: 1.25vw;
+    color: #777;
+  }
+  
+  .yes, .no {
+    text-align: center;
+    padding: 2vw;
+    font-size: 2.5vw;
+    font-weight: 400;
+    color: white;
+  }
+
+  .yes { 
+    background: #FF8E00;
+    border-top: solid 2px #FFA739;
+    border-bottom: solid 2px #C56E00;
+  }
+  
+  .no {
+    background: #00B25C;
+    border-top: solid 2px #29B672;
+    border-bottom: solid 2px #008947;
+  }
+  
+  .toggle-on, .toggle-off {
+    position: absolute;
+    top: 15%;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    
+    transition: all 0.25s;
+  }
+  
+  .toggle-on {
+    opacity: 0;
+  }
+
+  .demo:hover {
+    .toggle-on {
+      opacity: 1;
+    }
+    .toggle-off {
+      opacity: 0;
+    }
+  }
+}
+
+#whitesky {
+  .demo {
+    background: rgb(0,177,255); /* Old browsers */
+    background: -moz-linear-gradient(top, rgba(0,177,255,1) 0%, rgba(158,201,220,1) 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,177,255,1)), color-stop(100%,rgba(158,201,220,1))); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, rgba(0,177,255,1) 0%,rgba(158,201,220,1) 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, rgba(0,177,255,1) 0%,rgba(158,201,220,1) 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, rgba(0,177,255,1) 0%,rgba(158,201,220,1) 100%); /* IE10+ */
+    background: linear-gradient(to bottom, rgba(0,177,255,1) 0%,rgba(158,201,220,1) 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b1ff', endColorstr='#9ec9dc',GradientType=0 ); /* IE6-9 */
+  }
+}
+
+#teamlunch {
+  .demo {
+    background: #212121;
+    background: -moz-linear-gradient(top, #373737, #212121);
+    background: -webkit-linear-gradient(top, #373737, #212121);
+    background: -ms-linear-gradient(top, #373737, #212121);
+    background: -o-linear-gradient(top, #373737, #212121);
+    background: linear-gradient(top, #373737, #212121);
+  }  
+}
+
+#contact-me {
+  background: #EAEAEA;
+  padding: 80px 80px 80px 80px;
+  
+  text-align: right;
+  
+  .title {
+    font-size: 2em;
+    font-weight: 200;
+    margin-bottom: 10px;
+  } 
+  
+  .description {
+    max-width: 420px;
+    display: inline-block;
+    text-align: justify;
+  }
+}
+
+footer {
+  background: #444;
+  color: white;
+  font-size: 0.8em;
+  padding: 40px 80px 60px 80px;
+  
+  p {
+    margin: 0px 0px 4px 0px;
+    padding: 0px;
+    float: left;
+  }
+  p.thought {
+    color: #AAA;
+    float: right;
   }
 }

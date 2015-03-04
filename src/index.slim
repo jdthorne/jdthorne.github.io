@@ -9,136 +9,163 @@ html
     script type="text/javascript"== File.open("obj/index.js").read
   
   body
-    .panel#jamesthorne
-      .grid
-        .span3
-          img.picture src="img/james-pic.png"
-        .span1 &nbsp; 
-        .span6
-          .name James Thorne
-          .title Entrepreneur, Developer, and Maker of Things
-          .description
-            | I can't stop making things. I've built everything from digital manufacturing systems to WebGL and iOS games to military-grade aircraft control software. I'm always on the lookout for new technologies to explore.
-      
-      .header Some Things I Made &blacktriangledown;
+    #header
+      .header-bar
+        .main
+          | James Thorne
+          span.small  .ca
+          
+        .navigation.contact Contact
+        .navigation.portfolio Portfolio
+        .navigation.about About
+        
+    #jamesthorne
+      img.picture src="img/james-pic.png"
+      .text
+        .name James Thorne
+        .title Entrepreneur, Developer, and Maker of Things
+        .description
+          | I can't stop making things. I've built everything from digital manufacturing systems to WebGL and iOS games to military-grade aircraft control software. I'm always on the lookout for new technologies to explore, so let me know if you want to work on something together!
   
-    .panel#printtopeer
-      .grid
-        .span5
-          img.logo src="img/printtopeer-logo.png"
-          .description
-            | We're making 3D printing easier, faster, and more powerful, so all it takes is one click. PrintToPeer is the easiest way to use your 3D printer, and the easiest way to coordinate multiple 3D printers.
-            
-          a.call-to-action href="http://printtopeer.com" Start Printing
-          
-        .span5 &nbsp;
+    .header Some of the Things I've Made
     
-    .panel#richners-log
-      .grid
-        .span4
-          img.demo src="img/richnerslog-demo.gif"
-        .span1 &nbsp;
-        .span5
-          .logo Richner's Log
-          .description
-            | A story of adventure, isolation, and travel to the stars. Play a classic text-adventure game, reimagined for today's touch devices, and help Richner and Hayley complete their mission and save the galaxy.
+    .panels    
+    
+      #printtopeer.panel
+        .demo data-url="http://printtopeer.com"
+          .printtopanel
+            
+        .description
+          .name PrintToPeer
+          .stack Web + Embedded
+          .tech
+            div Ruby on Rails
+            div Postgres
+            div Redis
+            div Websockets
+            div WebGL
+            div Raspberry Pi
+            div 3D Printing
+      
+      #richners-log.panel
+        .demo data-url="http://jamesthorne.ca/richners-log"
+          .gif
+        .description
+          .name Richner's Log
+          .stack Web
+          .tech
+            div Coffeescript
+            div Slim
+            div LESS
+            div HTML5
 
-          a.call-to-action href="http://jamesthorne.ca/richners-log" Play Now
-    
-    .panel#fuzzytec
-      .grid
-        .span5
-          img.logo src="img/fuzzytec-logo.png"
-          .description
-            | The Evil Robots have captured Presley and his fellow fuzzles! It's up to you to help Ted rescue them, upgrade his ship, find some extra special powerups, and stop the robots!
-          
-          a.call-to-action href="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;mt=8" Play Now
-            
-        .span1 &nbsp;
-        .span4
-          .iphone
-            img src="img/fuzzytec-demo.gif"
+      #lintr.panel
+        .demo data-url="http://lintr.co"
+          .gif
+        .description
+          .name Lintr.co
+          .stack Web
+          .tech
+            div Python
+            div Flask
+            div NLTK
+            div Heroku
+            div English Grammar      
 
-    .panel#lintr
-      .grid
-        .span4
-          .demo
-            img src="img/lintr-demo.gif"
-        .span1 &nbsp;
-        .span5
-          .logo lintr.co
-          .description lintr.co is a linter for the English language. It's an opinionated grammar and style checker that warns you about improper use of active/passive voice, sentences that are too short or too long, improper use of SI units, and more.
-          a.call-to-action href="http://lintr.co" Check my Grammar
-    
-    .panel#antex
-      .grid
-        .span5
-          .logo Antex
-          .description Antex is a Tactical Strategy Puzzle Game for iPad. You command an army of hovercraft, tanks, trucks, ships, submarines and helicopters. Use your finger to draw a path for your forces, and watch as they lay waste to enemy defenses.
+      #fuzzytec.panel
+        .demo data-url="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;mt=8"
+          .iPhone
+            .gif
+          .presley
           
-          a.call-to-action href="https://itunes.apple.com/us/app/antex/id656352369?ls=1&amp;mt=8" Play Now
-        
-        .span1 &nbsp;
-        .span4
-          .ipad
-            / img src="img/antex-demo.gif"
+        .description
+          .name Fuzzytec
+          .stack iPhone
+          .tech
+            div Objective-C
+            div SpriteKit
+            div Adobe Illustrator
+            div In-App Purchases
+            div Procedural Generation
+            div Terrible Puns
+            
+      #antex.panel
+        .demo data-url="https://itunes.apple.com/us/app/antex/id656352369?ls=1&amp;mt=8"
+        .description
+          .name Antex
+          .stack iPad
+          .tech
+            div Objective-C
+            div Cocos2d
+            div OpenGL
+            div Level Design
+            div Story Writing
+            div Adobe Illustrator
+      
+      #isthereanaccidentondeerfoot.panel
+        .demo data-url="http://isthereanaccidentondeerfoot.herokuapp.com"
+          .page
+            .toggle-on
+              .text Is there an accident on Deerfoot?
+              .yes Yes
+              .text And the current slowness index is <b>86</b>
+            
+            .toggle-off
+              .text Is there an accident on Deerfoot?
+              .no No
+              .text And traffic isn't too bad either.
 
-    .panel#isthereanaccidentondeerfoot
-      .grid
-        .span4
-          .demo
-            .text Is there an accident on Deerfoot?
-            .yes.toggles.initially-hidden Yes
-            .no.toggles No
-            .text.toggles.initially-hidden And the current slowness index is <b>86</b>
-            .text.toggles And traffic isn't too bad either.
-          
-          .demo-footer
+        .description
+          .name Is there an accident on Deerfoot?
+          .stack Web
+          .tech
+            div Bing Maps API
+            div Twitter API
+            div Rails
+            div Postgres
+            div Heroku
+      
+      #whitesky.panel
+        .demo data-url="http://whitesky.jamesthorne.ca"
+        .description
+          .name White Sky
+          .stack Web
+          .tech
+            div WebGL
+            div Coffeescript
+            div NodeJS
+            div Procedural Generation
             
-        .span1 &nbsp;
-        .span5
-          .logo Is there an accident on Deerfoot?
-          .description
-            | Deerfoot Trail is a major freeway in Calgary. Traffic gets really bad when there's an accident. "Is there an accident on Deerfoot?" uses the Bing and Twitter APIs to tell you, in realtime, if there's an accident on Deerfoot.
+      #teamlunch.panel
+        .demo data-url="http://teamlunch.github.io"
+        .description
+          .name Team Lunch
+          .stack Embedded
+          .tech
+            div Linux
+            div Avionics
+            div Ultrasonic Sensors
+            div Parrot AR.Drone
+            div Collision Avoidance
             
-          a.call-to-action href="http://isthereanaccidentondeerfoot.herokuapp.com" Well, is there?
-    
-    .panel#whitesky
-      .grid
-        .span5
-          .logo White Sky
-          .description Hey there
-          a.call-to-action href="http://whitesky.jamesthorne.ca" Play Now
-          
-        .span1 &nbsp;
-        .span4 Demo?
-    
-    .panel#teamlunch
-      .grid
-        .span4 Demo
-        .span1 &nbsp;
-        .span5
-          .logo Team Lunch
-          .description This drone is safe.
-          a.call-to-action href="http://teamlunch.github.io" More Information
-    
-    .panel#pokemon
-      .grid
-        .span5
-          .logo Pokemon: Zoo Version
-          .description Silly Video
-          a.call-to-action href="https://www.youtube.com/watch?v=OxTxx9HpZeg" Watch Now
-        .span1 &nbsp;
-        .span4 Demo?
-    
-    .panel#contact
-      .grid
-        .span3
-          img.picture src="img/contact-mail.png"
-        
-        .span1 &nbsp;
-        .span6
-          .logo Good Stuff.
-          .description
-            | I'm always looking for new technologies to explore! If you're interested in working together, shoot me an email, or take a look at my linkedin or my resume.
-            
+      #pokemon.panel
+        .demo data-url="https://www.youtube.com/watch?v=OxTxx9HpZeg"
+        .description
+          .name Pokemon: Zoo Version
+          .stack Film
+          .tech
+            div Film Production
+            div Video Editing
+            div Screenwriting
+            div Special Effects
+            div Explosions
+      
+    #contact-me
+      .title Good Stuff.
+      .description 
+        | I'm always looking for new technologies to explore! If you're interested in working together, shoot me an email, or take a look at my linkedin or my resume.
+      
+    footer 
+      p Crafted with love by <b>James Thorne</b>. 
+      p.thought Also, have I mentioned how much I love HTML5 and CSS3?
+              

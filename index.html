@@ -1,305 +1,387 @@
 <!DOCTYPE html><html><head><title>James Thorne</title><script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><style>@import url(http://fonts.googleapis.com/css?family=Roboto:400,100,300,500,700,900);
 @import url(http://fonts.googleapis.com/css?family=Advent+Pro:300);
+#old {
+  display: none;
+}
 body {
   margin: 0px;
   padding: 0px;
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  color: white;
-  background: #333;
+  color: #333;
+  background: url(img/background.png);
+  font-size: 16px;
 }
-.vertical-center {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: -webkit-flex;
-  -webkit-align-items: center;
-  -webkit-justify-content: center;
-  display: -ms-flex;
-  -ms-align-items: center;
-  -ms-justify-content: center;
+#header {
+  background: white;
 }
-.panel {
-  position: relative;
-  box-sizing: border-box;
-  min-height: 90vh;
-  background-size: cover;
-  padding: 80px 0px 80px 0px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: -webkit-flex;
-  -webkit-align-items: center;
-  -webkit-justify-content: center;
-  display: -ms-flex;
-  -ms-align-items: center;
-  -ms-justify-content: center;
+#header .header-bar {
+  margin: 0px 80px 0px 80px;
+  border-right: solid 1px #F2F2F2;
 }
-.panel .logo {
-  width: 430px;
-}
-.panel .description {
-  margin-top: 20px;
-  line-height: 140%;
-  font-size: 20px;
-  text-align: justify;
-}
-.panel .call-to-action {
-  display: block;
-  margin: 40px auto 20px auto;
-  box-sizing: border-box;
-  width: 258px;
+#header .header-bar div {
+  display: inline-block;
   padding: 20px;
+  border-left: solid 1px #F2F2F2;
+}
+#header .small {
+  font-size: 0.7em;
+  color: #888;
+}
+#header .navigation {
+  float: right;
+  cursor: pointer;
+}
+#jamesthorne {
+  background: #EAEAEA;
+  padding: 100px 80px 100px 80px;
+}
+#jamesthorne * {
+  vertical-align: top;
+}
+#jamesthorne .picture {
+  width: 140px;
+  height: 140px;
+  margin: 0px 40px 40px 0px;
+}
+#jamesthorne .text {
+  display: inline-block;
+  max-width: 420px;
+}
+#jamesthorne .text .name {
+  font-size: 50px;
+  font-weight: 400;
+  line-height: 100%;
+}
+#jamesthorne .text .title {
   font-size: 20px;
   font-weight: 300;
-  color: white;
-  text-decoration: none;
-  text-align: center;
+  margin-bottom: 10px;
+}
+#jamesthorne .text .description {
+  color: #555;
 }
 .header {
-  background: rgba(0, 0, 0, 0.3);
-  color: white;
-  font-size: 21px;
-  text-align: center;
-  padding: 20px;
+  font-size: 2em;
+  font-weight: 200;
+  margin: 40px 80px 40px 80px;
+  padding-bottom: 40px;
+  border-bottom: solid 1px #499BC9;
+}
+.panels {
+  margin: 0px 80px 0px 80px;
+  position: relative;
+}
+.panel:nth-child(even) {
+  padding-left: 20px;
+}
+.panel:nth-child(odd) {
+  padding-right: 20px;
+}
+.panel {
+  vertical-align: top;
+  position: relative;
+  box-sizing: border-box;
+  display: inline-block;
+  width: 50%;
+}
+.panel img {
+  width: 100%;
+}
+.panel .description {
+  transition: all 0.25s;
+  margin: 0px 0px 80px 0px;
+  padding-top: 20px;
+}
+.panel .description .name {
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.panel .description .stack {
+  margin-bottom: 10px;
+}
+.panel .description .tech div {
+  display: inline-block;
+  padding: 4px 8px 4px 8px;
+  margin: 0px 4px 4px 0px;
+  font-size: 0.8em;
+  background: #E6E6E6;
+  color: #777;
+}
+.panel .demo {
+  cursor: pointer;
+  background-size: cover;
+  position: relative;
+  width: 100%;
+  transition: all 0.5s;
+}
+.panel .demo:before {
+  font-size: 0px;
+  content: "";
+  display: block;
+  padding-top: 65%;
+}
+.panel .demo:after {
+  content: "";
   position: absolute;
+  z-index: 10;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  border-sizing: box-sizing;
+  font-size: 2em;
+  color: white;
+}
+.panel:hover .demo:after {
+  content: "";
+}
+#printtopeer .demo {
+  background-image: url(img/printtopeer-background.jpg);
+}
+#printtopeer .printtopanel {
+  position: absolute;
+  top: 33%;
+  bottom: 33%;
+  left: 8%;
+  right: 58%;
+  box-sizing: border-box;
+  border-top: solid 1.25vw #1CB699;
+  background-image: url(img/printtopeer-splash.png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.25);
+  transition: all 0.25s;
+}
+#printtopeer .demo:hover .printtopanel {
+  background-image: url(img/printtopeer-demo.gif);
+  top: 20%;
+  bottom: 20%;
+  right: 36%;
+}
+#richners-log .demo {
+  background: #576b77;
+  background: -moz-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #576b77), color-stop(46%, #828c95), color-stop(100%, #b5bdc8));
+  background: -webkit-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  background: -o-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  background: -ms-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  background: linear-gradient(to bottom, #576b77 0%, #828c95 46%, #b5bdc8 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#576b77', endColorstr='#b5bdc8', GradientType=0);
+}
+#richners-log .gif {
+  background: url(img/richnerslog-splash.jpg) center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 15%;
+  bottom: 15%;
+  right: 15%;
+  left: 15%;
+  transition: all 0.25s;
+}
+#richners-log .demo:hover .gif {
+  background-image: url(img/richnerslog-demo.gif);
+  top: 10%;
+  bottom: 10%;
+}
+#fuzzytec .demo {
+  background-image: url(img/fuzzytec-background.jpg);
+  overflow: hidden;
+}
+#fuzzytec .iPhone {
+  background: url(img/fuzzytec-iphone.png) center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 10%;
+  bottom: -5%;
+  right: 33%;
+  left: 0px;
+  transition: all 0.25s;
+}
+#fuzzytec .gif {
+  background: url(img/fuzzytec-splash.jpg) no-repeat center;
+  background-size: contain;
+  position: absolute;
+  top: 19.5%;
   bottom: 0px;
   right: 0px;
   left: 0px;
 }
-.grid {
-  width: 860px;
-  margin: auto;
-  clear: both;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  display: -webkit-flex;
-  -webkit-align-items: center;
-  -webkit-justify-content: center;
-  display: -ms-flex;
-  -ms-align-items: center;
-  -ms-justify-content: center;
-}
-.grid [class*='span'] {
-  float: left;
-}
-.grid .span1 {
-  width: 86px;
-}
-.grid .span2 {
-  width: 172px;
-}
-.grid .span3 {
-  width: 258px;
-}
-.grid .span4 {
-  width: 344px;
-}
-.grid .span5 {
-  width: 430px;
-}
-.grid .span6 {
-  width: 516px;
-}
-#jamesthorne {
-  background-image: url(img/james-background.jpg);
-  padding-bottom: 140px;
-}
-#jamesthorne .name {
-  font-size: 62px;
-  font-weight: 400;
-  line-height: 100%;
-}
-#jamesthorne .title {
-  font-size: 20px;
-  font-weight: 300;
-}
-#jamesthorne .description {
-  color: #CCC;
-}
-#printtopeer {
-  background-image: url(img/printtopeer-background.jpg);
-}
-#printtopeer .call-to-action {
-  background: #1cb699;
-  border-radius: 1000px;
-}
-#printtopeer .call-to-action:hover {
-  background: #06826a;
-}
-#richners-log {
-  background: #576b77;
-  /* Old browsers */
-  background: -moz-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
-  /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #576b77), color-stop(46%, #828c95), color-stop(100%, #b5bdc8));
-  /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
-  /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
-  /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, #576b77 0%, #828c95 46%, #b5bdc8 100%);
-  /* IE10+ */
-  background: linear-gradient(to bottom, #576b77 0%, #828c95 46%, #b5bdc8 100%);
-  /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#576b77', endColorstr='#b5bdc8', GradientType=0);
-  /* IE6-9 */
-}
-#richners-log .logo {
-  font-size: 74px;
-  font-weight: 100;
-}
-#richners-log .call-to-action {
-  border: solid 2px white;
-  border-radius: 1000px;
-  padding: 14px;
-}
-#richners-log .call-to-action:hover {
-  border: solid 2px #white;
-  background: white;
-  color: #333;
-}
-#fuzzytec {
-  background-image: url(img/fuzzytec-background.jpg);
-}
-#fuzzytec .call-to-action {
-  background: url(img/fuzzytec-calltoaction.png) no-repeat center;
-}
-#fuzzytec .call-to-action:hover {
-  background-image: url(img/fuzzytec-calltoaction-hover.png);
-}
-#fuzzytec .iphone {
-  background: url(img/fuzzytec-iphone.png);
+#fuzzytec .presley {
+  background: url(img/fuzzytec-presley.png) no-repeat center;
+  background-size: contain;
   position: absolute;
-  bottom: 0px;
-  width: 390px;
-  height: 531px;
+  top: 15%;
+  bottom: 15%;
+  right: -33%;
+  left: 66%;
+  transition: all 0.25s;
 }
-#fuzzytec .iphone img {
+#fuzzytec .demo:hover .iPhone {
+  top: 5%;
+  bottom: 0%;
+}
+#fuzzytec .demo:hover .gif {
+  background-image: url(img/fuzzytec-demo.gif);
+}
+#fuzzytec .demo:hover .presley {
+  left: 56%;
+  right: -23%;
+}
+#lintr .demo {
+  background: #919191;
+  background: -moz-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #919191), color-stop(100%, #333333));
+  background: -webkit-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: -o-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: -ms-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: radial-gradient(ellipse at center, #919191 0%, #333333 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#919191', endColorstr='#333333', GradientType=1);
+}
+#lintr .gif {
+  background: url(img/lintr-splash.jpg) center;
+  background-size: contain;
+  background-repeat: no-repeat;
   position: absolute;
+  top: 15%;
+  bottom: 15%;
+  right: 15%;
+  left: 15%;
+  transition: all 0.25s;
+}
+#lintr .demo:hover .gif {
+  background-image: url(img/lintr-demo.gif);
+  top: 10%;
+  bottom: 10%;
+}
+#antex .demo {
+  background-image: url(img/antex-background.jpg);
+}
+#isthereanaccidentondeerfoot .demo {
+  background-color: #333;
+}
+#isthereanaccidentondeerfoot .page {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
   bottom: 0px;
-  left: 75px;
+  box-sizing: border-box;
+  padding-top: 5%;
 }
-#isthereanaccidentondeerfoot {
-  background: #333;
-}
-#isthereanaccidentondeerfoot .logo {
-  font-size: 28px;
-  font-weight: 400;
-}
-#isthereanaccidentondeerfoot .demo .text {
+#isthereanaccidentondeerfoot .text {
   text-align: center;
-  padding: 10px;
-  font-size: 14px;
+  padding: 1vw;
+  font-size: 1.25vw;
   color: #777;
 }
-#isthereanaccidentondeerfoot .demo .yes,
-#isthereanaccidentondeerfoot .demo .no {
+#isthereanaccidentondeerfoot .yes,
+#isthereanaccidentondeerfoot .no {
   text-align: center;
-  padding: 20px;
-  font-size: 26px;
+  padding: 2vw;
+  font-size: 2.5vw;
   font-weight: 400;
+  color: white;
 }
-#isthereanaccidentondeerfoot .demo .yes {
+#isthereanaccidentondeerfoot .yes {
   background: #FF8E00;
   border-top: solid 2px #FFA739;
   border-bottom: solid 2px #C56E00;
 }
-#isthereanaccidentondeerfoot .demo .no {
+#isthereanaccidentondeerfoot .no {
   background: #00B25C;
   border-top: solid 2px #29B672;
   border-bottom: solid 2px #008947;
 }
-#isthereanaccidentondeerfoot .demo .initially-hidden {
-  display: none;
-}
-#isthereanaccidentondeerfoot .demo-footer {
+#isthereanaccidentondeerfoot .toggle-on,
+#isthereanaccidentondeerfoot .toggle-off {
   position: absolute;
-  bottom: 0px;
-  right: 0px;
+  top: 15%;
   left: 0px;
-  height: 80px;
-  background-color: #222;
+  right: 0px;
+  bottom: 0px;
+  transition: all 0.25s;
 }
-#isthereanaccidentondeerfoot .call-to-action {
-  border-top: solid 2px #666;
-  background: #555;
-  border-bottom: solid 2px #444;
-  padding: 14px;
+#isthereanaccidentondeerfoot .toggle-on {
+  opacity: 0;
 }
-#isthereanaccidentondeerfoot .call-to-action:hover {
-  border-top: solid 2px #777;
-  background: #666;
-  border-bottom: solid 2px #555;
+#isthereanaccidentondeerfoot .demo:hover .toggle-on {
+  opacity: 1;
 }
-#lintr {
-  background: #919191;
+#isthereanaccidentondeerfoot .demo:hover .toggle-off {
+  opacity: 0;
+}
+#whitesky .demo {
+  background: #00b1ff;
   /* Old browsers */
-  background: -moz-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: -moz-linear-gradient(top, #00b1ff 0%, #9ec9dc 100%);
   /* FF3.6+ */
-  background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%, #919191), color-stop(100%, #333333));
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #00b1ff), color-stop(100%, #9ec9dc));
   /* Chrome,Safari4+ */
-  background: -webkit-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: -webkit-linear-gradient(top, #00b1ff 0%, #9ec9dc 100%);
   /* Chrome10+,Safari5.1+ */
-  background: -o-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
-  /* Opera 12+ */
-  background: -ms-radial-gradient(center, ellipse cover, #919191 0%, #333333 100%);
+  background: -o-linear-gradient(top, #00b1ff 0%, #9ec9dc 100%);
+  /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, #00b1ff 0%, #9ec9dc 100%);
   /* IE10+ */
-  background: radial-gradient(ellipse at center, #919191 0%, #333333 100%);
+  background: linear-gradient(to bottom, #00b1ff 0%, #9ec9dc 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#919191', endColorstr='#333333', GradientType=1);
-  /* IE6-9 fallback on horizontal gradient */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00b1ff', endColorstr='#9ec9dc', GradientType=0);
+  /* IE6-9 */
 }
-#lintr .logo {
-  font-family: serif;
-  font-size: 70px;
-  font-weight: 100;
+#teamlunch .demo {
+  background: #212121;
+  background: -moz-linear-gradient(top, #373737, #212121);
+  background: -webkit-linear-gradient(top, #373737, #212121);
+  background: -ms-linear-gradient(top, #373737, #212121);
+  background: -o-linear-gradient(top, #373737, #212121);
+  background: linear-gradient(top, #373737, #212121);
 }
-#lintr .demo img {
-  border: solid 1px #555;
+#contact-me {
+  background: #EAEAEA;
+  padding: 80px 80px 80px 80px;
+  text-align: right;
 }
-#lintr .call-to-action {
-  background: #22B573;
+#contact-me .title {
+  font-size: 2em;
+  font-weight: 200;
+  margin-bottom: 10px;
 }
-#lintr .call-to-action:hover {
-  background: #B52222;
+#contact-me .description {
+  max-width: 420px;
+  display: inline-block;
+  text-align: justify;
 }
-#antex {
-  background-image: url(img/antex-sky.jpg);
+footer {
+  background: #444;
+  color: white;
+  font-size: 0.8em;
+  padding: 40px 80px 60px 80px;
 }
-#antex .logo {
-  font-family: 'Advent Pro', sans-serif;
-  font-size: 64px;
-  font-weight: 300;
+footer p {
+  margin: 0px 0px 4px 0px;
+  padding: 0px;
+  float: left;
 }
-#antex .ipad {
-  background: url(img/antex-ipad.png);
-  width: 344px;
-  height: 486px;
-}
-#contact {
-  background-image: url(img/james-background.jpg);
-}
-#contact .logo {
-  font-size: 74px;
-  font-weight: 100;
+footer p.thought {
+  color: #AAA;
+  float: right;
 }
 </style><script type="text/javascript">(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var toggle_deerfoot;
-
 $(document).ready(function() {
-  return $("a").attr('target', '_new');
+  return $(".demo").each(function(i, demo) {
+    return (function(demo) {
+      return $(demo).click(function() {
+        return window.open($(demo).attr("data-url"), "_new");
+      });
+    })(demo);
+  });
 });
-
-toggle_deerfoot = function() {
-  return $("#isthereanaccidentondeerfoot .toggles").toggle();
-};
-
-window.setInterval(toggle_deerfoot, 2000);
 
 
 
 },{}]},{},[1]);
-</script></head><body><div class="panel" id="jamesthorne"><div class="grid"><div class="span3"><img class="picture" src="img/james-pic.png" /></div><div class="span1">&nbsp; </div><div class="span6"><div class="name">James Thorne</div><div class="title">Entrepreneur, Developer, and Maker of Things</div><div class="description">I can't stop making things. I've built everything from digital manufacturing systems to WebGL and iOS games to military-grade aircraft control software. I'm always on the lookout for new technologies to explore.</div></div></div><div class="header">Some Things I Made &blacktriangledown;</div></div><div class="panel" id="printtopeer"><div class="grid"><div class="span5"><img class="logo" src="img/printtopeer-logo.png" /><div class="description">We're making 3D printing easier, faster, and more powerful, so all it takes is one click. PrintToPeer is the easiest way to use your 3D printer, and the easiest way to coordinate multiple 3D printers.</div><a class="call-to-action" href="http://printtopeer.com">Start Printing</a></div><div class="span5">&nbsp;</div></div></div><div class="panel" id="richners-log"><div class="grid"><div class="span4"><img class="demo" src="img/richnerslog-demo.gif" /></div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Richner's Log</div><div class="description">A story of adventure, isolation, and travel to the stars. Play a classic text-adventure game, reimagined for today's touch devices, and help Richner and Hayley complete their mission and save the galaxy.</div><a class="call-to-action" href="http://jamesthorne.ca/richners-log">Play Now</a></div></div></div><div class="panel" id="fuzzytec"><div class="grid"><div class="span5"><img class="logo" src="img/fuzzytec-logo.png" /><div class="description">The Evil Robots have captured Presley and his fellow fuzzles! It's up to you to help Ted rescue them, upgrade his ship, find some extra special powerups, and stop the robots!</div><a class="call-to-action" href="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;amp;mt=8">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4"><div class="iphone"><img src="img/fuzzytec-demo.gif" /></div></div></div></div><div class="panel" id="lintr"><div class="grid"><div class="span4"><div class="demo"><img src="img/lintr-demo.gif" /></div></div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">lintr.co</div><div class="description">lintr.co is a linter for the English language. It's an opinionated grammar and style checker that warns you about improper use of active/passive voice, sentences that are too short or too long, improper use of SI units, and more.</div><a class="call-to-action" href="http://lintr.co">Check my Grammar</a></div></div></div><div class="panel" id="antex"><div class="grid"><div class="span5"><div class="logo">Antex</div><div class="description">Antex is a Tactical Strategy Puzzle Game for iPad. You command an army of hovercraft, tanks, trucks, ships, submarines and helicopters. Use your finger to draw a path for your forces, and watch as they lay waste to enemy defenses.</div><a class="call-to-action" href="https://itunes.apple.com/us/app/antex/id656352369?ls=1&amp;amp;mt=8">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4"><div class="ipad"></div></div></div></div><div class="panel" id="isthereanaccidentondeerfoot"><div class="grid"><div class="span4"><div class="demo"><div class="text">Is there an accident on Deerfoot?</div><div class="yes toggles initially-hidden">Yes</div><div class="no toggles">No</div><div class="text toggles initially-hidden">And the current slowness index is <b>86</b></div><div class="text toggles">And traffic isn't too bad either.</div></div><div class="demo-footer"></div></div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Is there an accident on Deerfoot?</div><div class="description">Deerfoot Trail is a major freeway in Calgary. Traffic gets really bad when there's an accident. "Is there an accident on Deerfoot?" uses the Bing and Twitter APIs to tell you, in realtime, if there's an accident on Deerfoot.</div><a class="call-to-action" href="http://isthereanaccidentondeerfoot.herokuapp.com">Well, is there?</a></div></div></div><div class="panel" id="whitesky"><div class="grid"><div class="span5"><div class="logo">White Sky</div><div class="description">Hey there</div><a class="call-to-action" href="http://whitesky.jamesthorne.ca">Play Now</a></div><div class="span1">&nbsp;</div><div class="span4">Demo?</div></div></div><div class="panel" id="teamlunch"><div class="grid"><div class="span4">Demo</div><div class="span1">&nbsp;</div><div class="span5"><div class="logo">Team Lunch</div><div class="description">This drone is safe.</div><a class="call-to-action" href="http://teamlunch.github.io">More Information</a></div></div></div><div class="panel" id="pokemon"><div class="grid"><div class="span5"><div class="logo">Pokemon: Zoo Version</div><div class="description">Silly Video</div><a class="call-to-action" href="https://www.youtube.com/watch?v=OxTxx9HpZeg">Watch Now</a></div><div class="span1">&nbsp;</div><div class="span4">Demo?</div></div></div><div class="panel" id="contact"><div class="grid"><div class="span3"><img class="picture" src="img/contact-mail.png" /></div><div class="span1">&nbsp;</div><div class="span6"><div class="logo">Good Stuff.</div><div class="description">I'm always looking for new technologies to explore! If you're interested in working together, shoot me an email, or take a look at my linkedin or my resume.</div></div></div></div></body></html>
+</script></head><body><div id="header"><div class="header-bar"><div class="main">James Thorne<span class="small"> .ca</span></div><div class="navigation contact">Contact</div><div class="navigation portfolio">Portfolio</div><div class="navigation about">About</div></div></div><div id="jamesthorne"><img class="picture" src="img/james-pic.png" /><div class="text"><div class="name">James Thorne</div><div class="title">Entrepreneur, Developer, and Maker of Things</div><div class="description">I can't stop making things. I've built everything from digital manufacturing systems to WebGL and iOS games to military-grade aircraft control software. I'm always on the lookout for new technologies to explore, so let me know if you want to work on something together!</div></div></div><div class="header">Some of the Things I've Made</div><div class="panels"><div class="panel" id="printtopeer"><div class="demo" data-url="http://printtopeer.com"><div class="printtopanel"></div></div><div class="description"><div class="name">PrintToPeer</div><div class="stack">Web + Embedded</div><div class="tech"><div>Ruby on Rails</div><div>Postgres</div><div>Redis</div><div>Websockets</div><div>WebGL</div><div>Raspberry Pi</div><div>3D Printing</div></div></div></div><div class="panel" id="richners-log"><div class="demo" data-url="http://jamesthorne.ca/richners-log"><div class="gif"></div></div><div class="description"><div class="name">Richner's Log</div><div class="stack">Web</div><div class="tech"><div>Coffeescript</div><div>Slim</div><div>LESS</div><div>HTML5</div></div></div></div><div class="panel" id="lintr"><div class="demo" data-url="http://lintr.co"><div class="gif"></div></div><div class="description"><div class="name">Lintr.co</div><div class="stack">Web</div><div class="tech"><div>Python</div><div>Flask</div><div>NLTK</div><div>Heroku</div><div>English Grammar      </div></div></div></div><div class="panel" id="fuzzytec"><div class="demo" data-url="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;amp;mt=8"><div class="iPhone"><div class="gif"></div></div><div class="presley"></div></div><div class="description"><div class="name">Fuzzytec</div><div class="stack">iPhone</div><div class="tech"><div>Objective-C</div><div>SpriteKit</div><div>Adobe Illustrator</div><div>In-App Purchases</div><div>Procedural Generation</div><div>Terrible Puns</div></div></div></div><div class="panel" id="antex"><div class="demo" data-url="https://itunes.apple.com/us/app/antex/id656352369?ls=1&amp;amp;mt=8"></div><div class="description"><div class="name">Antex</div><div class="stack">iPad</div><div class="tech"><div>Objective-C</div><div>Cocos2d</div><div>OpenGL</div><div>Level Design</div><div>Story Writing</div><div>Adobe Illustrator</div></div></div></div><div class="panel" id="isthereanaccidentondeerfoot"><div class="demo" data-url="http://isthereanaccidentondeerfoot.herokuapp.com"><div class="page"><div class="toggle-on"><div class="text">Is there an accident on Deerfoot?</div><div class="yes">Yes</div><div class="text">And the current slowness index is <b>86</b></div></div><div class="toggle-off"><div class="text">Is there an accident on Deerfoot?</div><div class="no">No</div><div class="text">And traffic isn't too bad either.</div></div></div></div><div class="description"><div class="name">Is there an accident on Deerfoot?</div><div class="stack">Web</div><div class="tech"><div>Bing Maps API</div><div>Twitter API</div><div>Rails</div><div>Postgres</div><div>Heroku</div></div></div></div><div class="panel" id="whitesky"><div class="demo" data-url="http://whitesky.jamesthorne.ca"></div><div class="description"><div class="name">White Sky</div><div class="stack">Web</div><div class="tech"><div>WebGL</div><div>Coffeescript</div><div>NodeJS</div><div>Procedural Generation</div></div></div></div><div class="panel" id="teamlunch"><div class="demo" data-url="http://teamlunch.github.io"></div><div class="description"><div class="name">Team Lunch</div><div class="stack">Embedded</div><div class="tech"><div>Linux</div><div>Avionics</div><div>Ultrasonic Sensors</div><div>Parrot AR.Drone</div><div>Collision Avoidance</div></div></div></div><div class="panel" id="pokemon"><div class="demo" data-url="https://www.youtube.com/watch?v=OxTxx9HpZeg"></div><div class="description"><div class="name">Pokemon: Zoo Version</div><div class="stack">Film</div><div class="tech"><div>Film Production</div><div>Video Editing</div><div>Screenwriting</div><div>Special Effects</div><div>Explosions</div></div></div></div></div><div id="contact-me"><div class="title">Good Stuff.</div><div class="description">I'm always looking for new technologies to explore! If you're interested in working together, shoot me an email, or take a look at my linkedin or my resume.</div></div><footer><p>Crafted with love by <b>James Thorne</b>. </p><p class="thought">Also, have I mentioned how much I love HTML5 and CSS3?</p></footer></body></html>
