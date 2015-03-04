@@ -95,7 +95,7 @@ body {
   box-sizing: border-box;
   display: inline-block;
   width: 50%;
-  transition: all 0.25s;
+  opacity: 0;
 }
 .panel img {
   width: 100%;
