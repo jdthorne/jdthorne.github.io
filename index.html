@@ -95,6 +95,7 @@ body {
   box-sizing: border-box;
   display: inline-block;
   width: 50%;
+  transition: all 0.25s;
 }
 .panel img {
   width: 100%;
@@ -106,7 +107,7 @@ body {
 }
 .panel .description .name {
   font-weight: 500;
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 .panel .description .stack {
   margin-bottom: 10px;
@@ -283,6 +284,12 @@ body {
   left: 15%;
   transition: all 0.25s;
 }
+#antex .demo:hover .iPad {
+  top: 10%;
+  bottom: 10%;
+  right: 10%;
+  left: 10%;
+}
 #isthereanaccidentondeerfoot .demo {
   background-color: #333;
 }
@@ -308,6 +315,7 @@ body {
   font-size: 2.5vw;
   font-weight: 400;
   color: white;
+  transition: all 0.25s;
 }
 #isthereanaccidentondeerfoot .yes {
   background: #FF8E00;
@@ -322,7 +330,7 @@ body {
 #isthereanaccidentondeerfoot .toggle-on,
 #isthereanaccidentondeerfoot .toggle-off {
   position: absolute;
-  top: 15%;
+  top: 3.5vw;
   left: 0px;
   right: 0px;
   bottom: 0px;
@@ -330,6 +338,14 @@ body {
 }
 #isthereanaccidentondeerfoot .toggle-on {
   opacity: 0;
+}
+#isthereanaccidentondeerfoot .demo:hover .yes,
+#isthereanaccidentondeerfoot .demo:hover .no {
+  padding: 2.5vw;
+}
+#isthereanaccidentondeerfoot .demo:hover .toggle-on,
+#isthereanaccidentondeerfoot .demo:hover .toggle-off {
+  top: 3vw;
 }
 #isthereanaccidentondeerfoot .demo:hover .toggle-on {
   opacity: 1;
@@ -354,6 +370,11 @@ body {
   /* W3C */
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00b1ff', endColorstr='#9ec9dc', GradientType=0);
   /* IE6-9 */
+  background-image: url(img/whitesky-splash.jpg);
+  background-size: cover;
+}
+#whitesky .demo:hover {
+  background-image: url(img/whitesky-demo.gif);
 }
 #teamlunch .demo {
   background: #212121;
@@ -362,6 +383,64 @@ body {
   background: -ms-linear-gradient(top, #373737, #212121);
   background: -o-linear-gradient(top, #373737, #212121);
   background: linear-gradient(top, #373737, #212121);
+  background-size: contain;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  transition: all 0.25s;
+}
+#teamlunch .quadcopter {
+  background: url(img/teamlunch-drone.png) center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 10%;
+  bottom: 10%;
+  left: 10%;
+  right: 10%;
+  transition: all 0.25s;
+}
+#teamlunch .gif {
+  background: url(img/teamlunch-demo.gif) center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  transition: all 0.25s;
+}
+#teamlunch .demo:hover .gif {
+  opacity: 1;
+}
+#teamlunch .demo:hover .quadcopter {
+  opacity: 0;
+  top: 25%;
+  bottom: 25%;
+  left: 25%;
+  right: 25%;
+}
+#pokemon .demo {
+  background-image: url(img/pokemon-film.png);
+}
+#pokemon .gif {
+  background: url(img/pokemon-splash.jpg) center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 8%;
+  bottom: 8%;
+  left: 1%;
+  right: 1%;
+  transition: all 0.25s;
+}
+#pokemon .demo:hover .gif {
+  background-image: url(img/pokemon-preview.gif);
+  top: 16%;
+  bottom: 16%;
+  left: 1%;
+  right: 1%;
 }
 #contact-me {
   background: url(img/james-background.jpg);
@@ -433,4 +512,4 @@ $(document).ready(function() {
 
 
 },{}]},{},[1]);
-</script></head><body><div id="header"><div class="header-bar"><div class="main">James Thorne<span class="small"> .ca</span></div><div class="navigation contact">Contact</div><div class="navigation portfolio">Portfolio</div><div class="navigation about">About</div></div></div><div id="jamesthorne"><img class="picture" src="img/james-pic.png" /><div class="text"><div class="name">James Thorne</div><div class="title">Entrepreneur, Developer, and Maker of Things</div><div class="description">I'm passionate about technology. I've built everything from digital manufacturing systems, to WebGL and iOS games, to military-grade aircraft control software. I can't stop learning, and I'm always on the lookout for new opportunities.</div></div></div><div class="header">Some Things I've Made <span class="triangle"> &#x25be;</span></div><div class="panels"><div class="panel" id="printtopeer"><div class="demo" data-url="http://printtopeer.com"><div class="printtopanel"></div></div><div class="description"><div class="name">PrintToPeer</div><div class="stack">Web + Embedded</div><div class="tech"><div>Ruby on Rails</div><div>Postgres</div><div>Redis</div><div>Websockets</div><div>WebGL</div><div>Raspberry Pi</div><div>3D Printing</div></div></div></div><div class="panel" id="richners-log"><div class="demo" data-url="http://jamesthorne.ca/richners-log"><div class="gif"></div></div><div class="description"><div class="name">Richner's Log</div><div class="stack">Web</div><div class="tech"><div>Coffeescript</div><div>Slim</div><div>LESS</div><div>HTML5</div></div></div></div><div class="panel" id="lintr"><div class="demo" data-url="http://lintr.co"><div class="gif"></div></div><div class="description"><div class="name">Lintr.co</div><div class="stack">Web</div><div class="tech"><div>Python</div><div>Flask</div><div>NLTK</div><div>Heroku</div><div>English Grammar      </div></div></div></div><div class="panel" id="fuzzytec"><div class="demo" data-url="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;amp;mt=8"><div class="iPhone"><div class="gif"></div></div><div class="presley"></div></div><div class="description"><div class="name">Fuzzytec</div><div class="stack">iPhone</div><div class="tech"><div>Objective-C</div><div>SpriteKit</div><div>Adobe Illustrator</div><div>In-App Purchases</div><div>Procedural Generation</div><div>Terrible Puns</div></div></div></div><div class="panel" id="antex"><div class="demo" data-url="https://itunes.apple.com/us/app/antex/id656352369?ls=1&amp;amp;mt=8"><div class="iPad"><div class="gif"></div></div></div><div class="description"><div class="name">Antex</div><div class="stack">iPad</div><div class="tech"><div>Objective-C</div><div>Cocos2d</div><div>OpenGL</div><div>Game Design</div><div>Adobe Illustrator</div></div></div></div><div class="panel" id="isthereanaccidentondeerfoot"><div class="demo" data-url="http://isthereanaccidentondeerfoot.herokuapp.com"><div class="page"><div class="toggle-on"><div class="text">Is there an accident on Deerfoot?</div><div class="yes">Yes</div><div class="text">And the current slowness index is <b>86</b></div></div><div class="toggle-off"><div class="text">Is there an accident on Deerfoot?</div><div class="no">No</div><div class="text">And traffic isn't too bad either.</div></div></div></div><div class="description"><div class="name">Is there an accident on Deerfoot?</div><div class="stack">Web</div><div class="tech"><div>Bing Maps API</div><div>Twitter API</div><div>Rails</div><div>Postgres</div><div>Heroku</div></div></div></div><div class="panel" id="whitesky"><div class="demo" data-url="http://whitesky.jamesthorne.ca"></div><div class="description"><div class="name">White Sky</div><div class="stack">Web</div><div class="tech"><div>WebGL</div><div>Coffeescript</div><div>NodeJS</div><div>Procedural Generation</div></div></div></div><div class="panel" id="teamlunch"><div class="demo" data-url="http://teamlunch.github.io"></div><div class="description"><div class="name">Team Lunch</div><div class="stack">Embedded</div><div class="tech"><div>Linux</div><div>Avionics</div><div>Ultrasonic Sensors</div><div>Parrot AR.Drone</div><div>Collision Avoidance</div></div></div></div><div class="panel" id="pokemon"><div class="demo" data-url="https://www.youtube.com/watch?v=OxTxx9HpZeg"></div><div class="description"><div class="name">Pokemon: Zoo Version</div><div class="stack">Film</div><div class="tech"><div>Film Production</div><div>Video Editing</div><div>Screenwriting</div><div>Special Effects</div><div>Explosions</div></div></div></div></div><div id="contact-me"><img class="icon" src="img/contact-mail.png" /><div class="text"><div class="title">Awesome.</div><div class="description">If you're looking for more information about any of the projects listed above, or just want to grab a coffee sometime, let's get in touch. Shoot me an email, take a look at my linkedin, or download my resume.</div><div class="buttons"><a href="mailto:james@jamesthorne.ca">Email</a><a href="https://ca.linkedin.com/in/jamesdonaldthorne">LinkedIn</a><a href="/resume.pdf">R&eacute;sum&eacute;</a></div></div></div><footer><p>Crafted with love by <b>James Thorne</b>. </p><p class="thought">Also, have I mentioned how much I love HTML5 and CSS3?</p></footer></body></html>
+</script></head><body><div id="header"><div class="header-bar"><div class="main">James Thorne<span class="small"> .ca</span></div><div class="navigation contact">Contact</div><div class="navigation portfolio">Portfolio</div><div class="navigation about">About</div></div></div><div id="jamesthorne"><img class="picture" src="img/james-pic.png" /><div class="text"><div class="name">James Thorne</div><div class="title">Entrepreneur, Developer, and Maker of Things</div><div class="description">I'm passionate about technology. I've built everything from digital manufacturing systems, to WebGL and iOS games, to military-grade aircraft control software. I can't stop learning, and I'm always on the lookout for new opportunities.</div></div></div><div class="header">Some Things I've Made <span class="triangle"> &#x25be;</span></div><div class="panels"><div class="panel" id="printtopeer"><div class="demo" data-url="http://printtopeer.com"><div class="printtopanel"></div></div><div class="description"><div class="name">PrintToPeer</div><div class="stack">Web + Embedded</div><div class="tech"><div>Ruby on Rails</div><div>Postgres</div><div>Redis</div><div>Websockets</div><div>WebGL</div><div>Raspberry Pi</div><div>3D Printing</div></div></div></div><div class="panel" id="richners-log"><div class="demo" data-url="http://jamesthorne.ca/richners-log"><div class="gif"></div></div><div class="description"><div class="name">Richner's Log</div><div class="stack">Web</div><div class="tech"><div>Coffeescript</div><div>Slim</div><div>LESS</div><div>HTML5</div></div></div></div><div class="panel" id="lintr"><div class="demo" data-url="http://lintr.co"><div class="gif"></div></div><div class="description"><div class="name">Lintr.co</div><div class="stack">Web</div><div class="tech"><div>Python</div><div>Flask</div><div>NLTK</div><div>Heroku</div><div>English Grammar      </div></div></div></div><div class="panel" id="fuzzytec"><div class="demo" data-url="https://itunes.apple.com/us/app/fuzzytec/id881087794?ls=1&amp;amp;mt=8"><div class="iPhone"><div class="gif"></div></div><div class="presley"></div></div><div class="description"><div class="name">Fuzzytec</div><div class="stack">iPhone</div><div class="tech"><div>Objective-C</div><div>SpriteKit</div><div>Adobe Illustrator</div><div>In-App Purchases</div><div>Procedural Generation</div><div>Terrible Puns</div></div></div></div><div class="panel" id="isthereanaccidentondeerfoot"><div class="demo" data-url="http://isthereanaccidentondeerfoot.herokuapp.com"><div class="page"><div class="toggle-on"><div class="text">Is there an accident on Deerfoot?</div><div class="yes">Yes</div><div class="text">And the current slowness index is <b>86</b></div></div><div class="toggle-off"><div class="text">Is there an accident on Deerfoot?</div><div class="no">No</div><div class="text">And traffic isn't too bad either.</div></div></div></div><div class="description"><div class="name">Is there an accident on Deerfoot?</div><div class="stack">Web</div><div class="tech"><div>Bing Maps API</div><div>Twitter API</div><div>Rails</div><div>Postgres</div><div>Heroku</div></div></div></div><div class="panel" id="whitesky"><div class="demo" data-url="http://whitesky.jamesthorne.ca"><div class="gif"></div></div><div class="description"><div class="name">White Sky</div><div class="stack">Web</div><div class="tech"><div>WebGL</div><div>Coffeescript</div><div>NodeJS</div><div>Procedural Generation</div></div></div></div><div class="panel" id="teamlunch"><div class="demo" data-url="http://teamlunch.github.io"><div class="gif"></div><div class="quadcopter"></div></div><div class="description"><div class="name">Team Lunch</div><div class="stack">Embedded</div><div class="tech"><div>Linux</div><div>Avionics</div><div>Ultrasonic Sensors</div><div>Parrot AR.Drone</div><div>Collision Avoidance</div></div></div></div><div class="panel" id="pokemon"><div class="demo" data-url="https://www.youtube.com/watch?v=OxTxx9HpZeg"><div class="gif"></div></div><div class="description"><div class="name">Pokemon: Zoo Version</div><div class="stack">Film</div><div class="tech"><div>Film Production</div><div>Video Editing</div><div>Screenwriting</div><div>Special Effects</div><div>Explosions</div></div></div></div></div><div id="contact-me"><img class="icon" src="img/contact-mail.png" /><div class="text"><div class="title">Awesome.</div><div class="description">If you're looking for more information about any of the projects listed above, or just want to grab a coffee sometime, let's get in touch. Shoot me an email, take a look at my linkedin, or download my resume.</div><div class="buttons"><a href="mailto:james@jamesthorne.ca">Email</a><a href="https://ca.linkedin.com/in/jamesdonaldthorne">LinkedIn</a><a href="/resume.pdf">R&eacute;sum&eacute;</a></div></div></div><footer><p>Crafted with love by <b>James Thorne</b>. </p><p class="thought">Isn't living in the future amazing?</p></footer></body></html>

@@ -120,6 +120,8 @@ body {
   box-sizing: border-box;
   display: inline-block;
   width: 50%;
+  
+  transition: all 0.25s;
     
   // Demo images should be 1200 x 780
   img {
@@ -133,7 +135,7 @@ body {
     
     .name {
       font-weight: 500;
-      margin-bottom: 10px;
+      margin-bottom: 4px;
     }
     .stack {
       margin-bottom: 10px;
@@ -369,6 +371,14 @@ body {
     left: 15%;    
     transition: all 0.25s;
   }
+  
+  .demo:hover .iPad {
+    top: 10%;
+    bottom: 10%;
+    right: 10%;
+    left: 10%;    
+    
+  }
 }
 
 #isthereanaccidentondeerfoot {
@@ -399,6 +409,8 @@ body {
     font-size: 2.5vw;
     font-weight: 400;
     color: white;
+    
+    transition: all 0.25s;
   }
 
   .yes { 
@@ -415,7 +427,7 @@ body {
   
   .toggle-on, .toggle-off {
     position: absolute;
-    top: 15%;
+    top: 3.5vw;
     left: 0px;
     right: 0px;
     bottom: 0px;
@@ -428,6 +440,12 @@ body {
   }
 
   .demo:hover {
+    .yes, .no {
+      padding: 2.5vw;
+    }
+    .toggle-on, .toggle-off {
+      top: 3vw;
+    }
     .toggle-on {
       opacity: 1;
     }
@@ -447,6 +465,13 @@ body {
     background: -ms-linear-gradient(top, rgba(0,177,255,1) 0%,rgba(158,201,220,1) 100%); /* IE10+ */
     background: linear-gradient(to bottom, rgba(0,177,255,1) 0%,rgba(158,201,220,1) 100%); /* W3C */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b1ff', endColorstr='#9ec9dc',GradientType=0 ); /* IE6-9 */
+
+    background-image: url(img/whitesky-splash.jpg); 
+    background-size: cover; 
+  }
+  
+  .demo:hover {
+    background-image: url(img/whitesky-demo.gif); 
   }
 }
 
@@ -458,7 +483,84 @@ body {
     background: -ms-linear-gradient(top, #373737, #212121);
     background: -o-linear-gradient(top, #373737, #212121);
     background: linear-gradient(top, #373737, #212121);
+
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    overflow: hidden;
+    transition: all 0.25s;
+  }
+  
+  .quadcopter {
+    background: url(img/teamlunch-drone.png) center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    
+    position: absolute;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+    
+    transition: all 0.25s;
+  }
+  
+  .gif {
+    background: url(img/teamlunch-demo.gif) center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0;
+
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+
+    transition: all 0.25s;
+  }
+  
+  .demo:hover {
+    .gif {
+      opacity: 1;
+    }
+    
+    .quadcopter {
+      opacity: 0;
+      top: 25%;
+      bottom: 25%;
+      left: 25%;
+      right: 25%;
+    }
   }  
+}
+
+#pokemon {
+  .demo {
+    background-image: url(img/pokemon-film.png);
+  }  
+  
+  .gif {
+    background: url(img/pokemon-splash.jpg) center;
+    background-size: cover;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    top: 8%;
+    bottom: 8%;
+    left: 1%;
+    right: 1%;
+
+    transition: all 0.25s;
+  }
+  
+  .demo:hover .gif {
+    background-image: url(img/pokemon-preview.gif);
+    top: 16%;
+    bottom: 16%;
+    left: 1%;
+    right: 1%;
+  }
 }
 
 #contact-me {
