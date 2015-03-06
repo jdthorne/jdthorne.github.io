@@ -370,9 +370,26 @@ body {
   /* IE6-9 */
   background-image: url(img/whitesky-splash.jpg);
   background-size: cover;
+  overflow: hidden;
 }
-#whitesky .demo:hover {
+#whitesky .gif {
   background-image: url(img/whitesky-demo.gif);
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0;
+  position: absolute;
+  top: -15%;
+  bottom: -15%;
+  left: -15%;
+  right: -15%;
+  transition: all 0.25s;
+}
+#whitesky .demo:hover .gif {
+  opacity: 1;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
 }
 #teamlunch .demo {
   background: #212121;
@@ -403,14 +420,18 @@ body {
   background-repeat: no-repeat;
   opacity: 0;
   position: absolute;
-  top: 0px;
-  bottom: 0px;
-  left: 0px;
-  right: 0px;
+  top: -15%;
+  bottom: -15%;
+  left: -15%;
+  right: -15%;
   transition: all 0.25s;
 }
 #teamlunch .demo:hover .gif {
   opacity: 1;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
 }
 #teamlunch .demo:hover .quadcopter {
   opacity: 0;

@@ -2,33 +2,38 @@
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
 $(document).ready(function() {
-  var on_scroll, panels_to_show, show_next_panel, shown_panels;
+  var current_panel, on_scroll, panels_to_show, show_next_panel, shown_panels;
+  current_panel = null;
   shown_panels = [];
   panels_to_show = [];
   show_next_panel = function() {
-    var panel;
     if (panels_to_show.length === 0) {
       return;
     }
-    panel = panels_to_show[0];
-    return $(panel).animate({
+    current_panel = panels_to_show[0];
+    return $(current_panel).animate({
       opacity: "1"
     }, 250, null, function() {
       panels_to_show.shift();
-      shown_panels.push(panel);
+      shown_panels.push(current_panel);
       return show_next_panel();
     });
   };
   on_scroll = function(e) {
-    var visible_bottom;
+    var visible_bottom, visible_top;
     if ($(window).scrollTop() < 5) {
       return;
     }
+    visible_top = $(window).scrollTop();
     visible_bottom = $(window).scrollTop() + ($(window).height() * 0.8);
     return $(".panel").each(function(i, panel) {
       return (function(panel) {
-        var panel_top;
+        var panel_bottom, panel_top;
         panel_top = $(panel).offset().top;
+        panel_bottom = panel_top + $(panel).height();
+        if (panel === current_panel) {
+          return;
+        }
         if (panel_top > visible_bottom) {
           return;
         }
@@ -38,6 +43,9 @@ $(document).ready(function() {
         if (indexOf.call(panels_to_show, panel) >= 0) {
           return;
         }
+        if (panel_bottom < visible_top) {
+          return $(panel).css('opacity', 1);
+        }
         panels_to_show.push(panel);
         if (panels_to_show.length === 1) {
           return show_next_panel();
@@ -45,8 +53,8 @@ $(document).ready(function() {
       })(panel);
     });
   };
-  on_scroll();
   $(document).scroll(on_scroll);
+  on_scroll();
   return $(".demo").each(function(i, demo) {
     return (function(demo) {
       return $(demo).click(function(e) {
