@@ -271,6 +271,17 @@ body {
 #antex .demo {
   background-image: url(img/antex-background.jpg);
 }
+#antex .gif {
+  background: url(img/antex-splash.png) center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 12%;
+  left: 12%;
+  transition: all 0.25s;
+}
 #antex .iPad {
   background: url(img/antex-ipad.png) center;
   background-size: contain;
@@ -281,6 +292,10 @@ body {
   right: 15%;
   left: 15%;
   transition: all 0.25s;
+}
+#antex .demo:hover .gif {
+  opacity: 1;
+  background-image: url(img/antex-demo.gif);
 }
 #antex .demo:hover .iPad {
   top: 10%;
@@ -373,7 +388,6 @@ body {
   overflow: hidden;
 }
 #whitesky .gif {
-  background-image: url(img/whitesky-demo.gif);
   background-repeat: no-repeat;
   background-size: cover;
   opacity: 0;
@@ -385,6 +399,7 @@ body {
   transition: all 0.25s;
 }
 #whitesky .demo:hover .gif {
+  background-image: url(img/whitesky-demo.gif);
   opacity: 1;
   top: 0%;
   bottom: 0%;
@@ -415,7 +430,6 @@ body {
   transition: all 0.25s;
 }
 #teamlunch .gif {
-  background: url(img/teamlunch-demo.gif) center;
   background-size: contain;
   background-repeat: no-repeat;
   opacity: 0;
@@ -427,6 +441,7 @@ body {
   transition: all 0.25s;
 }
 #teamlunch .demo:hover .gif {
+  background-image: url(img/teamlunch-demo.gif);
   opacity: 1;
   top: 0px;
   bottom: 0px;

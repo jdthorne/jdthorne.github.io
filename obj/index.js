@@ -21,9 +21,6 @@ $(document).ready(function() {
   };
   on_scroll = function(e) {
     var visible_bottom, visible_top;
-    if ($(window).scrollTop() < 5) {
-      return;
-    }
     visible_top = $(window).scrollTop();
     visible_bottom = $(window).scrollTop() + ($(window).height() * 0.8);
     return $(".panel").each(function(i, panel) {

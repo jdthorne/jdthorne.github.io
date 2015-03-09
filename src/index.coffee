@@ -14,7 +14,6 @@ $(document).ready ->
       show_next_panel()
   
   on_scroll = (e)->
-    return if $(window).scrollTop() < 5
     visible_top = $(window).scrollTop()
     visible_bottom = $(window).scrollTop() + ( $(window).height() * 0.8 )
     $(".panel").each (i, panel) ->

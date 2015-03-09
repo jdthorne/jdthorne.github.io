@@ -356,6 +356,19 @@ body {
   .demo {
     background-image: url(img/antex-background.jpg);  
   }
+  
+  .gif {
+    background: url(img/antex-splash.png) center;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    right: 12%;
+    left: 12%;    
+    transition: all 0.25s;
+  }
 
   .iPad {
     background: url(img/antex-ipad.png) center;
@@ -370,12 +383,17 @@ body {
     transition: all 0.25s;
   }
   
-  .demo:hover .iPad {
-    top: 10%;
-    bottom: 10%;
-    right: 10%;
-    left: 10%;    
-    
+  .demo:hover {
+    .gif {
+      opacity: 1;
+      background-image: url(img/antex-demo.gif);
+    }
+    .iPad {
+      top: 10%;
+      bottom: 10%;
+      right: 10%;
+      left: 10%;    
+    }
   }
 }
 
@@ -470,7 +488,6 @@ body {
   }
   
   .gif {
-    background-image: url(img/whitesky-demo.gif); 
     background-repeat: no-repeat;
     background-size: cover;
     opacity: 0;
@@ -485,6 +502,7 @@ body {
   }
   
   .demo:hover .gif {
+    background-image: url(img/whitesky-demo.gif); 
     opacity: 1;
     top: 0%;
     bottom: 0%;
@@ -524,7 +542,6 @@ body {
   }
   
   .gif {
-    background: url(img/teamlunch-demo.gif) center;
     background-size: contain;
     background-repeat: no-repeat;
     opacity: 0;
@@ -540,6 +557,7 @@ body {
   
   .demo:hover {
     .gif {
+      background-image: url(img/teamlunch-demo.gif);
       opacity: 1;
       
       top: 0px;
