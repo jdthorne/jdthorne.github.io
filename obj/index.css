@@ -119,6 +119,8 @@ body {
   color: #777;
 }
 .panel .demo {
+  display: block;
+  text-decoration: none;
   cursor: pointer;
   background-size: cover;
   position: relative;

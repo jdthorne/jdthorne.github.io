@@ -51,18 +51,7 @@ $(document).ready(function() {
     });
   };
   $(document).scroll(on_scroll);
-  on_scroll();
-  return $(".demo").each(function(i, demo) {
-    return (function(demo) {
-      return $(demo).click(function(e) {
-        if (e.which === 2) {
-          return window.open($(demo).attr("data-url"));
-        } else {
-          return window.location = $(demo).attr("data-url");
-        }
-      });
-    })(demo);
-  });
+  return on_scroll();
 });
 
 
