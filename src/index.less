@@ -71,17 +71,24 @@ body {
     .name {
       font-size: 50px;
       font-weight: 400;
-      line-height: 100%;
-    }  
+      line-height: 50px;
+      
+      span.eit {
+        display: inline-block;
+        line-height: 50px;
+        font-size: 0.38em;
+        vertical-align: baseline;
+      }
+    } 
     
     .title {
-      font-size: 16px;
+      font-size: 18px;
       font-weight: 300;
       margin-bottom: 10px;
     }
     
     .description {
-      color: #CCC;
+      color: #DDD;
     }
   }
 }
@@ -673,3 +680,27 @@ footer {
     float: right;
   }
 }
+
+@media screen and (max-width: 550px) {
+  #jamesthorne .text {
+    .name {
+      font-size: 40px;
+      line-height: 40px;
+      
+      span.eit {
+        line-height: 40px;
+        font-size: 0.38em;
+      }
+    } 
+    
+    .title {
+      font-size: 15px;
+    }
+
+    .description {
+      color: #DDD;
+      font-size: 15px;
+    }
+  } 
+}
+
