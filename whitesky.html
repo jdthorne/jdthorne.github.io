@@ -1,0 +1,81 @@
+<!DOCTYPE html><html><head><title>White Sky</title><script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script><style>html,
+body {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#00b1ff+0,9ec9dc+100 */
+  background: #00b1ff;
+  /* Old browsers */
+  background: -moz-linear-gradient(top, #00b1ff 0%, #9ec9dc 100%);
+  /* FF3.6-15 */
+  background: -webkit-linear-gradient(top, #00b1ff 0%, #9ec9dc 100%);
+  /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to bottom, #00b1ff 0%, #9ec9dc 100%);
+  /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00b1ff', endColorstr='#9ec9dc', GradientType=0);
+  /* IE6-9 */
+  background-size: cover;
+  background-repeat: no-repeat;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+.cloud {
+  width: 200px;
+  height: 200px;
+  background: url(img/whitesky-terrain-cloud.png);
+  background-size: cover;
+  position: absolute;
+}
+p {
+  position: absolute;
+  bottom: 20%;
+  left: 0;
+  right: 0;
+  font-size: 2em;
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  padding: 0.5em 1em 0.5em 0em;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.5);
+  color: #333;
+}
+</style><script type="text/javascript">(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+window.clouds = [];
+
+window.place_clouds = function(dx, dy) {
+  var cloud, h, i, len, ref, results, w, x, y;
+  ref = window.clouds;
+  results = [];
+  for (i = 0, len = ref.length; i < len; i++) {
+    cloud = ref[i];
+    h = 96 * cloud.size;
+    w = 128 * cloud.size;
+    x = cloud.x * ($(window).width() + w);
+    y = cloud.y * ($(window).height() + h);
+    x -= cloud.z * dx * $(window).width() * 0.25;
+    y -= cloud.z * dy * $(window).height() * 0.25;
+    cloud.div.css('bottom', y + 'px');
+    cloud.div.css('right', x + 'px');
+    cloud.div.css('height', h + 'px');
+    results.push(cloud.div.css('width', w + 'px'));
+  }
+  return results;
+};
+
+$(document).ready(function() {
+  $(".cloud").each(function(index, cloud) {
+    window.clouds.push({
+      x: Math.random(),
+      y: Math.random(),
+      z: Math.random() + 0.25,
+      size: (Math.random() * 3) + 0.5,
+      div: $(cloud)
+    });
+    return window.place_clouds(0, 0);
+  });
+  return $('body').mousemove(function(e) {
+    return window.place_clouds((e.clientX / $(window).width()) - 0.5, (e.clientY / $(window).height()) - 0.5);
+  });
+});
+
+
+
+},{}]},{},[1]);
+</script></head><body><div class="clouds"><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div><div class="cloud"></div></div><p>Sorry, White Sky is currently offline for maintenance.</p></body></html>
