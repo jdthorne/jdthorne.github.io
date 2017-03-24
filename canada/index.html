@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Journal</title>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+
+    <style>
+      body {
+        font-family: 'Overpass', sans-serif;
+        
+        background: url(photos/rockies-blur.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+        
+        margin: 0 4em 0 4em;
+      }
+      
+      * {
+        box-sizing: border-box;
+      }
+      
+      main {
+        margin-left: auto;
+        margin-right: auto;
+        
+        max-width: 1000px;
+        padding-top: 4em;
+        padding-bottom: 4em;
+      }
+      
+      h1 {
+        font-size: 1.6em;
+        padding: 0;
+        margin: 0;
+        
+        background: url(photos/flag.png) no-repeat right center;
+        background-size: contain;
+      }
+      
+      h1 span {
+        font-weight: 400;
+        background-color: red;
+        color: white;
+        display: inline;
+        padding: 0.2em 0.5em 0.2em 0.5em;        
+      }
+      
+      h1 span b {
+        font-weight: 900;
+      }
+      
+      h1 i {
+        margin-left: 0.4em;
+        color: white;
+        
+        animation: wiggle 2s infinite;
+      }
+      
+      @keyframes wiggle {
+        0% { transform: translateY(0em); }
+        10% { transform: translateY(-0.25em); }
+        20% { transform: translateY(0em); }
+        30% { transform: translateY(-0.25em); }
+        40% { transform: translateY(0em); }
+      }
+      
+      .flow {
+        background: white;
+        width: 100%;
+        margin-top: 1em;
+        padding-top: 3em;
+      }
+      
+      h2 {
+        font-size: 1em;
+        text-transform: uppercase;
+        color: #AAA;
+        padding: 0em 14% 1em 14%;
+        margin: 0;
+      }
+      
+      h2 .location {
+        float: right;
+        color: red;
+      }
+      
+      i.fa-bookmark {
+        margin-right: 0.4em;
+      }
+      
+      .entry-photo {
+        margin-left: 7%;
+        margin-right: 7%;
+        width: 86%;
+      }
+      
+      .entry-text {
+        padding: 1em 14% 1em 14%;
+        text-align: justify;
+        text-justify: inter-word;
+      }
+      
+      footer {
+        color: #AAA;
+        text-transform: uppercase;
+        padding: 0em 14% 5em 14%;
+      }
+      
+      footer .weather {
+        float: right;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>
+        <span>
+          <b>James &amp; Tiffany</b>'s Grand Tour of Canada
+        </span>
+
+        <!-- <i class="fa fa-chevron-up"></i> -->
+      </h1>
+      
+              <div class="flow">
+          <article class="entry">
+            <h2 class="entry-title">
+              <span class="date">
+                <i class="fa fa-bookmark"></i> Thursday, Mar 23, 2017
+              </span>
+              <span class="location">
+                                Calgary, AB
+                              </span>
+            </h2>
+            <img class="entry-photo" src="photos/149361F3D7F441DE83CD95955F4DCA04.jpg"/>
+            <div class="entry-text">
+                <p>T - 2.5 Weeks</p>
+            </div>
+            
+            <footer>
+              <span class="time">
+                5:35 pm MDT
+              </span>
+              
+              <span class="weather">
+                6&deg; Mostly Cloudy
+              </span>
+            </footer>
+          </article>
+        </div>
+          </main>
+  </body>
+</html>
