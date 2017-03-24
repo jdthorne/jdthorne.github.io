@@ -6,6 +6,8 @@
     <link href="https://fonts.googleapis.com/css?family=Overpass" rel="stylesheet" />
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <style>
       body {
         font-family: 'Overpass', sans-serif;
@@ -37,8 +39,10 @@
         padding: 0;
         margin: 0;
         
-        background: url(photos/flag.png) no-repeat right center;
-        background-size: contain;
+        position: relative;
+        
+        /* background: url(photos/flag.png) no-repeat right center;
+        background-size: contain; */
       }
       
       h1 span {
@@ -46,7 +50,16 @@
         background-color: red;
         color: white;
         display: inline;
-        padding: 0.2em 0.5em 0.2em 0.5em;        
+        padding: 0.2em 0.5em 0.2em 0.5em;
+      }
+      
+      h1 img {
+        height: 1.6em;
+        float: right;
+        
+        position: absolute;
+        bottom: 0px;
+        right: 0px;
       }
       
       h1 span b {
@@ -113,15 +126,37 @@
       footer .weather {
         float: right;
       }
+
+        .large { display: inline; }
+        .small { display: none; }
+      
+      @media screen and (max-width: 740px) {
+        body {
+          margin: 0;
+        } 
+        
+        main {
+          padding-top: 2em;
+        }
+        
+        .large { display: none; }
+        .small { display: inline; }
+      }
     </style>
   </head>
   <body>
     <main>
       <h1>
-        <span>
+        <img src="photos/flag.png" />
+
+        <span class="large">
           <b>James &amp; Tiffany</b>'s Grand Tour of Canada
         </span>
 
+        <span class="small">
+          <b>James &amp; Tiffany</b>'s&nbsp;&nbsp;<br />
+          &nbsp;&nbsp;Grand Tour of Canada
+        </span>
         <!-- <i class="fa fa-chevron-up"></i> -->
       </h1>
       
@@ -129,7 +164,9 @@
           <article class="entry">
             <h2 class="entry-title">
               <span class="date">
-                <i class="fa fa-bookmark"></i> Thursday, Mar 23, 2017
+                <i class="fa fa-bookmark"></i> 
+                <span class="large">Thursday, Mar 23, 2017</span>
+                <span class="small" data-day="Thursday">Mar 23, 2017</span>
               </span>
               <span class="location">
                                 Calgary, AB
@@ -152,5 +189,17 @@
           </article>
         </div>
           </main>
+    <script type="text/javascript">
+      var days = document.querySelectorAll('[data-day]');
+      var thisWeek = new Date();
+      thisWeek.setDate(thisWeek.getDate() - 5);
+      
+      for (var i = 0; i < days.length; i++) {
+        var date = Date.parse(days[i].innerText);
+        if (date > thisWeek) {
+          days[i].innerText = days[i].dataset.day;
+        }
+      }
+    </script>
   </body>
 </html>
